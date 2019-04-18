@@ -18,13 +18,18 @@
     * Latency (Độ trễ): Lượng thời gian (chờ) để tạo ra một kết quả nào đó.
     * Ví dụ: 
         - Lượng nước chảy qua ống có đường kính khác nhau gọi là Thông lượng.
-        - Khoảng thời gian cần thiết để lượng nước từ đầu này sang đầu kia hoàn tất gọi là Độ trễ. <br/>
+        - Khoảng thời gian cần thiết để lượng nước từ đầu này sang đầu kia hoàn tất gọi là Độ trễ. <br/><br/>
         ![Alt](images/1.jpg "Example throughput & latency") <br/>
 
 3. Task Queue khác gì Message Queue?
-    * a
+    * MQ: Cung cấp một bộ lưu trữ các tin nhắn tạm thời giữa người gửi và người nhận để người gửi có thể tiếp tục hoạt động mà không bị gián đoạn khi chương trình đích bận/không kết nối được.
+    * TQ: Là cơ chế phân phối một chuỗi các nhiệm vụ/công việc giữa các luồng song song (multiple worker threads). Các luồng song song sẽ nhận nhiệm vụ từ hàng đợi và thực hiện các tính toán, xử lý rồi trả về kết quả. Hệ thống thời gian chạy (runtime system) sẽ quản lý việc các luồng truy cập vào hàng đợi chứa nhiệm vụ nhằm bảo đảm chúng sử dụng hàng đợi hợp lý.
 
-
+4. Các phương pháp để scale database (MySQL):
+    * Master-slave replication: Server master phục vụ việc đọc và ghi, nhân bản các dữ liệu được ghi ra slave (nơi dữ liệu chỉ đọc), và slave có thể nhân bản ra các slave khác. Nếu master sập, hệ thống sẽ ở trạng thái chỉ đọc cho đến khi một slave nào đó được đưa lên làm master hoặc master được tu sửa.
+    * Master-master replication: Có 2 hoặc nhiều master, tất cả đều hỗ trợ đọc ghi, các server là ngang hàng về việc ghi. Nếu một master sập, hệ thống vẫn tiếp tục đọc ghi trên các master khác.
+    * Federation: Chia CSDL bằng hàm. Thay vì sử dụng một CSDL đơn (chứa rất nhiều bảng và data) thì ta tách nó ra thành các CSDL riêng biệt, như: accounts, orders và products. Nếu như cần đọc ghi gì thì đi đến đúng CSDL đó, giúp giảm tải cho việc chỉ sử dụng một CSDL.
+    * Sharding: Là một tiến trình lưu giữ các bản ghi dữ liệu qua nhiều thiết bị để đáp ứng yêu cầu về sự gia tăng dữ liệu. Khi kích cỡ của dữ liệu tăng lên, một thiết bị đơn ( 1 database hay 1 bảng) không thể đủ để lưu giữ dữ liệu. Sharding giải quyết vấn đề này với việc mở rộng phạm vi theo bề ngang (horizontal scaling). Với Sharding, bạn bổ sung thêm nhiều thiết bị để hỗ trợ cho việc gia tăng dữ liệu và các yêu cầu của các hoạt động đọc và ghi. Ví dụ, chia nhỏ bảng hoặc CSDL ra thành các phần khác nhau, chúng có cấu trúc dữ liệu giống nhau nhưng lưu các dữ liệu khác nhau để giảm tải thay cho việc chỉ dùng 1 bảng.
 
 <br/><br/>
 ### Nguồn tham khảo:
@@ -32,4 +37,6 @@
 2. https://viblo.asia/p/shard-database-voi-activerecord-turntable-l0rvmx3kGyqA
 3. https://kipalog.com/posts/Cau-chuyen-nhung-nha-tham-hiem-va-nguyen-ly-C-A-P-cua-he-phan-tan
 4. http://paginaswebpublicidad.com/questions/23227/su-khac-biet-giua-do-tre-bang-thong-va-thong-luong-la-gi
-5. https://viblo.asia/p/shard-database-voi-activerecord-turntable-l0rvmx3kGyqA
+5. https://www.manifold.co/blog/introduction-to-message-queuing-and-rabbitmq-6cb8e6e9b2
+6. https://blog.imaginea.com/scale-part-i-task-queues/
+
