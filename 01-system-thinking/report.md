@@ -18,8 +18,8 @@
     * Latency (Độ trễ): Lượng thời gian (chờ) để tạo ra một kết quả nào đó.
     * Ví dụ: 
         - Lượng nước chảy qua ống có đường kính khác nhau gọi là Thông lượng.
-        - Khoảng thời gian cần thiết để lượng nước từ đầu này sang đầu kia hoàn tất gọi là Độ trễ.
-        - ![Alt](images/1.jpg "Example throughput & latency") <br/>
+        - Khoảng thời gian cần thiết để lượng nước từ đầu này sang đầu kia hoàn tất gọi là Độ trễ. <br/>
+        ![Alt](images/1.jpg "Example throughput & latency") <br/>
 
 3. Task Queue khác gì Message Queue?
     * a
