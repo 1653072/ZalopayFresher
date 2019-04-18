@@ -29,7 +29,7 @@
 
 
 
-<br/>
+<br/><br/>
 **Nguồn tham khảo**:
 1. https://github.com/nesso99/system-design-beginner#relational-database-management-system-rdbms
 2. https://viblo.asia/p/shard-database-voi-activerecord-turntable-l0rvmx3kGyqA
