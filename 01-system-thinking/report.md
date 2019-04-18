@@ -1,6 +1,7 @@
 ## SYSTEM THINKING <br/>
 
-**Người thực hiện**: Trần Kiến Quốc (Domain: quoctk) <br/>
+### Người thực hiện: 
+Trần Kiến Quốc (Domain: quoctk) <br/>
 
 ### Nội dung báo cáo:
 1. Định lý **CAP** và khái niệm **eventual consistency** là gì?
@@ -30,7 +31,7 @@
 
 
 <br/><br/>
-**Nguồn tham khảo**:
+### Nguồn tham khảo:
 1. https://github.com/nesso99/system-design-beginner#relational-database-management-system-rdbms
 2. https://viblo.asia/p/shard-database-voi-activerecord-turntable-l0rvmx3kGyqA
 3. https://kipalog.com/posts/Cau-chuyen-nhung-nha-tham-hiem-va-nguyen-ly-C-A-P-cua-he-phan-tan
