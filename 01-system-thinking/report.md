@@ -1,6 +1,6 @@
 Người thực hiện: **Trần Kiến Quốc (Domain: quoctk)** <br/><br/>
 
-Nội dung báo cáo: <br/>
+<em>Nội dung báo cáo: <em/><br/>
 1. Định lý CAP và khái niệm **eventual consistency** là gì?<br/>
     * CAP là viết tắt của 3 từ: Consistency, Availability và Partition Tolerance.<br/>
         - *Consistency (Tính nhất quán)*: Các sự kiện đọc đều nhận được kết quả mới nhất của sự kiện ghi gần nhất.
@@ -12,7 +12,7 @@ Nội dung báo cáo: <br/>
     * Eventual consistency (Nhất quán đến cuối cùng): 
         - *Cách hiểu*: Sau khi một cập nhật được diễn ra, các lần đọc sau đó không đảm bảo sẽ luôn trả về giá trị mới được cập nhật (có thể có lần đọc vẫn trả về dữ liệu cũ). Tuy nhiên sau một khoảng thời gian (đồng bộ giữa các CSDL) thì cuối cùng các lần đọc đều trả về giá trị mới nhất.
         - *Ví dụ*: Mỗi tối thứ 2 Quốc hoàn thành một bài tập và sao chép bài vào USB. Mỗi tối thứ 3 Ngọc qua nhà Quốc để lấy USB về và sử dụng "ké" kết quả bài tập của Quốc (USB chứa nội dung bài tập mới nhất). Tuy nhiên, vào hôm thứ 5 Quốc mở bài ra kiểm tra lại và thấy bài làm của mình có chỗ sai nên đã sửa lại. Lúc này, nội dung bài tập trong USB của Ngọc đã "lỗi thời" (dữ liệu cũ), và để nhận được nội dung mới (bài tập đã sửa) lẫn kết quả bài tập tuần kế tiếp thì Ngọc phải trả USB cho Q vào tối chủ nhật rồi đợi đến tối thứ 3 để nhận USB sau khi Q sao chép bài mới nhất (Gồm bài tập đã sửa và bài tập mới).
-2. Khái niệm throughput (thông lượng) và latency (độ trễ) là gì?
+2. Khái niệm **throughput (thông lượng)** và **latency (độ trễ)** là gì?
     * *Throughput (Thông lượng)*:
     * *Latency (Độ trễ)*:
 
