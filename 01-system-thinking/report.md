@@ -1,4 +1,4 @@
-### SYSTEM THINKING
+### SYSTEM THINKING <br/><br/>
 
 **Người thực hiện**: Trần Kiến Quốc (Domain: quoctk) <br/><br/>
 
