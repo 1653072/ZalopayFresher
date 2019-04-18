@@ -1,0 +1,442 @@
+/* ------------------------------------------------------------ */
+/* Font */
+@font-face {
+    font-family: 'Haiku Regular'; 
+    src: url("../font/Haiku\'s\ Script\ version\ 09\ Regular.ttf"); 
+}
+
+@font-face {
+    font-family: 'Haiku Bold'; 
+    src: url("../font/Haiku\'s\ Script\ version\ 09\ Bold.ttf"); 
+}
+
+/* ------------------------------------------------------------ */
+/* Header */
+body {
+    background-color: #fff !important;
+}
+
+header {
+    width: 100%;
+    background-color: #f6f6f6;
+    height: auto;
+}
+
+.logoname, .logoname:hover  {
+    font-family: 'Haiku Bold';
+    padding-top: 10px;
+    font-size: 28px;
+    color: #248241;
+    float: right;
+    text-decoration: none;
+}
+
+#userBtnLogin {
+    color: #248241;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ------------------------------------------------------------ */
+/* Introduction */
+.introstyle_logo {
+    margin-left: 10px;
+    margin-top: 10px;
+    display: inline-block;
+    height: 60px;
+    position: fixed;
+    z-index: 1000;
+}
+
+header {
+    display: block;
+    margin: 0;
+}
+
+.header {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    background-color: RGB(36,130,65,0.3);
+    display: block;
+    overflow: hidden;
+}
+
+.divtitleframe {
+    margin-top: 10vh;
+    height: 180px;
+    padding-left: 10vw;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+.divtitle {
+    font-family: monospace;
+    font-size: 120px;
+}
+
+.divcontent {
+    margin-top: 3vh;
+    width: 80vw;
+    height: 60vh;
+    float: right;
+    margin: 20px 80px;
+}
+
+.quoteleft {
+    font-size: 50px;
+    font-style: italic;
+}
+
+.quoteright {
+    font-size: 50px;
+    font-style: italic;
+    float: right;
+}
+
+.content {
+    margin: 20px 60px;
+    font-size: 20px;
+    font-style: italic;
+    line-height: 2;
+    text-align: justify;
+}
+
+@media (max-width: 1400px) {
+    .header {
+        width: 100%;
+        height: 850px;
+        max-width: 100%;
+        background-color: RGB(36,130,65,0.3);
+        display: block;
+        overflow: hidden;
+    }
+
+    .divtitleframe {
+        margin-top: 10vh;
+        height: 160px;
+        padding-left: 10vw;
+        padding-top: 1vh;
+        padding-bottom: 1vh;
+    }
+    
+    .divtitle {
+        font-family: 'monospace';
+        font-size: 100px;
+    }
+
+    .quoteleft {
+        font-size: 20px;
+        font-style: italic;
+    }
+    
+    .quoteright {
+        font-size: 20px;
+        font-style: italic;
+        float: right;
+    }
+    
+    .content {
+        margin: 10px 30px;
+        font-size: 18px;
+        font-style: italic;
+        line-height: 2;
+        text-align: justify;
+    }
+}
+
+@media (max-width: 900px) {
+    .header {
+        width: 100%;
+        height: 800px;
+        max-width: 100%;
+        background-color: RGB(36,130,65,0.3);
+        display: block;
+        overflow: hidden;
+    }
+    
+    .divtitleframe {
+        margin-top: 10vh;
+        height: 120px;
+        padding-left: 5vw;
+        padding-top: 1vh;
+        padding-bottom: 1vh;
+    }
+    
+    .divtitle {
+        font-family: 'monospace';
+        font-size: 70px;
+    }
+
+    .quoteleft {
+        font-size: 15px;
+        font-style: italic;
+    }
+    
+    .quoteright {
+        font-size: 15px;
+        font-style: italic;
+        float: right;
+    }
+    
+    .content {
+        margin: 5px 30px;
+        font-size: 16px;
+        font-style: italic;
+        line-height: 2;
+        text-align: justify;
+    }
+}
+
+@media (max-width: 700px) {
+    .header {
+        width: 100%;
+        height: 850px;
+        max-width: 100%;
+        background-color: RGB(36,130,65,0.3);
+        display: block;
+        overflow: hidden;
+    }
+    
+    .divtitleframe {
+        margin-top: 10vh;
+        height: 80px;
+        padding-left: 5vw;
+        padding-top: 2vh;
+        padding-bottom: 1vh;
+    }
+    
+    .divcontent {
+        margin-top: 3vh;
+        width: 90vw;
+        height: 60vh;
+        float: right;
+        margin: 30px 20px;
+    }
+    
+    .divtitle {
+        font-family: 'monospace';
+        font-size: 50px;
+    }
+
+    .quoteleft {
+        font-size: 15px;
+        font-style: italic;
+    }
+    
+    .quoteright {
+        font-size: 15px;
+        font-style: italic;
+        float: right;
+    }
+    
+    .content {
+        margin: 2px 15px;
+        font-size: 16px;
+        font-style: italic;
+        line-height: 2;
+        text-align: justify;
+    }
+}
+
+@media (max-width: 500px) {
+    .header {
+        width: 100%;
+        height: 1000px;
+        max-width: 100%;
+        background-color: RGB(36,130,65,0.3);
+        display: block;
+        overflow: hidden;
+    }
+
+    .divtitleframe {
+        margin-top: 10vh;
+        height: 80px;
+        padding-left: 2vw;
+        padding-top: 2vh;
+        padding-bottom: 1vh;
+    }
+    
+    .divcontent {
+        margin-top: 3vh;
+        width: 90vw;
+        height: 60vh;
+        float: right;
+        margin: 30px 10px;
+    }
+    
+    .divtitle {
+        font-family: 'monospace';
+        font-size: 50px;
+    }
+
+    .quoteleft {
+        font-size: 12px;
+        font-style: italic;
+    }
+    
+    .quoteright {
+        font-size: 12px;
+        font-style: italic;
+        float: right;
+    }
+    
+    .content {
+        margin: 2px 5px;
+        font-size: 16px;
+        font-style: italic;
+        line-height: 2;
+        text-align: justify;
+    }
+}
+
+/* ------------------------------------------------------------ */
+/* Content */
+.headingtitle {
+    font-family: 'Haiku Bold';
+    font-size: 120px;
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    color: #248241;
+}
+
+.bodycontent {
+    font-size: 20px;
+    text-align: justify;
+}
+
+.imagestyle_three {
+    width: 500px;
+    max-width: 100%;
+    height: 340px;
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-bottom: 5px;
+    border: 1px solid #248241;
+}
+
+.quotestyle {
+    background-color: RGB(180, 180, 180, 0.3);
+    margin: 40px 0px;
+    border-left: 5px solid #248241;
+    padding: 3px 3px 3px 10px;
+}
+
+.imagestyle_five {
+    margin-top: 10px;
+    margin-left: 20px;
+    width: 500px;
+    max-width: 100%;
+    border: 1px solid #248241;
+}
+
+@media (max-width: 380px) {
+    .header {
+        width: 100%;
+        height: 1100px;
+        max-width: 100%;
+        background-color: RGB(36,130,65,0.3);
+        display: block;
+        overflow: hidden;
+    }
+
+    .divtitleframe {
+        margin-top: 10vh;
+        height: 80px;
+        padding-left: 2vw;
+        padding-top: 2vh;
+        padding-bottom: 1vh;
+    }
+    
+    .divcontent {
+        margin-top: 3vh;
+        width: 90vw;
+        height: 60vh;
+        float: right;
+        margin: 0px 10px;
+    }
+    
+    .divtitle {
+        font-family: 'monospace';
+        font-size: 40px;
+    }
+
+    .quoteleft {
+        font-size: 12px;
+        font-style: italic;
+    }
+    
+    .quoteright {
+        font-size: 12px;
+        font-style: italic;
+        float: right;
+    }
+    
+    .content {
+        margin: 2px 5px;
+        font-size: 16px;
+        font-style: italic;
+        line-height: 2;
+        text-align: justify;
+    }
+}
+
+/* ------------------------------------------------------------ */
+/* Content */
+.headingtitle {
+    font-family: 'Haiku Bold';
+    font-size: 120px;
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    color: #248241;
+}
+
+@media (max-width: 350px) {
+    .headingtitle {
+        font-family: 'Haiku Bold';
+        font-size: 100px;
+        text-align: center;
+        margin-top: 100px;
+        margin-bottom: 20px;
+        color: #248241;
+    }
+}
+
+.bodycontent {
+    font-size: 20px;
+    text-align: justify;
+}
+
+.imagestyle_three {
+    width: 500px;
+    max-width: 100%;
+    height: 340px;
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-bottom: 5px;
+    border: 1px solid #248241;
+}
+
+.quotestyle {
+    background-color: RGB(180, 180, 180, 0.3);
+    margin: 40px 0px;
+    border-left: 5px solid #248241;
+    padding: 3px 3px 3px 10px;
+}
+
+.imagestyle_five {
+    margin-top: 10px;
+    margin-left: 20px;
+    width: 500px;
+    max-width: 100%;
+    border: 1px solid #248241;
+}
+
+/* ------------------------------------------------------------ */
+/* Footer */
+.makecenter {
+    text-align: center;
+}
