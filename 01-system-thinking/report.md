@@ -1,7 +1,6 @@
 ## SYSTEM THINKING <br/>
 
-### Người thực hiện: 
-Trần Kiến Quốc (Domain: quoctk) <br/>
+### Người thực hiện ###: Trần Kiến Quốc (Domain: quoctk) <br/>
 
 ### Nội dung báo cáo:
 1. Định lý **CAP** và khái niệm **eventual consistency** là gì?
