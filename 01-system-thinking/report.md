@@ -1,6 +1,6 @@
 Người thực hiện: **Trần Kiến Quốc (Domain: quoctk)** <br/><br/>
 Nội dung báo cáo: <br/>
-1. Định lý CAP và khái niệm **eventual consistency** là gì?
+1. Định lý CAP và khái niệm **eventual consistency** là gì?<br/>
     *CAP là viết tắt của 3 từ: Consistency, Availability và Partition Tolerance).<br/>
         -aaa
 
