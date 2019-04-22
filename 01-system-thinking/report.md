@@ -22,15 +22,47 @@
         ![Alt](images/1.jpg "Example throughput & latency") <br/>
 
 3. Task Queue khác gì Message Queue?
-    * MQ: Cung cấp một bộ lưu trữ các tin nhắn tạm thời giữa người gửi và người nhận để người gửi có thể tiếp tục hoạt động mà không bị gián đoạn khi chương trình đích bận/không kết nối được.
-    * TQ: Là cơ chế phân phối một chuỗi các nhiệm vụ/công việc giữa các luồng song song (multiple worker threads). Các luồng song song sẽ nhận nhiệm vụ từ hàng đợi và thực hiện các tính toán, xử lý rồi trả về kết quả. Hệ thống thời gian chạy (runtime system) sẽ quản lý việc các luồng truy cập vào hàng đợi chứa nhiệm vụ nhằm bảo đảm chúng sử dụng hàng đợi hợp lý.
+    * MQ: Dùng cơ chế truyền message (message passing) khi nào message tới thì nó nhận, giữ và xử lý.
+    * TQ: Dùng theo cơ chế quản lý Task - có nghĩa là khi có yêu cầu đến, thì nó đẩy vào Task Queue nhưng không xử lý liền, mà xác định một thời gian, nó tạo plan để sắp xếp các task nào cùng nghiệp vụ hoặc có tính chất tuần tự nhau, hoặc giống nhau thì mới chạy theo lịch thực thi này. TQ cũng nhận, giữ, xử lý và chuyển đi các kết quả, song là phù hợp với các công việc đòi hỏi tính toán nặng.
 
 4. Các phương pháp để scale database (MySQL):
     * Master-slave replication: Server master phục vụ việc đọc và ghi, nhân bản các dữ liệu được ghi ra slave (nơi dữ liệu chỉ đọc), và slave có thể nhân bản ra các slave khác. Nếu master sập, hệ thống sẽ ở trạng thái chỉ đọc cho đến khi một slave nào đó được đưa lên làm master hoặc master được tu sửa.
+        - Ưu: Master sập thì người dùng vẫn xem được dữ liệu.
+        - Nhược: Cần cơ chế để đưa slave lên master.
     * Master-master replication: Có 2 hoặc nhiều master, tất cả đều hỗ trợ đọc ghi, các server là ngang hàng về việc ghi. Nếu một master sập, hệ thống vẫn tiếp tục đọc ghi trên các master khác.
+        - Ưu: Tất cả đều hỗ trợ đọc và ghi, một master sập thì master khác vẫn hoạt động.
+        - Nhược:<br/>
+            ~ Cần một load balancer để điều phối hoặc cần thay đổi logic để quyết định ghi vào/đọc từ master nào.<br/>
+            ~ Nếu thêm master thì độ phức tạp khi xung đột sẽ tăng lên (Ghi vào đâu, đọc ở đâu, chia như thế nào...)<br/>
+            ~ Tính nhất quán giữa các master không cao và việc đồng bộ giữa các master cũng góp phần tăng độ trễ.
     * Federation: Chia CSDL bằng hàm. Thay vì sử dụng một CSDL đơn (chứa rất nhiều bảng và data) thì ta tách nó ra thành các CSDL riêng biệt, như: accounts, orders và products. Nếu như cần đọc ghi gì thì đi đến đúng CSDL đó, giúp giảm tải cho việc chỉ sử dụng một CSDL.
-    * Sharding: Là một tiến trình lưu giữ các bản ghi dữ liệu qua nhiều thiết bị để đáp ứng yêu cầu về sự gia tăng dữ liệu. Khi kích cỡ của dữ liệu tăng lên, một thiết bị đơn ( 1 database hay 1 bảng) không thể đủ để lưu giữ dữ liệu. Sharding giải quyết vấn đề này với việc mở rộng phạm vi theo bề ngang (horizontal scaling). Với Sharding, bạn bổ sung thêm nhiều thiết bị để hỗ trợ cho việc gia tăng dữ liệu và các yêu cầu của các hoạt động đọc và ghi. Ví dụ, chia nhỏ bảng hoặc CSDL ra thành các phần khác nhau, chúng có cấu trúc dữ liệu giống nhau nhưng lưu các dữ liệu khác nhau để giảm tải thay cho việc chỉ dùng 1 bảng.<br/><br/>
-    ![Alt](images/2.jpg "shardingDB") <br/>
+        - Ưu:<br/>
+            ~ Chia tách nên CSDL sẽ nhỏ, ít traffic đọc, ghi cho mỗi database và giảm 'lag'.<br/>
+            ~ CSDL nhỏ nên tiết kiệm dung lượng bộ nhớ, cải thiện thông lượng cũng như có thể đọc ghi song song.
+        - Nhược: <br/>
+            ~ Các CSDL tách rời nhau nên kết hợp bảng lại sẽ phức tạp.<br/>
+            ~ Cần cài đặt các logic để xác định việc ghi & đọc ở trên CSDL nào.<br/>
+            ~ Nếu một lược đồ  chứa nhiều thuộc tính và bảng chứa dữ liệu quá lớn, lại nằm trên một CSDL nào đó thì phương pháp này trở nên kém hiệu quả.
+    * Sharding: Là một tiến trình lưu giữ các bản ghi dữ liệu qua nhiều thiết bị để đáp ứng yêu cầu về sự gia tăng dữ liệu. Khi kích cỡ của dữ liệu tăng lên, một thiết bị đơn ( 1 database hay 1 bảng) không thể đủ để lưu giữ dữ liệu. Sharding giải quyết vấn đề này với việc mở rộng phạm vi theo bề ngang (horizontal scaling). Với Sharding, bạn bổ sung thêm nhiều thiết bị để hỗ trợ cho việc gia tăng dữ liệu và các yêu cầu của các hoạt động đọc và ghi. Ví dụ, chia nhỏ bảng hoặc CSDL ra thành các phần khác nhau, chúng có cấu trúc dữ liệu giống nhau nhưng lưu các dữ liệu khác nhau để giảm tải thay cho việc chỉ dùng 1 bảng.
+        - Ưu: <br/>
+            ~ Kích cỡ các CSDL gọn nhẹ sau tách, hiệu năng tăng và truy vấn nhanh hơn.<br/>
+            ~ Nếu một sharp sập thì vẫn còn sharp khác họat động.<br/>
+            ~ Việc đọc và ghi dễ dàng diễn ra song song.
+        - Nhược:<br/>
+            ~ Cần phải có logic để điều phối việc đọc ghi trên sharp nào.<br/>
+            ~ Dữ liệu có thể bị "nhồi" ở một sharp nào đó, tức là có sharp sẽ nhận được nhiều request trong khi có sharp "rảnh rỗi".<br/>
+            ~ Việc kết hợp các sharp lại với nhau cũng khó khăn, tốn kém.
+    <br/><br/>![Alt](images/2.jpg "shardingDB") <br/>
+
+5. Khái niệm về Load balancer và lí do NGINX dùng single thread:
+    * Load balancer:
+
+    * NGINX dùng single thread:
+
+
+
+
+
 
 <br/><br/>
 ### Nguồn tham khảo:
