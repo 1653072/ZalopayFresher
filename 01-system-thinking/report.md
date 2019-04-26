@@ -72,7 +72,7 @@
     * NGINX:
         - Cách hiểu: Web server truyền thống tạo một thread cho mỗi yêu cầu (request). Trong khi đó, NGINX lại là một web server mạnh mẽ với cách thức hoạt động khác, cụ thể là sử dụng kiến trúc hướng sự kiện (event-driven), bất đồng bộ (asynchronous) và cho phép mở rộng tới hàng trăm nghìn kết nối đồng thời đến phần cứng/máy chủ. Ngoài ra, NGINX còn cung cấp nhiều tính năng nổi bật như Load balancer, HTTP caching, reverse proxy,...
         - Kiến trúc: NGINX có tiến trình cha và các tiến trình con, mà tiến trình con gồm các tiến trình xử lý (worker processes) cũng như các tiến trình trợ giúp (Ở hình dưới, Cache Manager và Cache Loader là 2 thành phần hỗ trợ). <br/>
-            ~ Tiến trình cha (Master process): Có nhiệm vụ là đọc cấu hình, liên kết các cổng với nhau. Sau đó tạo ra một vài tiến trình con để xử lý công việc. <br/>
+            ~ Tiến trình cha Master process: Có nhiệm vụ là đọc cấu hình, liên kết các cổng với nhau. Sau đó tạo ra một vài tiến trình con để xử lý công việc. <br/>
             ~ Tiến trình hỗ trợ Cache Loader: Khi tiến trình con được khởi động thì Cache Loader sẽ chạy để tải "disk-based cache" vào bộ nhớ.<br/>
             ~ Tiến trình hỗ trợ Cache Manager: Chạy đình kỳ nhằm cắt bớt "entries" ít xài ở "disk cache" để duy trì kích cỡ cache đã được cấu hình.<br/>
             ~ Tiến trình xử lý Worker Processes: Làm mọi nhiệm vụ, xử lý mọi thứ, đảm bảo kết nối mạng được duy trì, đọc ghi lên đĩa cũng như giao tiếp với máy chủ. Mặc định thường có là 4 Worker Processes.
