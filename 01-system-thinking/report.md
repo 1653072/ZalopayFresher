@@ -87,7 +87,6 @@
 
 
 
-
 <br/><br/>
 ### Nguồn tham khảo:
 1. https://github.com/nesso99/system-design-beginner#relational-database-management-system-rdbms
