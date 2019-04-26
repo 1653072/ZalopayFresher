@@ -54,10 +54,34 @@
             ~ Việc kết hợp các sharp lại với nhau cũng khó khăn, tốn kém.
     <br/><br/>![Alt](images/2.jpg "shardingDB") <br/>
 
-5. Khái niệm về Load balancer và lí do NGINX dùng single thread:
-    * Load balancer:
+5. Khái niệm về Load balancer và NGINX:
+    * Load balancer (LB): 
+        - Cách hiểu: LB có nhiệm vụ phân tán các request đến các tài nguyên tính toán như các server hay CSDL mà chúng đang ổn định và ít "áp lực" hơn so với những server/CSDL còn lại. Về kết quả, LB đều trả về response từ tài nguyên tính toán đã nhận request đến client đã gửi request.
+        - Lợi ích: <br/>
+            ~ Tối đa hóa Uptime: LB giúp dàn trải lưu lượng truy cập và truy xuất giữa 2 hoặc nhiều máy chủ. Trường hợp máy chủ này lỗi thì LB sẽ phát hiện vấn đề và di chuyển lưu lượng truy cập đến các máy chủ online còn lại, nên dịch vụ cho người dùng sẽ không bị gián đoạn.<br/>
+            ~ Dễ dàng thêm server/CSDL (Mở rộng hệ thống Datacenter): LB tự động điều phối giữa các máy chủ cũ và mới để tiếp tục xử lý các dịch vụ cũng như giảm tải trọng cho các máy chủ cũ.<br/>
+            ~ Tăng cường bảo mật cho hệ thống Datacenter: Vì mọi yêu cầu hay trả lời đều thông qua LB nên ta có thể chặn người dùng giao tiếp trực tiếp với các máy chủ, ẩn đi các thông tin & cấu trúc mạng nội bộ, thậm chí có thể ngăn chặn các cuộc tấn công/truy cập trái phép.
+        - Nhược điểm: <br/>
+            ~ Mọi thứ đều đi qua LB, chỉ cần LB có vấn đề hoặc tài nguyên hoặc cấu hình của nó không tốt thì chẳng khác nào ta đang tự bóp cổ chính mình. <br/>
+            ~ LB xử lý sẽ khá nhiều về req từ client cũng như res từ máy chủ nên có thể thể sẽ tăng sự phức tạp xử lý ở đây. <br/>
+            ~ Dùng LB đơn lẻ thì không thể, nhưng nếu dùng nhiều LB thì dĩ nhiên sẽ tốt hơn, nhưng lại cấu hình phức tạp.
+        - Có nhiều độ đo phổ biến để LB định tuyến traffic, nhưng có thể nói phổ biến nhất là Layer 4 và Layer 7: <br/>
+            ~ Layer 4: Chuyển tiếp gói dữ liệu mạng đến và đi từ máy chủ upstream mà không kiểm tra nội dung của các gói dữ liệu. Có thể đưa ra quyết định định tuyến giới hạn bằng kiểm tra vài gói đầu tiên trong dòng TCP. Điểm trưng của Layer 4 là xử lý dữ liệu tìm thấy trong các giao thức tầng mang và vận chuyển (IP, TCP, FTP, UDP). <br/>
+            ~ Layer 7: Hoạt động ở các lớp ứng dụng cao cấp, xử lý trực tiếp với nội dung thực tế của mỗi thư. HTTP là giao thức chủ yếu của layer 7 cho việc điều phôi lưu lượng truy cập trang web trên Internet. Nó có thể quyết định cân bằng tải dựa trên nội dung của thư (URL, cookie, hoặc message,...). Sau đó tạo mới một kết nối TCP mới đến máy chủ upstream đã chọn (hoặc tái sử dụng nếu sẵn có bằng phương pháp HTTP keepalives) và tạo ra yêu cầu đến máy chủ.
+        <br/><br/>![Alt](images/3.png "Load Balancer") <br/>
+    * NGINX:
+        - Cách hiểu: Web server truyền thống tạo một thread cho mỗi yêu cầu (request). Trong khi đó, NGINX lại là một web server mạnh mẽ với cách thức hoạt động khác, cụ thể là sử dụng kiến trúc hướng sự kiện (event-driven), bất đồng bộ (asynchronous) và cho phép mở rộng tới hàng trăm nghìn kết nối đồng thời đến phần cứng/máy chủ. Ngoài ra, NGINX còn cung cấp nhiều tính năng nổi bật như Load balancer, HTTP caching, reverse proxy,...
+        - Kiến trúc: NGINX có tiến trình cha và các tiến trình con, mà tiến trình con gồm các tiến trình xử lý (worker processes) cũng như các tiến trình trợ giúp (Ở hình dưới, Cache Manager và Cache Loader là 2 thành phần hỗ trợ). <br/>
+            ~ Tiến trình cha (Master process): Có nhiệm vụ là đọc cấu hình, liên kết các cổng với nhau. Sau đó tạo ra một vài tiến trình con để xử lý công việc. <br/>
+            ~ Tiến trình hỗ trợ Cache Loader: Khi tiến trình con được khởi động thì Cache Loader sẽ chạy để tải "disk-based cache" vào bộ nhớ.<br/>
+            ~ Tiến trình hỗ trợ Cache Manager: Chạy đình kỳ nhằm cắt bớt "entries" ít xài ở "disk cache" để duy trì kích cỡ cache đã được cấu hình.<br/>
+            ~ Tiến trình xử lý Worker Processes: Làm mọi nhiệm vụ, xử lý mọi thứ, đảm bảo kết nối mạng được duy trì, đọc ghi lên đĩa cũng như giao tiếp với máy chủ. Mặc định thường có là 4 Worker Processes.
+        <br/><br/>![Alt](images/4.png "NGINX Master processes and Child processes") <br/>
+        - NGINX dùng đơn luồng: <br/>
+            ~ Khi máy chủ NGINX hoạt động, chỉ các tiến trình xử lý (Worker Process) là bận, mỗi tiến trình xử lý sẽ xử lý nhiều kết nối theo kiểu không chặn (non-blocking) nhằm giảm số lần chuyển đổi ngữ cảnh. Ngoài ra, mỗi tiến trình xử lý là một luồng đơn và chạy độc lập nhau, cứ lấy các kết nối mới & xử lý chúng. Do vậy, điều này giúp hạn chế (hoặc tránh) các vấn đề về blocking hoặc context switching (chuyển đổi ngữ cảnh) mà chúng thường làm cho hệ thống trì trệ. <br/>
+            ~ Ngược lại, cách tiếp cận process-per-connect hay thread-per-connection khi không nhận được sự kiện nào để xử lý, chúng sẽ bị block, đợi chờ và dẫn đến lãng phí tài nguyên hệ thống cho việc chuyển đổi ngữ cảnh. Suy ra, tiến trình xử lý (worker process) là luồng đơn, cứ "vào", nó xử lý, phản hồi và làm tiếp cái khác liên tục, không block và hạn chế nhất có thể việc chuyển đổi ngữ cảnh. <br/>
+            ~ Giải thích về chuyển đổi ngữ cảnh: Việc điều phối các process sẽ bao gồm, việc ngừng process hiện tại lại, lưu lại trạng thái của process này, lựa chọn process tiếp theo sẽ được chạy, load trạng thái của process tiếp theo đó lên, rồi chạy tiếp process tiếp theo. Qúa trình này được gọi là chuyển đổi ngữ cảnh (context switch). Trong khi đó, có biết bao thứ cần phải được xử lý, mà cứ chuyển đổi ngữ cảnh hoài thì... rất tệ. Bản chất tiến trình xử lý (worker process) sẽ không bao giờ block network traffic hoặc đợi respond từ client cả, cải thiện được tình huống này.
 
-    * NGINX dùng single thread:
 
 
 
@@ -72,4 +96,8 @@
 4. http://paginaswebpublicidad.com/questions/23227/su-khac-biet-giua-do-tre-bang-thong-va-thong-luong-la-gi
 5. https://www.manifold.co/blog/introduction-to-message-queuing-and-rabbitmq-6cb8e6e9b2
 6. https://blog.imaginea.com/scale-part-i-task-queues/
-
+7. https://viblo.asia/p/layer-4-vs-layer-7-load-balancing-on-linux-eBYjv40yvxpV
+8. https://longvan.net/load-balancing-can-bang-tai-la-gi.html
+9. https://dzone.com/articles/inside-nginx-how-we-designed
+10. https://www.hostinger.vn/huong-dan/nginx-la-gi-no-hoat-dong-nhu-the-nao/
+11. https://kipalog.com/posts/He-dieu-hanh--Process
