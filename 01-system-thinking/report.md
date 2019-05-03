@@ -82,6 +82,19 @@
             ~ Ngược lại, cách tiếp cận process-per-connect hay thread-per-connection khi không nhận được sự kiện nào để xử lý, chúng sẽ bị block, đợi chờ và dẫn đến lãng phí tài nguyên hệ thống cho việc chuyển đổi ngữ cảnh. Suy ra, tiến trình xử lý (worker process) là luồng đơn, cứ "vào", nó xử lý, phản hồi và làm tiếp cái khác liên tục, không block và hạn chế nhất có thể việc chuyển đổi ngữ cảnh. <br/>
             ~ Giải thích về chuyển đổi ngữ cảnh: Việc điều phối các process sẽ bao gồm, việc ngừng process hiện tại lại, lưu lại trạng thái của process này, lựa chọn process tiếp theo sẽ được chạy, load trạng thái của process tiếp theo đó lên, rồi chạy tiếp process tiếp theo. Qúa trình này được gọi là chuyển đổi ngữ cảnh (context switch). Trong khi đó, có biết bao thứ cần phải được xử lý, mà cứ chuyển đổi ngữ cảnh hoài thì... rất tệ. Bản chất tiến trình xử lý (worker process) sẽ không bao giờ block network traffic hoặc đợi respond từ client cả, cải thiện được tình huống này.
 
+6. Vai trò của cache, các thuật toán apply cho cache (LRU, LFU):
+    * Vai trò của cache: Kích thước lưu trữ be bé, thường dùng để lưu trữ những dữ liệu phổ biến được truy xuất nhiều. Từ đó, bộ điều phối sẽ truy cập vào cache đầu tiên để kiểm tra dữ liệu có tồn tại hay không và lấy ra từ nó (Nếu có) chứ không cần phải tương tác quá nhiều vào CSDL của server. Suy ra, cache giúp cải thiện thời gian tải trang, thời gian thực thi, giảm thiểu việc tương tác với CSDL của server và giảm việc mất cân bằng phân phối khi những dữ liệu phổ biến nằm lệch về 1 bên tại server.
+    * Vai trò của các thuật toán apply cho cache:
+        - LRU (Least recently used): Lưu nhiều dữ liệu thì cache sẽ không đủ chứa cũng như cồng kềnh, cho nên LRU sẽ loại bỏ các mục ít dùng (nằm cuối cache) và giữ lại các mục thường xuyên được truy xuất gần đây nhất (đầu cache) ở trên RAM.
+        - LFU (Least frequently used): Mục tiêu tương tự như LRU, nhưng phương pháp thì khác. Mục nào trong cache có SỐ LẦN được truy xuất ít nhất sẽ được xóa đi đầu tiên.
+    <br/><br/>![Alt](images/5.png "Cache image") <br/>
+
+
+
+
+
+
+
 
 
 
@@ -100,3 +113,5 @@
 9. https://dzone.com/articles/inside-nginx-how-we-designed
 10. https://www.hostinger.vn/huong-dan/nginx-la-gi-no-hoat-dong-nhu-the-nao/
 11. https://kipalog.com/posts/He-dieu-hanh--Process
+12. https://tech.vccloud.vn/cache-bo-nho-dem-la-gi-vai-tro-va-phan-loai-cache-20180618111100714.htm
+
