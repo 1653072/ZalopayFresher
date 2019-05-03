@@ -25,7 +25,7 @@
     * MQ: Dùng cơ chế truyền message (message passing) khi nào message tới thì nó nhận, giữ và xử lý.
     * TQ: Dùng theo cơ chế quản lý Task - có nghĩa là khi có yêu cầu đến, thì nó đẩy vào Task Queue nhưng không xử lý liền, mà xác định một thời gian, nó tạo plan để sắp xếp các task nào cùng nghiệp vụ hoặc có tính chất tuần tự nhau, hoặc giống nhau thì mới chạy theo lịch thực thi này. TQ cũng nhận, giữ, xử lý và chuyển đi các kết quả, song là phù hợp với các công việc đòi hỏi tính toán nặng.
 
-4. Các phương pháp để scale database (MySQL):
+4. Các phương pháp để scale database (MySQL)?
     * Master-slave replication: Server master phục vụ việc đọc và ghi, nhân bản các dữ liệu được ghi ra slave (nơi dữ liệu chỉ đọc), và slave có thể nhân bản ra các slave khác. Nếu master sập, hệ thống sẽ ở trạng thái chỉ đọc cho đến khi một slave nào đó được đưa lên làm master hoặc master được tu sửa.
         - Ưu: Master sập thì người dùng vẫn xem được dữ liệu.
         - Nhược: Cần cơ chế để đưa slave lên master.
@@ -54,7 +54,7 @@
             ~ Việc kết hợp các sharp lại với nhau cũng khó khăn, tốn kém.
     <br/><br/>![Alt](images/2.jpg "shardingDB") <br/>
 
-5. Khái niệm về Load balancer và NGINX:
+5. Khái niệm về Load balancer và NGINX?
     * Load balancer (LB): 
         - Cách hiểu: LB có nhiệm vụ phân tán các request đến các tài nguyên tính toán như các server hay CSDL mà chúng đang ổn định và ít "áp lực" hơn so với những server/CSDL còn lại. Về kết quả, LB đều trả về response từ tài nguyên tính toán đã nhận request đến client đã gửi request.
         - Lợi ích: <br/>
@@ -82,17 +82,19 @@
             ~ Ngược lại, cách tiếp cận process-per-connect hay thread-per-connection khi không nhận được sự kiện nào để xử lý, chúng sẽ bị block, đợi chờ và dẫn đến lãng phí tài nguyên hệ thống cho việc chuyển đổi ngữ cảnh. Suy ra, tiến trình xử lý (worker process) là luồng đơn, cứ "vào", nó xử lý, phản hồi và làm tiếp cái khác liên tục, không block và hạn chế nhất có thể việc chuyển đổi ngữ cảnh. <br/>
             ~ Giải thích về chuyển đổi ngữ cảnh: Việc điều phối các process sẽ bao gồm, việc ngừng process hiện tại lại, lưu lại trạng thái của process này, lựa chọn process tiếp theo sẽ được chạy, load trạng thái của process tiếp theo đó lên, rồi chạy tiếp process tiếp theo. Qúa trình này được gọi là chuyển đổi ngữ cảnh (context switch). Trong khi đó, có biết bao thứ cần phải được xử lý, mà cứ chuyển đổi ngữ cảnh hoài thì... rất tệ. Bản chất tiến trình xử lý (worker process) sẽ không bao giờ block network traffic hoặc đợi respond từ client cả, cải thiện được tình huống này.
 
-6. Vai trò của cache, các thuật toán apply cho cache (LRU, LFU):
+6. Vai trò của cache, các thuật toán apply cho cache (LRU, LFU)?
     * Vai trò của cache: Kích thước lưu trữ be bé, thường dùng để lưu trữ những dữ liệu phổ biến được truy xuất nhiều. Từ đó, bộ điều phối sẽ truy cập vào cache đầu tiên để kiểm tra dữ liệu có tồn tại hay không và lấy ra từ nó (Nếu có) chứ không cần phải tương tác quá nhiều vào CSDL của server. Suy ra, cache giúp cải thiện thời gian tải trang, thời gian thực thi, giảm thiểu việc tương tác với CSDL của server và giảm việc mất cân bằng phân phối khi những dữ liệu phổ biến nằm lệch về 1 bên tại server.
     * Vai trò của các thuật toán apply cho cache:
         - LRU (Least recently used): Lưu nhiều dữ liệu thì cache sẽ không đủ chứa cũng như cồng kềnh, cho nên LRU sẽ loại bỏ các mục ít dùng (nằm cuối cache) và giữ lại các mục thường xuyên được truy xuất gần đây nhất (đầu cache) ở trên RAM.
         - LFU (Least frequently used): Mục tiêu tương tự như LRU, nhưng phương pháp thì khác. Mục nào trong cache có SỐ LẦN được truy xuất ít nhất sẽ được xóa đi đầu tiên.
     <br/><br/>![Alt](images/5.png "Cache image") <br/>
 
-
-
-
-
+7. Redis???
+    * Khái niệm cơ bản: Là hệ thống lưu trữ dữ liệu dưới hình thức key-value ở trong RAM chính. RAM chính có dung lượng không lớn và đắt đỏ nên rất khó để lưu những dữ liệu có kích cỡ lớn. Ngược lại, với những dữ liệu be bé thường được truy cập, sửa đổi và thêm thì tốc độ lúc này lại rất nhanh & hiệu quả.
+    * Kiến trúc của Redis: Là kiến trúc thực thể đơn nên sẽ chứa 2 quy trình chính là "Redis client" (RC) và "Redis Server" (RS). RC và RS có thể trên cùng một máy tính hoặc 2 máy tính khác nhau. RS nhận dữ liệu từ RC, sau đó lưu trữ dữ liệu trên RAM cũng như phục vụ dữ liệu lại cho RC, mà vì lưu trữ trên RAM cho nên những dữ liệu này dễ bị mất mát nếu server hoặc máy tính được khởi động lại. Vì vậy, Redis cung cấp cơ chế RDB, AOF và SAVE Command để lưu trữ lại kho dữ liệu ấy.
+    <br/><br/>![Alt](images/6.jpg "Redis single instance architecture image") <br/>
+    * Cấu trúc lưu trữ của Redis gọn gàn trong 5 kiểu: String, Hash, List, Set và Sorted Set. [Xem thêm](https://viblo.asia/p/tim-hieu-redis-databace-model-Ljy5Vepolra)
+    * Khi nào dùng cấu trúc hyperloglog: HyperLogLog (HLL) dựa trên cấu trúc dữ liệu xác suất được sử dụng để ước lượng lực lượng của một tập hợp (cardinality, hay cách hiểu khác là số phần tử không trùng trong một tập hợp). Ví dụ tập A = {2, 2, 3, 3, 4, 6} có 6 phần tử nhưng số phần tử không trùng hoặc lực lượng của A chỉ bằng 4 mà thôi, gồm {2, 3, 4, 6}; tương tự cho các loại/kiểu dữ liệu khác. Chúng ta có thể sử dụng cấu trúc này để đếm các phần tử unique trong một tập dữ liệu mà chỉ sử dụng một phần nhỏ bộ nhớ. Chẳng hạn, một bài viết có 1 triệu view, ta phải lưu các unique user ID để đánh dấu là các user đó đã xem bài viết đó rồi, mỗi user ID chẳng hạn 8Bytes thì ta sẽ tiêu tốn tầm 8MB để lưu trữ chỉ để đếm lượng xem unique. Trong khi đó, nhờ HLL, ta có thể ước lượng được lượng người xem unique dựa trên xác suất.
 
 
 
@@ -114,4 +116,9 @@
 10. https://www.hostinger.vn/huong-dan/nginx-la-gi-no-hoat-dong-nhu-the-nao/
 11. https://kipalog.com/posts/He-dieu-hanh--Process
 12. https://tech.vccloud.vn/cache-bo-nho-dem-la-gi-vai-tro-va-phan-loai-cache-20180618111100714.htm
+13. http://qnimate.com/overview-of-redis-architecture/#prettyPhoto/1/
+14. https://viblo.asia/p/tim-hieu-redis-databace-model-Ljy5Vepolra
+15. https://redislabs.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/
+
+
 
