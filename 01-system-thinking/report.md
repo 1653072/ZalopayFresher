@@ -119,6 +119,8 @@
 13. http://qnimate.com/overview-of-redis-architecture/#prettyPhoto/1/
 14. https://viblo.asia/p/tim-hieu-redis-databace-model-Ljy5Vepolra
 15. https://redislabs.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/
+16. https://viblo.asia/p/redis-co-ban-57rVRq5OR4bP
+
 
 
 
