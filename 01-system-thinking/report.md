@@ -9,8 +9,8 @@
 
 ### 1. Định lý CAP và khái niệm eventual consistency là gì?
 
-* CAP là viết tắt của 3 từ: Consistency, Availability và Partition Tolerance.
-* Consistency (Tính nhất quán): Các sự kiện đọc đều nhận được kết quả mới nhất của sự kiện ghi gần nhất.
+* <code>CAP là viết tắt của 3 từ:</code> Consistency, Availability và Partition Tolerance.
+  * Consistency (Tính nhất quán): Các sự kiện đọc đều nhận được kết quả mới nhất của sự kiện ghi gần nhất.
   * Availability (Tính sẵn sàng): Mọi request đều nhận được response (không nhất thiết phải đảm bảo dữ liệu nhận được là phiên bản mới nhất).
   * Partition Tolerance (Tính chịu đựng phân mảnh): Trạng thái hoạt động của hệ thống khi đường mạng giữa các node bị đứt.
   * Ví dụ trường hợp có CP nhưng không có A: Website đọc báo đứt kết nối tới database nên những gì người dùng thấy được trên website ngay tại thời điểm đó đều là dữ liệu đã được cache trong RAM. Đồng thời, một vài node ở cuối mạng đã bị mất hoặc bị lỗi nên sẽ góp phần xảy ra tình huống này.
