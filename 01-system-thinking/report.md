@@ -5,6 +5,9 @@
 * Họ tên: Trần Kiến Quốc (QuocTk)
 * Vị trí: Software Development Fresher
 
+## Mục lục
+<a href="#1">1. Định lý CAP và khái niệm eventual consistency</a>
+
 ## Nội dung báo cáo
 
 ### 1. Định lý CAP và khái niệm eventual consistency
@@ -34,6 +37,7 @@
   * Khoảng thời gian cần thiết để lượng nước từ đầu này sang đầu kia hoàn tất gọi là Độ trễ.
   <br/><img src="images/1.jpg" alt="Example throughput & latency" title="Example throughput & latency" style="margin-top: 10px; border: 5px solid orange;" width="500px"/>
 
+<span id="1"></span>
 ### 3. Task Queue khác gì Message Queue
 
 * **MQ:** Dùng cơ chế truyền message (message passing) khi nào message tới thì nó nhận, giữ và xử lý.
