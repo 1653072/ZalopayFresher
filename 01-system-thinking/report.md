@@ -6,10 +6,22 @@
 * Vị trí: Software Development Fresher
 
 ## Mục lục
-<a href="#1">1. Định lý CAP và khái niệm eventual consistency</a>
+
+<ol>
+    <li><a href="#1">Định lý CAP và khái niệm eventual consistency</a></li>
+    <ul>
+        <li></li>
+    </ul>
+    <li><a href="#2">Khái niệm throughput và latency</a></li>
+    <li><a href="#3">Task Queue khác gì Message Queue</a></li>
+    <li><a href="#4">Các phương pháp để scale database (MySQL)</a></li>
+    <li><a href="#5">Khái niệm về Load balancer và NGINX</a></li>
+    <li><a href="#6">Vai trò của cache, các thuật toán apply cho cache (LRU, LFU)</a></li>
+</ol>
 
 ## Nội dung báo cáo
 
+<span id="1"></span>
 ### 1. Định lý CAP và khái niệm eventual consistency
 
 * **CAP là viết tắt của 3 từ:** Consistency, Availability và Partition Tolerance.
@@ -27,6 +39,7 @@
     * Ngọc muốn nhận được nội dung mới (bài tập Q đã cập nhật) lẫn kết quả bài tập tuần kế tiếp thì Ngọc phải trả USB cho Q vào tối chủ nhật. Sau đó, Ngọc phải đợi đến tối thứ 3 tuần tiếp theo để nhận lại USB (USB lần này gồm bài tập Q đã cập nhật và bài tập mới).
   * **Kết luận phương pháp:** Độ trễ để nhận được kết mới nhất cũng không quá cao, kết quả nhận được có thể không phải là mới nhất.
 
+<span id="2"></span>
 ### 2. Khái niệm throughput và latency
 
 * **Throughput (Thông lượng):** Lượng hành động đưa ra (hoặc kết quả nhận được) trong một đơn vị thời gian.
@@ -37,13 +50,14 @@
   * Khoảng thời gian cần thiết để lượng nước từ đầu này sang đầu kia hoàn tất gọi là Độ trễ.
   <br/><img src="images/1.jpg" alt="Example throughput & latency" title="Example throughput & latency" style="margin-top: 10px; border: 5px solid orange;" width="500px"/>
 
-<span id="1"></span>
+<span id="3"></span>
 ### 3. Task Queue khác gì Message Queue
 
 * **MQ:** Dùng cơ chế truyền message (message passing) khi nào message tới thì nó nhận, giữ và xử lý.
 
 * **TQ:** Dùng theo cơ chế quản lý Task. Khi có yêu cầu đến thì nó đẩy vào Task Queue nhưng không xử lý liền, mà xác định một thời gian nhằm tạo plan để sắp xếp các task nào cùng nghiệp vụ hoặc có tính chất tuần tự nhau (hoặc giống nhau) rồi mới chạy theo lịch thực thi này. TQ cũng nhận, giữ, xử lý và chuyển đi các kết quả, song song là phù hợp với các công việc đòi hỏi tính toán nặng khó xử lý ngay lập tức.
 
+<span id="4"></span>
 ### 4. Các phương pháp để scale database (MySQL)
 
 * **Master-slave replication:** Server master phục vụ việc đọc và ghi, nhân bản các dữ liệu được ghi ra slave (nơi dữ liệu chỉ đọc) và slave cũng có thể nhân bản ra các slave khác. Nếu master sập, hệ thống sẽ ở trạng thái chỉ đọc cho đến khi một slave nào đó được đưa lên làm master hoặc master được tu sửa.
@@ -77,6 +91,7 @@
     * Việc kết hợp các sharp lại với nhau cũng tương đối khó khăn, tốn kém.
     <br/><img src="images/2.jpg" alt="shardingDB" title="shardingDB" style="margin-top: 10px; border: 5px solid orange;" width="500px"/>
 
+<span id="5"></span>
 ### 5. Khái niệm về Load balancer và NGINX
 
 * **Load balancer (LB):**
@@ -107,6 +122,7 @@
     * Ngược lại, cách tiếp cận process-per-connect hay thread-per-connection khi không nhận được sự kiện nào để xử lý, chúng sẽ bị block, đợi chờ và dẫn đến lãng phí tài nguyên hệ thống cho việc chuyển đổi ngữ cảnh. Suy ra, tiến trình xử lý (worker process) là luồng đơn, cứ "vào", nó xử lý, phản hồi và làm tiếp cái khác liên tục, không block và hạn chế nhất có thể việc chuyển đổi ngữ cảnh.
     * Giải thích về chuyển đổi ngữ cảnh: Việc điều phối các process sẽ bao gồm, việc ngừng process hiện tại lại, lưu lại trạng thái của process này, lựa chọn process tiếp theo sẽ được chạy, load trạng thái của process tiếp theo đó lên, rồi chạy tiếp process tiếp theo. Qúa trình này được gọi là chuyển đổi ngữ cảnh (context switch). Trong khi đó, có biết bao thứ cần phải được xử lý, mà cứ chuyển đổi ngữ cảnh hoài thì... rất tệ. Bản chất tiến trình xử lý (worker process) sẽ không bao giờ block network traffic hoặc đợi respond từ client cả, cải thiện được tình huống này.
 
+<span id="6"></span>
 ### 6. Vai trò của cache, các thuật toán apply cho cache (LRU, LFU)
 
 * **Vai trò của cache:** Kích thước lưu trữ be bé, thường dùng để lưu trữ những dữ liệu phổ biến được truy xuất nhiều. Từ đó, bộ điều phối sẽ truy cập vào cache đầu tiên để kiểm tra dữ liệu có tồn tại hay không và lấy ra từ nó (Nếu có), chứ không cần phải vào/ra CSDL quá nhiều. Suy ra, cache giúp cải thiện thời gian tải trang, thời gian thực thi, giảm thiểu việc tương tác với CSDL của server và giảm việc mất cân bằng phân phối khi những dữ liệu phổ biến nằm lệch về 1 bên CSDL tại server.
