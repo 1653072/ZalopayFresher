@@ -9,7 +9,7 @@
 
 <ol type="A">
   <a href="A"><li>NỘI DUNG CƠ BẢN</li></a>
-  <ol type="1">
+  <ol type="I">
     <a href="#1"><li>Định lý CAP và khái niệm eventual consistency</li></a>
       <dd><a href="#1.1">1.1 CAP</a></dd>
       <dd><a href="#1.2">1.2 Eventual consistency</a></dd>
