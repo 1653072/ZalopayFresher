@@ -147,3 +147,7 @@
 15. https://redislabs.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/
 16. https://viblo.asia/p/redis-co-ban-57rVRq5OR4bP
 17. https://viblo.asia/p/tim-hieu-redis-databace-model-Ljy5Vepolra
+18. https://en.wikipedia.org/wiki/Cardinality
+19. https://en.wikipedia.org/wiki/HyperLogLog
+20. https://redislabs.com/redis-best-practices/counting/hyperloglog/
+21. https://odino.org/my-favorite-data-structure-hyperloglog/
