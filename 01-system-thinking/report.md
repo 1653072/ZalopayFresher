@@ -11,8 +11,8 @@
   <a href="A"><li>NỘI DUNG CƠ BẢN</li></a>
   <ul>
     <a href="#1"><li>Định lý CAP và khái niệm eventual consistency</li></a>
-      <dd><a href="#1.1">1.1 CAP</a></dd>
-      <dd><a href="#1.2">1.2 Eventual consistency</a></dd>
+      <ol><a href="#1.1">1.1 CAP</a></ol>
+      <ol><a href="#1.2">1.2 Eventual consistency</a></ol>
     <a href="#2"><li>Khái niệm throughput và latency</li></a>
       <dd><a href="#2.1">2.1 Throughput</a></dd>
       <dd><a href="#2.2">2.2 Latency</a></dd>
