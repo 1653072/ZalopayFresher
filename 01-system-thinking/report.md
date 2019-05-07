@@ -9,7 +9,7 @@
 
 <ol type="A">
   <a href="A"><li>NỘI DUNG CƠ BẢN</li></a>
-  <ul>
+  <ol>
     <a href="#1"><li>Định lý CAP và khái niệm eventual consistency</li></a>
       <ol><a href="#1.1">1.1 CAP</a></ol>
       <ol><a href="#1.2">1.2 Eventual consistency</a></ol>
@@ -35,7 +35,7 @@
       <dd><a href="#7.2">7.2 Kiến trúc</a></dd>
       <dd><a href="#7.3">7.3 Cấu trúc lưu trữ thường dùng của Redis</a></dd>
       <dd><a href="#7.4">7.4 Khi nào dùng cấu trúc hyperloglog</a></dd>
-  </ul>
+  </ol>
   <a href="B"><li>NGUỒN THAM KHẢO</li></a>
 </ol>
 
