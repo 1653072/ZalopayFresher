@@ -7,39 +7,56 @@
 
 ## Mục lục
 
-<ul type="A">
-  <a href="A"><li>NỘI DUNG BÁO CÁO</li></a>
-  <ol>
-    <a href="#1"><li>Định lý CAP và khái niệm eventual consistency</li></a>
-      <dd><a href="#1.1">1.1 CAP</a></dd>
-      <dd><a href="#1.2">1.2 Eventual consistency</a></dd>
-    <a href="#2"><li>Khái niệm throughput và latency</li></a>
-      <dd><a href="#2.1">2.1 Throughput</a></dd>
-      <dd><a href="#2.2">2.2 Latency</a></dd>
-    <a href="#3"><li>Task Queue khác gì Message Queue</li></a>
-      <dd><a href="#3.1">3.1 Message Queue</a></dd>
-      <dd><a href="#3.2">3.2 Task Queue</a></dd>
-    <a href="#4"><li>Các phương pháp để scale database (MySQL)</li></a>
-      <dd><a href="#4.1">4.1 Master-Slave Replication</a></dd>
-      <dd><a href="#4.2">4.2 Master-Master Replication</a></dd>
-      <dd><a href="#4.3">4.3 Federation</a></dd>
-      <dd><a href="#4.4">4.4 Sharding</a></dd>
-    <a href="#5"><li>Khái niệm về Load balancer và NGINX</li></a>
-      <dd><a href="#5.1">5.1 Load balancer</a></dd>
-      <dd><a href="#5.2">5.2 NGINX</a></dd>
-    <a href="#6"><li>Vai trò của cache, các thuật toán apply cho cache (LRU, LFU)</li></a>
-      <dd><a href="#6.1">6.1 Vai trò của cache</a></dd>
-      <dd><a href="#6.2">6.2 Các thuật toán dùng cho cache</a></dd>
-    <a href="#7"><li>Thông tin cơ bản về Redis</li></a>
-      <dd><a href="#7.1">7.1 Khái niệm cơ bản</a></dd>
-      <dd><a href="#7.2">7.2 Kiến trúc</a></dd>
-      <dd><a href="#7.3">7.3 Cấu trúc lưu trữ thường dùng của Redis</a></dd>
-      <dd><a href="#7.4">7.4 Khi nào dùng cấu trúc hyperloglog</a></dd>
-  </ol>
-  <a href="B"><li>NGUỒN THAM KHẢO</li></a>
-</ul>
+- [SYSTEM THINKING](#system-thinking)
+  - [Người thực hiện](#ng%C6%B0%E1%BB%9Di-th%E1%BB%B1c-hi%E1%BB%87n)
+  - [Mục lục](#m%E1%BB%A5c-l%E1%BB%A5c)
+  - [Nội dung báo cáo](#n%E1%BB%99i-dung-b%C3%A1o-c%C3%A1o)
+    - [1. Định lý CAP và khái niệm eventual consistency](#1-%C4%91%E1%BB%8Bnh-l%C3%BD-cap-v%C3%A0-kh%C3%A1i-ni%E1%BB%87m-eventual-consistency)
+    - [2. Khái niệm throughput và latency](#2-kh%C3%A1i-ni%E1%BB%87m-throughput-v%C3%A0-latency)
+    - [3. Task Queue khác gì Message Queue](#3-task-queue-kh%C3%A1c-g%C3%AC-message-queue)
+    - [4. Các phương pháp để scale database (MySQL)](#4-c%C3%A1c-ph%C6%B0%C6%A1ng-ph%C3%A1p-%C4%91%E1%BB%83-scale-database-mysql)
+    - [5. Khái niệm về Load balancer và NGINX](#5-kh%C3%A1i-ni%E1%BB%87m-v%E1%BB%81-load-balancer-v%C3%A0-nginx)
+    - [6. Vai trò của cache, các thuật toán apply cho cache (LRU, LFU)](#6-vai-tr%C3%B2-c%E1%BB%A7a-cache-c%C3%A1c-thu%E1%BA%ADt-to%C3%A1n-apply-cho-cache-lru-lfu)
+    - [7. Thông tin cơ bản của Redis](#7-th%C3%B4ng-tin-c%C6%A1-b%E1%BA%A3n-c%E1%BB%A7a-redis)
+  - [Nguồn tham khảo](#ngu%E1%BB%93n-tham-kh%E1%BA%A3o)
 
-<span id="A"></span>
+- [NỘI DUNG BÁO CÁO](#A)
+
+
+<ol type="A">
+  <li><a href="#A">NỘI DUNG BÁO CÁO</a>
+    <ol type="1">
+      <a href="#1"><li>Định lý CAP và khái niệm eventual consistency</li></a>
+        <dd><a href="#1.1">1.1 CAP</a></dd>
+        <dd><a href="#1.2">1.2 Eventual consistency</a></dd>
+      <a href="#2"><li>Khái niệm throughput và latency</li></a>
+        <dd><a href="#2.1">2.1 Throughput</a></dd>
+        <dd><a href="#2.2">2.2 Latency</a></dd>
+      <a href="#3"><li>Task Queue khác gì Message Queue</li></a>
+        <dd><a href="#3.1">3.1 Message Queue</a></dd>
+        <dd><a href="#3.2">3.2 Task Queue</a></dd>
+      <a href="#4"><li>Các phương pháp để scale database (MySQL)</li></a>
+        <dd><a href="#4.1">4.1 Master-Slave Replication</a></dd>
+        <dd><a href="#4.2">4.2 Master-Master Replication</a></dd>
+        <dd><a href="#4.3">4.3 Federation</a></dd>
+        <dd><a href="#4.4">4.4 Sharding</a></dd>
+      <a href="#5"><li>Khái niệm về Load balancer và NGINX</li></a>
+        <dd><a href="#5.1">5.1 Load balancer</a></dd>
+        <dd><a href="#5.2">5.2 NGINX</a></dd>
+      <a href="#6"><li>Vai trò của cache, các thuật toán apply cho cache (LRU, LFU)</li></a>
+        <dd><a href="#6.1">6.1 Vai trò của cache</a></dd>
+        <dd><a href="#6.2">6.2 Các thuật toán dùng cho cache</a></dd>
+      <a href="#7"><li>Thông tin cơ bản về Redis</li></a>
+        <dd><a href="#7.1">7.1 Khái niệm cơ bản</a></dd>
+        <dd><a href="#7.2">7.2 Kiến trúc</a></dd>
+        <dd><a href="#7.3">7.3 Cấu trúc lưu trữ thường dùng của Redis</a></dd>
+        <dd><a href="#7.4">7.4 Khi nào dùng cấu trúc hyperloglog</a></dd>
+    </ol>
+  </li>
+  <li><a href="#B">NGUỒN THAM KHẢO</a></li>
+</ol>
+
+<a name="A"></a>
 ## Nội dung báo cáo
 
 <span id="1"></span>
