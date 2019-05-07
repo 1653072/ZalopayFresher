@@ -7,12 +7,12 @@
 
 ## Mục lục
 
-<ol type="A">
-  <a href="A"><li>NỘI DUNG CƠ BẢN</li></a>
+<ul type="A">
+  <a href="A"><li>NỘI DUNG BÁO CÁO</li></a>
   <ol>
     <a href="#1"><li>Định lý CAP và khái niệm eventual consistency</li></a>
-      <ol><a href="#1.1">1.1 CAP</a></ol>
-      <ol><a href="#1.2">1.2 Eventual consistency</a></ol>
+      <dd><a href="#1.1">1.1 CAP</a></dd>
+      <dd><a href="#1.2">1.2 Eventual consistency</a></dd>
     <a href="#2"><li>Khái niệm throughput và latency</li></a>
       <dd><a href="#2.1">2.1 Throughput</a></dd>
       <dd><a href="#2.2">2.2 Latency</a></dd>
@@ -37,7 +37,7 @@
       <dd><a href="#7.4">7.4 Khi nào dùng cấu trúc hyperloglog</a></dd>
   </ol>
   <a href="B"><li>NGUỒN THAM KHẢO</li></a>
-</ol>
+</ul>
 
 <span id="A"></span>
 ## Nội dung báo cáo
