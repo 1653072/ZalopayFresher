@@ -61,16 +61,16 @@ curl -I localhost/../static/images/1.jpg
 
 Để kiểm tra cache, ta tắt terminal (ngưng chạy chương trình), sau đó reload (F5) lại trang localhost. Nếu nội dung được render lên nghĩa là caching thành công.
 
+Kiểm tra status của nginx (nginx đang active hay stop cũng như các thông tin khác ở mục CGroup)
+```
+systemctl status nginx
+```
+
 Dừng nginx:
 ```
 sudo service nginx stop
 Hoặc
 systemctl stop nginx
-```
-
-Kiểm tra status của nginx (nginx đang active hay stop cũng như các thông tin khác ở mục CGroup)
-```
-systemctl status nginx
 ```
 
 **Một số lưu ý:**
