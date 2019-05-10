@@ -35,6 +35,7 @@ Chạy lần lượt các lệnh bên dưới ở mỗi Terminal để kiểm tr
 * Terminal 1 có port 3000
 * Terminal 2 có port 3001
 * Terminal 3 có port 3002
+  
 ```
 export FLASK_APP=program
 flask run --port 3000
