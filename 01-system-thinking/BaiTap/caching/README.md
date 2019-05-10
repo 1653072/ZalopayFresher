@@ -46,11 +46,11 @@ Hoặc gõ lệnh để kiểm tra.
 
 Nếu nhận được X-GG-Cache-Status là HIT, nghĩa là cache đã được khởi chạy & lưu lại thông tin. MISS là tìm không thấy thông tin trong cache, nếu nhận giá trị MISS thì reload trang & thử lại.
 ```
-Kiểm tra status Cache WEB
-curl -I localhost
+Kiểm tra status Cache WEB:
+    curl -I localhost
 
-Kiểm tra status Cache IMAGE
-curl -I localhost/../static/images/1.jpg
+Kiểm tra status Cache IMAGE:
+    curl -I localhost/../static/images/1.jpg
 ```
 
 ![Caching-image-01](images/1.jpg)
