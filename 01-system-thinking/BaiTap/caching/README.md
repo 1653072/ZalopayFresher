@@ -44,7 +44,7 @@ F12 website và bấm "Ctrl+Shift+R" để kiểm tra giá trị header X-GG-Cac
 
 Hoặc gõ lệnh để kiểm tra. 
 
-Nếu nhận được X-GG-Cache-Status là HIT, nghĩa là đã cache đã được khởi chạy & lưu lại thông tin. MISS là tìm không thấy thông tin trong cache, nếu nhận giá trị MISS thì reload trang & thử lại.
+Nếu nhận được X-GG-Cache-Status là HIT, nghĩa là cache đã được khởi chạy & lưu lại thông tin. MISS là tìm không thấy thông tin trong cache, nếu nhận giá trị MISS thì reload trang & thử lại.
 ```
 Kiểm tra status Cache WEB
 curl -I localhost
@@ -75,7 +75,7 @@ systemctl stop nginx
 
 **Một số lưu ý:**
 1. Ứng dụng sử dụng ngôn ngữ python, thư viện flask và nginx, nên bạn cần phải cài đặt các gói tương ứng cho hệ thống của mình (Google có hướng dẫn cách cài đặt)
-2. Các thông tin chi tiết về proxy_cache (Công dụng, khái niệm, cách sử dụng) xem ![tại đây](https://www.nginx.com/blog/nginx-caching-guide/).
+2. Các thông tin chi tiết về proxy_cache (Công dụng, khái niệm, cách sử dụng) xem [tại đây](https://www.nginx.com/blog/nginx-caching-guide/).
     * Đối với proxy_cache_path:
       * Hãy chọn thư mục mà bạn muốn lưu trữ các nội dung sau khi caching.
       * levels=1:2, nếu không set cái này, nginx sẽ đặt toàn file vào trong một thư mục thay vì chia ra các thư mục khác nhau. Nếu lượng file quá lớn trong cùng 1 thư mục sẽ gây ra việc truy cập chậm.
