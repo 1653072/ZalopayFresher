@@ -45,6 +45,7 @@ redis-cli --cluster create 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.
 ```
 
 Sau khi tạo cluster thành công, bạn sẽ nhận thông điệp ***[OK] All 16384 slots covered***
+
 ![Node_Config_Image](images/1.jpg)
 
 Mở một terminal mới (terminal thứ 8) để test cùng với terminal thứ 7
@@ -60,9 +61,11 @@ TERMINAL THỨ 8:
     get loop
 ```
 
-Để thoát redis-cli, ấn Ctrl+C
-
 ![Result_Image](images/2.jpg)
+
+(Ảnh ví dụ "set foo bar" và "get foo")
+
+Để thoát redis-cli và redis-server đang chạy, ấn Ctrl+C
 
 <br/><br/><br/>
 
