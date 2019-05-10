@@ -1,14 +1,4 @@
-# REDIS 3 NODES
-
-
-
-
-
-
-
-
-
-# REDIS PUB/SUB
+# REDIS - CONFIG CLUSTER REDIS 3 NODES
 
 Cài đặt Redis
 ```
@@ -18,9 +8,43 @@ $ cd redis-5.0.4
 $ make
 ```
 
-Dịch chuyển đến thư mục create-cluster
+Kiểm tra version hiện tại của Redis
 ```
-cd utils/create-cluster/
+redis-server -v
+redis-cli -v
+```
+
+Nếu version của Redis server và client chưa phải là 5.0.4 thì cập nhật version
+```
+sudo mv src/redis-server /usr/local/bin
+sudo mv src/redis-cli /usr/local/bin
+```
+
+Sao chép thư mục redis-3-nodes vào thư mục redis-5.0.4. Mở 6 tab terminal và mỗi terminal sẽ chạy một nodes.conf 
+```
+redis-server redis-3-nodes/7001/7001.conf
+redis-server redis-3-nodes/7002/7002.conf
+...
+...
+redis-server redis-3-nodes/7006/7006.conf
+```
+
+Mở một terminal mới và thực hiện lệnh tạo cluster
+```
+redis-cli --cluster create 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006 --cluster-replicas 1
+```
+
+Sau khi tạo cluster thành công, bạn sẽ nhận thông điệp ***[OK] All 16384 slots covered***
+[]
+
+
+
+
+# REDIS - CHƯƠNG TRÌNH CHAT SỬ DỤNG PUB/SUB
+
+Dịch chuyển đến thư mục create-cluster của redis-5.0.4
+```
+cd <redis-distribution-path>/utils/create-cluster/
 ```
 
 Khởi chạy create-cluster với 6 nodes có port lần lượt 30001, 30002, 30003, 30004, 30005 và 30006 theo mặc định.
