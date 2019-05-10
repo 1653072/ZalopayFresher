@@ -56,6 +56,11 @@ Hoặc
 systemctl stop nginx
 ```
 
+Kiểm tra status của nginx (nginx đang active hay stop cũng như các thông tin khác ở mục CGroup)
+```
+systemctl status nginx
+```
+
 **Một số lưu ý:**
 
 1. Ứng dụng sử dụng ngôn ngữ python, thư viện flask và nginx, nên bạn cần phải cài đặt các gói tương ứng cho hệ thống của mình (Google có hướng dẫn cách cài đặt)
