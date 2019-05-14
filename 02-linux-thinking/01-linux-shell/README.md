@@ -147,7 +147,7 @@
         Tải các file sampledata về máy, dịch chuyển (cd) vào thư mục chứa file
         awk '{sum+=$1} END {print "Sum of numbers: " sum}' sample02.data
         ```
-   * Như vậy là bạn đã có được giá trị sum một cách thật đơn giản. Ngoài ra, với cách 2 này, file dữ liệu mẫu của bạn phải chứa `số nguyên dương`.
+   * Như vậy là bạn đã có được giá trị sum một cách thật đơn giản. Ngoài ra, với cách 2 này, file dữ liệu mẫu của bạn cũng phải chứa `số nguyên dương` như cách 1.
 
 <br/><br/>
 
