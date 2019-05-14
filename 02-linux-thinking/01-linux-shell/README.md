@@ -60,7 +60,7 @@
     sudo netstat -tulnap | grep :[PORT]
     ```
 
-    ### CÁCH 1:
+    #### CÁCH 1:
 
     Xóa các tiến trình của port trên dựa trên PID
     ```
@@ -69,7 +69,7 @@
     VÍ DỤ: sudo kill -9 5353
     ```
 
-    ### CÁCH 2:
+    #### CÁCH 2:
 
     Ngắn gọn không kém phần mạnh mẽ. Xóa dựa trên port và kiểu protocol là TCP hoặc UDP.
     ```
@@ -85,8 +85,7 @@
     sudo netstat -tulap
     ```
 
-    ### CHÚ THÍCH cho netstat
-
+    CHÚ THÍCH cho netstat:
     * -a: Liệt kê tất cả các các cổng kết nối TCP và UDP
     * -t: Liệt kê các cổng kết nối kiểu TCP.
     * -u: Liệt kê các cổng kết nối kiểu UDP.
