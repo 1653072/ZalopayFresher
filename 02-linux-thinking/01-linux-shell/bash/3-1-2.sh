@@ -16,4 +16,3 @@ filelist=`find . -type f -name "*.cpp" -o -name "*.h" -o -name "*.c"`
 fileresult=`wc -l $filelist | awk '/total/ {print $1/1000}'`
 echo $fileresult
 
-
