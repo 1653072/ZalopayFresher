@@ -1,5 +1,10 @@
 # LINUX SHELL
 
+## NGƯỜI THỰC HIỆN
+
+* Họ tên: Trần Kiến Quốc (QuocTk)
+* Vị trí: Software Development Fresher
+
 ## PROCESSING TEXTS
 
 1. Count the number of lines satisfying a specific pattern in a log file
