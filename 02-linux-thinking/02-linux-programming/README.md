@@ -42,7 +42,8 @@
    * Một tiến trình cần sử dụng các tài nguyên: CPU, bộ nhớ, tập tin, thiết bị nhập xuất để hoàn tất công việc của nó.
    * Tùy thuộc vào hệ điều hành (HĐH), một tiến trình có thể được tạo thành từ nhiều luồng và thực thi đồng thời các lệnh.
 
-   ![Process-Image](images/2.png)
+        ![Process-Image](images/2.png)
+
    * CHÚ THÍCH:
         * New: process mới được tạo.
         * Running: process đang được thực thi.
@@ -61,11 +62,13 @@
 ## THREAD
 
 1. **Khái niệm:**
-   * **Thread:**
+   * **Thread:** Là luồng thực thi công việc trong một tiến trình. Một tiến trình có thể có nhiều luồng thực thi. Ngoài ra, một luồng sẽ duy trì một danh sách thông tin liên quan đến việc thực thi của nó bao gồm lịch chạy, trình xử lý ngoại lệ, các thanh ghi CPU, trạng thái stack trong không gian địa chỉ của tiến trình đang nắm giữ.
    * **POSIX Thread:**
    * **Các API trong POSIX:**
    * **Race condition:** Nhiều tiến trình truy xuất đồng thời một tài nguyên mang bản chất không chia sẻ được, dẫn đến vấn đề tranh đoạt điều khiển (Race Condition).
-   ![RaceCondition-Image](images/3.png)
+
+        ![RaceCondition-Image](images/3.png)
+
    * **Deadlock:**
    * **Phương pháp ngăn chặn Race Condition:**
         * Giải pháp tạm thời: Như hình trên, ta có thể sử dụng 2 biến khác nhau (hits01, hits02), nói chung là *xây cầu nhiều làn đường* để tránh va chạm. Tuy nhiên, phương pháp này sẽ làm tốn kém tài nguyên của hệ thống, dẫn đến không đúng cho mọi trường hợp.
@@ -74,27 +77,34 @@
 
 2. **Multi-Threading:**
    * **Khái niệm:**
+        * Chia một tiến trình thành nhiều luồng thực thi công việc song song. Các luồng song song ấy sẽ hoạt động một cách độc lập nhưng lại sử dụng cùng tài nguyên hệ thống.
+        * Ví dụ: MS Word sử dụng nhiều luồng, luồng này để định dạng văn bản, luồng kia xử lý các dữ liệu đầu vào,...
    * **Các vấn đề thường gặp:**
+        * aaasa
+        * bbsda
 
-
-
+        ![MultiThreading-Issues-Image](images/5.png)
 
 <br/><br/>
 
 ## SYNCHRONIZATION
 
 1. **Khái niệm Semaphore và so sánh Semaphore với Mutex:**
-   * **Khái niệm Semaphore:** 
+   * **Khái niệm Semaphore:**
         * Critical Section (Miền găng) - Là đoạn chương trình có khả năng gây ra hiện tượng Race Condition.
-        * Semaphore thuộc nhóm giải pháp `Sleep & Wakeup` - Là một cấu trúc dữ liệu có nhiệm vụ hạn chế việc truy cập cùng một lúc đến miền găng. Semaphore có 1 biến (Semaphore s) và được thao tác bởi 2 hoạt động chính: Down(s) và Up(s).
-        ![RSemaphore-Image](images/4.png)
+        * Semaphore thuộc nhóm giải pháp `Sleep & Wakeup`, nghĩa là cần sự hỗ trợ về Sleep & Wakeup từ HĐH.
+        * Semaphore là một kiểu dữ liệu trừu tượng (hoặc cơ chế báo hiệu) có nhiệm vụ hạn chế việc truy cập cùng một lúc đến miền găng.
+        * Semaphore được khởi tạo bằng cách khai báo *Semaphore s* và được thao tác bởi 2 hoạt động chính: Down(s) (Wait) và Up(s) (Signal).
+        * Thông thường, giá trị Semaphore được khởi tạo bằng số tài nguyên cần được cài đặt điều khiển (Ví dụ: Semaphore s=3).
+
+        ![RSemaphore-Image](images/4.png)  
+
    * **So sánh Semaphore với Mutex:**
-
-
-#Link drive của thầy Sơn: https://drive.google.com/drive/u/0/folders/1r2_LJG9SFKM6zKm-7YsQpPkFUC3IzVzW
-
-
-
+        * Mutex có mục đích đồng bộ hóa quyền truy cập vào tài nguyên, nên Mutex là một cơ chế khóa nhằm đảm bảo chỉ một luồng có thể vào được miền găng cũng như có được Mutex tại một thời điểm nhất định. Khi thoát khỏi miền găng, luồng sẽ nhả Mutex.
+        * Suy ra, bản chất của Mutex là cơ chế khóa trong khi Semaphore là cơ chế báo hiệu.
+        * Một Semaphore nhị phân có thể được sử dụng như một Mutex nhưng Mutex không bao giờ có thể được sử dụng như một Semaphore.
+        * Ở Semaphore, một luồng đang chờ có thể được báo hiệu bởi một luồng khác. Còn ở Mutex, luồng đã gọi hàm khóa cũng là luồng gọi hàm mở khóa.
+        * Giải thích thêm về Semaphore nhị phân: Là semaphore có giá trị bị giới hạn ở 0 và 1 (Semaphore s=1), dùng khi chỉ có một tài nguyên.
 
 2. **Reader Writer Program:**
    * aaa
@@ -125,3 +135,10 @@
 7. <https://techtalk.vn/nodejs-hieu-asynchronous-event-driven-nonblocking-io.html>
 8. <https://www.thegeekstuff.com/2012/03/linux-processes-memory-layout/>
 9. Slide bài giảng của thầy Phạm Viết Sơn - Giảng viên môn học Hệ Điều Hành, khoa CNTT, ĐH KHTN HCM.
+10. <https://www.tutorialspoint.com/mutex-vs-semaphore>
+11. <https://study.com/academy/lesson/threads-in-an-operating-systems-definition-examples.html>
+12. <https://www.tutorialspoint.com/major-issues-with-multi-threaded-programs>
+
+
+
+#Link drive của thầy Sơn: https://drive.google.com/drive/u/0/folders/1r2_LJG9SFKM6zKm-7YsQpPkFUC3IzVzW
