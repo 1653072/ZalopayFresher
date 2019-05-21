@@ -5,8 +5,33 @@
 * Họ tên: Trần Kiến Quốc (QuocTk)
 * Vị trí: Software Development Fresher
 
+## Mục lục
+
+- [File & File System](#A)
+  - [File Descriptor](#A1)
+  - [Regular File](#A2)
+  - [Special File](#A3)
+- [Process](#B)
+  - [Khái niệm về Process](#B1)
+  - [Memory Layout](#B2)
+- [Thread](#C)
+  - [Khái niệm về Thread](#C1)
+  - [Race Condition](#C2)
+  - [Deadlock](#C3)
+  - [POSIX Thread](#C4)
+  - [Multi-Threading](#C5)
+- [Synchronization](#D)
+  - [Khái niệm Semaphore và so sánh Semaphore với Mutex](#D1)
+  - [Vấn đề Reader & Writer](#D2)
+- [Networking](#E)
+  - [Blocking I/O](#E1)
+  - [NonBlocking I/O](#E2)
+- [Nguồn tham khảo](#F)
+
+<span name="A"></span>
 ## FILE & FILE SYSTEM
 
+<span name="A1"></span>
 1. **Khái niệm file descriptor:**
    * **Everything is a file** là một trong những triết lý của HĐH Linux, nghĩa là mọi thứ trong hệ thống đều được quy tụ về dạng file, như các thao tác nhập xuất, network socket, library files, file thực thi chương trình, .txt,... đều là file, và file được hiểu như là một khối thông tin tùy ý hoặc là tài nguyên để lưu trữ thông tin. HĐH Linux có các loại file bên dưới:
 
@@ -28,9 +53,11 @@
 
         ![File-Descriptor-Image](images/1.png)
 
+<span name="A2"></span>
 2. **Khái niệm Regular files:**
    * **RF:** Là loại file được lưu trữ trong hệ thống file và hầu hết các file này được sử dụng trực tiếp bởi chúng ta, chẳng hạn như: .txt, image, exe,... Nếu đọc/ghi dữ liệu từ file thường, kernel sẽ tuân thủ theo quy tắc của hệ thống file mà xử lý, nên đôi khi việc đọc/ghi này có thể bị trì hoãn do các trường hợp đặc-biệt-khác-xen-vào.
 
+<span name="A3"></span>
 3. **Khái niệm Special files:**
    * **SF:** Là loại file được lưu trữ trong hệ thống file và loại này đôi khi được gọi là "device file". Khi ghi dữ liệu vào file này, các thao tác dường như diễn ra ngay lập tức mà không tuân theo các quy tắc hệ thống file thông thường. Các file này thể hiện giao diện (interface) của các thiết bị driver (trình điều khiển thiết bị) trong hệ thống file như thể đó là file thông thường.
    * Ví dụ như `/dev/null`, đây không phải là file thông thường mà nó là interface. Ta có thể thực hiện nhiều thao tác trên các file kiểu như vậy. File đặc biệt này như một "lỗ đen" của máy tính, thu nhận mọi thứ ta gửi đến nhưng không gửi trả cái gì, ứng dụng rộng rãi cũng như bảo mật (Các gói tin "sai trái" thì firewall có thể chuyển vào đây).
@@ -40,8 +67,10 @@
 
 <br/><br/>
 
+<span name="B"></span>
 ## PROCESS
 
+<span name="B1"></span>
 1. **Khái niệm Process trong HĐH:**
    * Là thể hiện của một chương trình đang được thực thi.
    * Một tiến trình cần sử dụng các tài nguyên: CPU, bộ nhớ, tập tin, thiết bị nhập xuất để hoàn tất công việc của nó.
@@ -57,6 +86,7 @@
      * Ready: process sẵn sàng được CPU chạy.
      * Terminated: process hoàn thành việc/kết thúc.
 
+<span name="B2"></span>
 2. **Memory Layout:**
    * **Stack:** Vùng nhớ được các tiến trình sử dụng để lưu trữ các biến cục bộ của hàm và các thông tin khác (địa chỉ nơi hàm được gọi, thanh ghi được sử dụng,...).
    * **Heap:** Vùng nhớ được sử dụng cho các hành động cấp phát động, là vùng "mở" cho mọi tiến trình có thể truy xuất vào. Đã đăng kí ô nhớ ở heap thì cần phải xóa nó khi kết thúc công việc (Ví dụ: khởi tạo con trỏ thì phải xóa con trỏ).
@@ -65,10 +95,13 @@
 
 <br/><br/>
 
+<span name="C"></span>
 ## THREAD
 
+<span name="C1"></span>
 1. **Khái niệm Thread:** Là luồng thực thi công việc trong một tiến trình. Một tiến trình có thể có nhiều luồng thực thi. Ngoài ra, một luồng sẽ duy trì một danh sách thông tin liên quan đến việc thực thi của nó bao gồm lịch chạy, trình xử lý ngoại lệ, các thanh ghi CPU, trạng thái stack trong không gian địa chỉ của tiến trình đang nắm giữ.
 
+<span name="C2"></span>
 2. **Race Condition:**
    * **Khái niệm:** Nhiều tiến trình truy xuất đồng thời một tài nguyên mang bản chất không chia sẻ được, dẫn đến vấn đề tranh đoạt điều khiển (Race Condition).
 
@@ -78,6 +111,7 @@
      * Giải pháp tạm thời: Như hình trên, ta có thể sử dụng 2 biến khác nhau (hits01, hits02), nói chung là *xây cầu nhiều làn đường* để tránh va chạm. Tuy nhiên, phương pháp này sẽ làm tốn kém tài nguyên của hệ thống, dẫn đến không đúng cho mọi trường hợp.
      * Giải pháp tổng quát: Bảo đảm tính `atomicity (nguyên tử)` cho phép tiến trình hoàn tất trọn vẹn quá trình truy xuất tài nguyên chung, trước khi có tiến trình khác can thiệp.
 
+<span name="C3"></span>
 3. **Deadlock:**
    * **Khái niệm:** Là trạng thái xảy ra trong môi trường đa nhiệm (mutithreading) khi hai hoặc nhiều tiến trình đi vào vòng lặp chờ tài nguyên mãi mãi.
    * **Ví dụ:** Luồng 1 và luồng 2 muốn có tài nguyên A và B. Luồng 1 chiếm tài nguyên A, luồng 2 chiếm tài nguyên B. Luồng 1 đợi tài nguyên B được giải phóng trong khi luồng 2 đợi tài nguyên A được giải phóng. Suy ra, cả 2 luồng đều đợi chờ tài nguyên vô tận.
@@ -93,6 +127,7 @@
        * Cách hiểu khác nếu đề cập về nhận tài nguyên theo thứ tự giảm: Tiến trình muốn có tài nguyên j, tiến trình phải giải phóng tất cả các tài nguyên có trọng số i >= j (nếu có).
        * Một thách thức lớn trong phương pháp này là xác định thứ tự tương đối của các tài nguyên khác nhau.
 
+<span name="C4"></span>
 4. **POSIX Thread:**
    * **Khái niệm:** 
    * **Các API trong POSIX:**
@@ -104,7 +139,7 @@
 
 
 
-
+<span name="C5"></span>
 5. **Multi-Threading:**
    * **Khái niệm:**
      * Chia một tiến trình thành nhiều luồng thực thi công việc. Các luồng ấy sẽ hoạt động một cách độc lập nhưng lại sử dụng cùng tài nguyên hệ thống.
@@ -130,8 +165,10 @@
 
 <br/><br/>
 
+<span name="D"></span>
 ## SYNCHRONIZATION
 
+<span name="D1"></span>
 1. **Khái niệm Semaphore và so sánh Semaphore với Mutex:**
    * **Khái niệm Semaphore:**
      * Critical Section (Miền găng) - Là đoạn chương trình có khả năng gây ra hiện tượng Race Condition.
@@ -149,6 +186,7 @@
      * Ở Semaphore, một luồng đang chờ có thể được báo hiệu bởi một luồng khác. Còn ở Mutex, luồng đã gọi hàm khóa cũng là luồng gọi hàm mở khóa.
      * Giải thích thêm về Semaphore nhị phân: Là semaphore có giá trị bị giới hạn ở 0 và 1 (Semaphore s=1), dùng khi chỉ có một tài nguyên.
 
+<span name="D2"></span>
 2. **Reader Writer Problem:**
    * **Mô tả, các tình huống và yêu cầu cần phải thỏa mãn của vấn đề Reader Writer:** Hãy đọc nội dung hình bên dưới.
   
@@ -166,19 +204,23 @@
 
 <br/><br/>
 
+<span name="E"></span>
 ## NETWORKING
 
+<span name="E1"></span>
 1. **Blocking I/O:**
    * Có thể hiểu là thao tác này được diễn ra khi và chỉ khi thao tác trước đó đã hoàn thành, nghĩa là việc xử lý các dữ liệu đầu vào/đầu ra phải hoàn tất hoặc xảy ra ngoại lệ thì mới tiếp tục xử lý cái khác.
    * Nếu cần dữ liệu được an toàn, đồng nhất, không bị lỗi thì đây là một phương pháp khá ổn, nhưng sẽ làm hệ thống trì trệ.
    * **Ví dụ:** Xếp hàng (hàng đợi) mua đồ trong siêu thị.
 
+<span name="E2"></span>
 2. **NonBlocking I/O:**
    * Có thể hiểu là thao tác này diễn ra mà không phụ thuộc hoàn toàn vào thao tác trước, nghĩa là hệ thống thực hiện các thao tác nhập xuất một cách độc lập với những thao tác/hoạt động khác mà các thao tác/hoạt động khác không cần phải rơi vào trạng thái chờ, giúp hệ thống giảm đi sự trì trệ đợi chờ.
    * **Ví dụ:** HĐH Windows cho phép chạy nhiều chương trình cùng một lúc, cũng như thực hiện nhiều thao tác copy và xóa cho dù thao tác trước đó vẫn chưa hoàn thành.
 
 <br/><br/>
 
+<span name="F"></span>
 ## NGUỒN THAM KHẢO
 
 1. <https://cloudcraft.info/huong-dan-cau-hinh-max-file-descriptor/>
@@ -197,6 +239,3 @@
 14. <https://www.backblaze.com/blog/whats-the-diff-programs-processes-and-threads/>
 15. <http://hedieuhanh.forumvi.com/t4498-topic>
 16. <https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/7_Deadlocks.html>
-
-
-#Link drive của thầy Sơn: https://drive.google.com/drive/u/0/folders/1r2_LJG9SFKM6zKm-7YsQpPkFUC3IzVzW
