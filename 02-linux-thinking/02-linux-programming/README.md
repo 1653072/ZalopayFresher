@@ -52,11 +52,9 @@
      * Ngoài ra, khi ta mở hoặc tạo một file, kernel sẽ trả về giá trị file descriptor cho process tương ứng. Khi ta đóng file đó lại thì file descriptor này sẽ được giải phóng để cấp phát cho những lần mở file sau.
 
         ![File-Descriptor-Image](images/1.png)
-
 <span name="A2"></span>
 2. **Khái niệm Regular files:**
    * **RF:** Là loại file được lưu trữ trong hệ thống file và hầu hết các file này được sử dụng trực tiếp bởi chúng ta, chẳng hạn như: .txt, image, exe,... Nếu đọc/ghi dữ liệu từ file thường, kernel sẽ tuân thủ theo quy tắc của hệ thống file mà xử lý, nên đôi khi việc đọc/ghi này có thể bị trì hoãn do các trường hợp đặc-biệt-khác-xen-vào.
-
 <span name="A3"></span>
 3. **Khái niệm Special files:**
    * **SF:** Là loại file được lưu trữ trong hệ thống file và loại này đôi khi được gọi là "device file". Khi ghi dữ liệu vào file này, các thao tác dường như diễn ra ngay lập tức mà không tuân theo các quy tắc hệ thống file thông thường. Các file này thể hiện giao diện (interface) của các thiết bị driver (trình điều khiển thiết bị) trong hệ thống file như thể đó là file thông thường.
@@ -85,7 +83,6 @@
      * Waiting: process đợi I/O hoặc tín hiệu nào đó.
      * Ready: process sẵn sàng được CPU chạy.
      * Terminated: process hoàn thành việc/kết thúc.
-
 <span name="B2"></span>
 2. **Memory Layout:**
    * **Stack:** Vùng nhớ được các tiến trình sử dụng để lưu trữ các biến cục bộ của hàm và các thông tin khác (địa chỉ nơi hàm được gọi, thanh ghi được sử dụng,...).
@@ -100,7 +97,6 @@
 
 <span name="C1"></span>
 1. **Khái niệm Thread:** Là luồng thực thi công việc trong một tiến trình. Một tiến trình có thể có nhiều luồng thực thi. Ngoài ra, một luồng sẽ duy trì một danh sách thông tin liên quan đến việc thực thi của nó bao gồm lịch chạy, trình xử lý ngoại lệ, các thanh ghi CPU, trạng thái stack trong không gian địa chỉ của tiến trình đang nắm giữ.
-
 <span name="C2"></span>
 2. **Race Condition:**
    * **Khái niệm:** Nhiều tiến trình truy xuất đồng thời một tài nguyên mang bản chất không chia sẻ được, dẫn đến vấn đề tranh đoạt điều khiển (Race Condition).
@@ -110,7 +106,6 @@
    * **Phương pháp ngăn chặn Race Condition:**
      * Giải pháp tạm thời: Như hình trên, ta có thể sử dụng 2 biến khác nhau (hits01, hits02), nói chung là *xây cầu nhiều làn đường* để tránh va chạm. Tuy nhiên, phương pháp này sẽ làm tốn kém tài nguyên của hệ thống, dẫn đến không đúng cho mọi trường hợp.
      * Giải pháp tổng quát: Bảo đảm tính `atomicity (nguyên tử)` cho phép tiến trình hoàn tất trọn vẹn quá trình truy xuất tài nguyên chung, trước khi có tiến trình khác can thiệp.
-
 <span name="C3"></span>
 3. **Deadlock:**
    * **Khái niệm:** Là trạng thái xảy ra trong môi trường đa nhiệm (mutithreading) khi hai hoặc nhiều tiến trình đi vào vòng lặp chờ tài nguyên mãi mãi.
@@ -126,21 +121,19 @@
        * Áp dụng một thứ tự tuyệt đối cho tất cả các loại tài nguyên, nghĩa là mỗi loại tài nguyên được gắn một số nguyên. Sau đó yêu cầu các tiến trình chỉ nhận tài nguyên theo thứ tự tăng (hoặc giảm) một cách nghiêm ngặt.
        * Cách hiểu khác nếu đề cập về nhận tài nguyên theo thứ tự giảm: Tiến trình muốn có tài nguyên j, tiến trình phải giải phóng tất cả các tài nguyên có trọng số i >= j (nếu có).
        * Một thách thức lớn trong phương pháp này là xác định thứ tự tương đối của các tài nguyên khác nhau.
-
 <span name="C4"></span>
 4. **POSIX Thread:**
    * **Khái niệm:** 
+     * Thường được gọi là `pthreads`.
+     * Được định nghĩa là một tập hợp các kiểu lập trình ngôn ngữ C và các API, được triển khai trong file header dưới dòng lệnh `#include <pthread.h>`.
+     * Cho phép một chương trình kiểm soát nhiều luồng công việc khác nhau song song. Việc tạo và quản lý các luồng công việc đạt được bằng cách gọi các API của nó.
    * **Các API trong POSIX:**
-
-
-
-
-
-
-
-
+     * Thread management: Là các hàm sử dụng để tạo, hủy, detached, join thread cũng như set/get các thuộc tính của thread.
+     * Mutexes: Là các hàm sử dụng để tạo, hủy, unlocking, locking mutex (“mutual exclusion” : vùng tranh chấp), cũng như set/get các thuộc tính của mutex.
+     * Condition variables: Là các hàm để tạo, hủy, đợi hoặc phát tín hiệu dựa trên giá trị của một biến cụ thể.
+     * Synchronization: Là các hàm dùng để quản lý việc read/write lock và barriers.
 <span name="C5"></span>
-5. **Multi-Threading:**
+1. **Multi-Threading:**
    * **Khái niệm:**
      * Chia một tiến trình thành nhiều luồng thực thi công việc. Các luồng ấy sẽ hoạt động một cách độc lập nhưng lại sử dụng cùng tài nguyên hệ thống.
      * Ví dụ: MS Word sử dụng nhiều luồng, luồng này để định dạng văn bản, luồng kia xử lý các dữ liệu đầu vào,...
@@ -155,8 +148,7 @@
 
         ![MultiThreading-Issues-Image](images/5.png)
 
-     *(Ảnh minh họa)*
-
+        *(Ảnh minh họa)*
    * **Các vấn đề thường gặp:**
      * Deadlock: Được giải thích ở trên.
      * Race Condition: Được giải thích ở trên.
@@ -185,7 +177,6 @@
      * Một Semaphore nhị phân có thể được sử dụng như một Mutex nhưng Mutex không bao giờ có thể được sử dụng như một Semaphore.
      * Ở Semaphore, một luồng đang chờ có thể được báo hiệu bởi một luồng khác. Còn ở Mutex, luồng đã gọi hàm khóa cũng là luồng gọi hàm mở khóa.
      * Giải thích thêm về Semaphore nhị phân: Là semaphore có giá trị bị giới hạn ở 0 và 1 (Semaphore s=1), dùng khi chỉ có một tài nguyên.
-
 <span name="D2"></span>
 2. **Reader Writer Problem:**
    * **Mô tả, các tình huống và yêu cầu cần phải thỏa mãn của vấn đề Reader Writer:** Hãy đọc nội dung hình bên dưới.
@@ -212,7 +203,6 @@
    * Có thể hiểu là thao tác này được diễn ra khi và chỉ khi thao tác trước đó đã hoàn thành, nghĩa là việc xử lý các dữ liệu đầu vào/đầu ra phải hoàn tất hoặc xảy ra ngoại lệ thì mới tiếp tục xử lý cái khác.
    * Nếu cần dữ liệu được an toàn, đồng nhất, không bị lỗi thì đây là một phương pháp khá ổn, nhưng sẽ làm hệ thống trì trệ.
    * **Ví dụ:** Xếp hàng (hàng đợi) mua đồ trong siêu thị.
-
 <span name="E2"></span>
 2. **NonBlocking I/O:**
    * Có thể hiểu là thao tác này diễn ra mà không phụ thuộc hoàn toàn vào thao tác trước, nghĩa là hệ thống thực hiện các thao tác nhập xuất một cách độc lập với những thao tác/hoạt động khác mà các thao tác/hoạt động khác không cần phải rơi vào trạng thái chờ, giúp hệ thống giảm đi sự trì trệ đợi chờ.
