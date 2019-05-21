@@ -183,8 +183,7 @@
   
         ![Reader-Writer-Problem-Image](images/6.jpg)  
 
-   * **Vấn đề khác:** Khi W này kết thúc cập nhật dữ liệu thì một W khác lại nhảy vào cập nhật, lúc này R có thể starvation, nghĩa là đứng đợi rất lâu, thậm chí là vô hạn nếu có nhiều W được ưu tiên. Ngược lại, các R lần lượt được ưu tiên vào ra nên W có thể bị starvation.
-
+   * **Vấn đề khác:** Khi W này kết thúc cập nhật dữ liệu thì một W khác lại nhảy vào cập nhật, lúc này R có thể starvation, nghĩa là đứng đợi rất lâu, thậm chí là vô hạn nếu có nhiều W được ưu tiên. Ngược lại, các R lần lượt được ưu tiên vào ra nên W có thể bị starvation. Vì vậy, cần sử dụng Semaphore để kiểm tra truy xuất CSDL của Rs và Ws một cách cẩn trọng.
    * **Chú thích các từ viết tắt:**
      * ME: Mutual Exclusion (Mutex)
      * R: Lượt đọc
@@ -229,3 +228,4 @@
 14. <https://www.backblaze.com/blog/whats-the-diff-programs-processes-and-threads/>
 15. <http://hedieuhanh.forumvi.com/t4498-topic>
 16. <https://www.cs.uic.edu/~jbell/CourseNotes/OperatingSystems/7_Deadlocks.html>
+17. <https://computing.llnl.gov/tutorials/pthreads/>
