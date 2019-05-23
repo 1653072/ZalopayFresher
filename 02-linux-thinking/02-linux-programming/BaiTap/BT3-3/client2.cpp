@@ -15,109 +15,113 @@ using namespace std;
 #define SA struct sockaddr
 
 //====================================================================
+//GLOBAL VARIABLES
+vector<int> marbleArray;
+
+
+//====================================================================
 //DECLARE FUNCTIONS
-void run(int sock, vector<int> &marbleArray);
-void func_test(int sock);
+long sumValueOfMarbleArray();
+void requestMarble(int sock);
+void writeFile();
+void sendFileToServer(int sock);
+void run(int sock);
 
 
 //====================================================================
 //IMPLEMENT FUNCTIONS
-void run(int sock, vector<int> &marbleArray) {
-	int check;
-	char buffer[256];
-	
-	/* Read message from server */
-	// bzero(buffer, 256);
-	// check = read(sock, buffer, 255);
-	// if (check < 0) {
-	// 	printf(">>ERROR on reading from socket!\n");
-	// 	exit(0);
-	// }
-	// printf("[FROM SERVER] %s\n", buffer);
-
-	while(1) {
-		write(sock, "RequestMarble", 13);
-
-		int val;
-		read(sock, &val, sizeof(val));
-		val=ntohl(val);
-		if (val==-1) break;
-		else
-		{
-			cout<<"[FROM SERVER][Client 2] Received: "<<val<<endl;
-			marbleArray.push_back(val);
-		}
+long sumValueOfMarbleArray() {
+	long sum = 0;
+	for (int i = 0; i < marbleArray.size(); ++i) {
+		sum += marbleArray[i];
 	}
-
-	cout<<"[Cli 2]"<<marbleArray.size()<<endl;
-
-	
-	/* Get the number of marbles */
-	// int marbleArrSize = -1;
-	// read(sock, &marbleArrSize, sizeof(marbleArrSize));
-	// marbleArrSize=ntohl(marbleArrSize);
-	// printf("[FROM SERVER] Quantity of marbles: %d\n", marbleArrSize);
-	
-	// /* Request marble if server still has marbles */
-	// if (marbleArrSize != -1) {
-	// 	if (marbleArrSize!=0) {
-	// 		write(sock, "RequestMarble", 13);
-	// 	}
-	// 	else break;	/* marbleArrSize == 0: Out of stock */
-	// }
-
-	// /* Get out of stock from server */
-	// bzero(buffer, 256);
-	// read(sock, buffer, 255);
-	// if (strcmp(buffer,"OutOfStock") == 0) break;
-	// else {
-	// 	int val;
-	// 	read(sock, &val, sizeof(val));
-	// 	val=ntohl(val);
-	// 	cout<<"[FROM SERVER] Received: "<<val<<endl;
-	// 	marbleArray.push_back(val);
-	// }
+	return sum;
 }
 
-void func_test(int sock) {
-	int check;
-	char buffer[256];
-	
-	while (1)
-	{
-		/* Send message to server */
-		printf("Please enter the message: ");
-		bzero(buffer, 256);
-		fgets(buffer, 255, stdin);
-		check = write(sock, buffer, strlen(buffer));
-		if (check < 0) {
-			printf(">>ERROR on writing to socket!\n");
-			exit(0);
-		}
+void requestMarble(int sock) {
+	printf("[NOTICE] Let 's start the game!\n");
 
-		/* Read message from server */
-		bzero(buffer, 256);
-		check = read(sock, buffer, 255);
-		if (check < 0) {
-			printf(">>ERROR on reading from socket!\n");
-			exit(0);
-		}
-		printf(">>The message from server: %s\n", buffer);
+	while (1) {
+		/* Send command "RequestMarble" to server */
+		write(sock, "RequestMarble", 13);
+
+		/* Receive value of marble from server.
+		   If server runs out of marbles. Value will be -1 */
+		int val;
+		read(sock, &val, sizeof(val));
+		val = ntohl(val);
+		if (val == -1) break;
+		else marbleArray.push_back(val);
 	}
+
+	printf("[NOTICE] You got your marbles | Total marbles: %d | Total score: %d\n", marbleArray.size(), sumValueOfMarbleArray());
+}
+
+void writeFile() {
+	/* Check size of marbleArray to decide to create file or not */
+	if (marbleArray.size() == 0)
+	{
+		printf("[NOTICE] You don't have any marbles for WRITING file. So sad!\n");
+		return;
+	}
+
+	/* Store data of marbleArray to file */
+	FILE *fp;
+	fp = fopen("client2.txt", "w+");
+	for (int i = 0; i < marbleArray.size(); ++i) {
+		if (i != (marbleArray.size() - 1)) fprintf(fp, "%d\n", marbleArray[i]);
+		else fprintf(fp, "%d", marbleArray[i]);
+	}
+	fclose(fp);
+	printf("[NOTICE] Writing marbles information to file successfully!\n");
+}
+
+void sendFileToServer(int sock) {
+	FILE *fp;
+	fp = fopen("client2.txt", "r");
+
+	/* Check file exists or not */
+	if (!fp)
+	{
+		printf("[NOTICE] File not found or you don't have any marbles for SENDING to server!\n");
+		return;
+	}
+
+	/* Send name of file to server */
+	write(sock, "client2.txt", 10;)
+
+		/* Send data of file to server */
+		int val;
+	while (!feof(fp)) {
+		fscanf(pFile, "%d", &val);
+		val = htonl(val);
+		write(sock, &val, sizeof(val));
+	}
+
+	fclose(fp);
+	printf("[NOTICE] Sending file of marbles to server successfully!\n");
+}
+
+void run(int sock) {
+	/* Request marble to server and Receive marble from server */
+	requestMarble(sock);
+	/* Save value of all marbles to file */
+	writeFile();
+	/* Send file to server */
+	sendFileToServer(sock);
 }
 
 
 //====================================================================
 //MAIN FUNCTIONS
 int main() {
-    int sockfd;
-    struct sockaddr_in servaddr; 
-	vector<int> marbleArray;
+	int sockfd;
+	struct sockaddr_in servaddr;
 
 	/* First call to socket() function to create */
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd < 0) {
-		printf(">>ERROR on opening socket!\n");
+		printf("[ERROR] Opening socket fail!\n");
 		exit(0);
 	}
 
@@ -129,45 +133,16 @@ int main() {
 
 	/* Now connect the client socket to the server socket */
 	if (connect(sockfd, (SA*)&servaddr, sizeof(servaddr)) < 0) {
-		printf(">>ERROR on connecting to server socket!\n");
+		printf("[ERROR] Connecting to server fail!\n");
 		exit(0);
 	}
+	else printf("[NOTICE] Connecting to server successfully. Please wait until enough clients join the game!\n");
 
-	run(sockfd, marbleArray);
-    
-    close(sockfd); 
+	/* Run program */
+	run(sockfd);
+
+	/* Close socket */
+	close(sockfd);
 	return 0;
-} 
-
-
-
-
-
-
-
-
-
-
-
-/*#define MAX 80
-void func(int sockfd)
-{
-	char buff[MAX];
-	int n;
-	for (;;) {
-		bzero(buff, sizeof(buff));
-		printf("Enter the string : ");
-		n = 0;
-		while ((buff[n++] = getchar()) != '\n')
-			;
-		write(sockfd, buff, sizeof(buff));
-		bzero(buff, sizeof(buff));
-		read(sockfd, buff, sizeof(buff));
-		printf("From Server : %s", buff);
-		if ((strncmp(buff, "exit", 4)) == 0) {
-			printf("Client Exit...\n");
-			break;
-		}
-	}
-}*/
+}
 
