@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #------------------------------------------
-#NGUOI THUC HIEN: TRAN KIEN QUOC
-#VI TRI: SOFTWARE DEVELOPMENT FRESHER
+#NGƯỜI THỰC HIỆN: TRAN KIEN QUOC
+#VỊ TRÍ: SOFTWARE DEVELOPMENT FRESHER
 #MODULE: 02-LINUX-THINKING
-#BAI TAP: 3-2-5
+#BÀI TẬP: 3-1-2
 #------------------------------------------
 
 HOMEPATH="/home/cpu11817"

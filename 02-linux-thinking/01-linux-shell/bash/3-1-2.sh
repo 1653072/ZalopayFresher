@@ -1,18 +1,19 @@
 #!/bin/bash
 
 #------------------------------------------
-#NGUOI THUC HIEN: TRAN KIEN QUOC
-#VI TRI: SOFTWARE DEVELOPMENT FRESHER
+#NGƯỜI THỰC HIỆN: TRAN KIEN QUOC
+#VỊ TRÍ: SOFTWARE DEVELOPMENT FRESHER
 #MODULE: 02-LINUX-THINKING
-#BAI TAP: 3-1-2
+#BÀI TẬP: 3-1-2
 #------------------------------------------
 
-#Danh sach cac file co duoi la .cpp, .h va .c (Tim kiem moi ngoc ngach trong folder hien tai)
+#Lấy ra danh sách các file có đuôi là .cpp, .h va .c (Tìm kiếm mọi ngóc ngách trong folder hiện tại).
 filelist=`find . -type f -name "*.cpp" -o -name "*.h" -o -name "*.c"`
 
-#Thong qua lenh wc -l $fileslist, moi file co NumRows & FileName (wc: word count, -l: line)
-#Ta lay gia tri cua total (o dau tien cua dong cuoi cung) thong qua /total/ va $1
-#Lay gia tri lay duoc chia 1000 se ra so KLOC cua Danh sach file
+#Thông qua lệnh `wc -l $fileslist`, mỗi file sẽ có NumRows & FileName (wc: word count, -l: line, thay 
+#vì đếm số từ, bây giờ là đếm số dòng bởi vì command có chứa `-l`).
+#Ta lấy giá trị của total thông qua /total/ va $1 ($1: Lấy giá trị của ô đầu tiên ở dòng total).
+#Lấy giá trị vừa lấy được chia cho 1000 sẽ ra số KLOC của Danh sách các file C/C++.
 fileresult=`wc -l $filelist | awk '/total/ {print $1/1000}'`
 echo $fileresult
 

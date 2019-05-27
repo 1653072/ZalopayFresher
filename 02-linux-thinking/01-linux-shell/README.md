@@ -16,18 +16,18 @@
     VÍ DỤ: grep -c EEEE logfile
     ```
 
-    **grep `<pattern>`** In những dòng chứa nội dung khớp với mẫu dữ liệu ta nhập vào. Tuy nhiên, vì có **-c** nên sẽ chuyển sang đếm (count).
+    **grep `<pattern>`**: Tìm kiếm chuỗi và in những dòng chứa nội dung khớp với mẫu dữ liệu ta nhập vào. Bắt đầu với dòng đầu tiên trong file, grep sẽ copy dòng đó vào buffer và so sánh nó với chuỗi tìm kiếm, nếu thỏa thì in dòng đó ra màn hình. Với câu hỏi này, vì có **-c** nên sẽ chuyển sang in giá trị đã đếm được (c: count).
 
 2. Calculate KLOC of code C/C++ files in a directory
 
-    Sử dụng file `bash/3-1-2.sh` để tính KLOC của các file có đuôi .c .cpp .h bằng cách
+    Sử dụng file `bash/3-1-2.sh` để tính KLOC của các file có đuôi `.c`, `.cpp`, `.h` bằng cách:
     ```
     Tải file về máy, dịch chuyển (cd) vào thư mục chứa file
     chmod +x 3-1-2.sh
     ./3-1-2.sh
     ```
     
-    Bạn có thể mở file để xem source code cũng như các dòng chú thích.
+    Bạn có thể mở file để xem source code cũng như các dòng chú thích (giải thích) ngay trong file.
 
 <br/><br/>
 
@@ -40,11 +40,11 @@
     ps -ef | grep 'name' | grep -v grep | awk '{print $2}' | xargs -r kill -9
     ```
 
-    Giải thích: 
+    CHÚ THÍCH: 
      * `ps-ef:` Liệt kê tất cả các tiến trình đang chạy.
      * `grep 'name':` Lọc tất cả tiến trình chứa tên là *name*.
      * `awk '{print $2}':` In các PID (Các PID nằm ở cột thứ 2 trong danh sách tiến trình)
-     * `grep -v grep:` Danh sách tiến trình có hiển thị grep 'name', cho nên dòng này cần được loại bỏ bằng grep -v grep.
+     * `grep -v grep:` Danh sách tiến trình có hiển thị lại grep 'name', cho nên dòng này cần được loại bỏ bằng grep -v grep.
      * `xargs -r kill -9:` Tạo ra một quy trình mới để gửi tất cả các PID đã lọc nhằm (kill -9) kết thúc tất cả.
      * `kill -9:` Khi sử dụng signal -9, quá trình đó sẽ không có cơ hội dọn dẹp "sạch sẽ chính bản thân mình" hoặc chưa kịp lưu lại trạng thái công việc của nó (Kết thúc một cách "bạo lực"). Sử dụng signal này như phương sách cuối cùng hoặc không muốn sử dụng các signal khác. 
 
@@ -78,19 +78,24 @@
     VÍ DỤ: sudo fuser -k 7000/tcp
     ```
 
+    #### CHÚ THÍCH cho netstat:
+    * netstat (network statistics): Hiển thị các kết nối mạng cho TCP/UDP (incoming và outgoing), bảng định tuyến, số lượng network interface và số lượng thống kê network protocol.
+    * -a: Liệt kê tất cả các các cổng kết nối TCP và UDP
+    * -t: Liệt kê các cổng kết nối kiểu TCP.
+    * -u: Liệt kê các cổng kết nối kiểu UDP.
+    * -l: Liệt kê tất cả các cổng kết nối đang hoạt động, lắng nghe.
+    * -p: Liệt kê mã ID của tiến trình.
+
+    #### CHÚ THÍCH về fuser:
+    * fuser: Tìm quá trình nào đang sử dụng tệp, thư mục, socket. Song, là hiển thị các thông tin khác liên quan đến người dùng đang sở hữu tiến trình đó và loại quyền truy cập.
+    * -k: Nghĩa là "kill", kết thúc các tiến trình thuộc protocol TCP hoặc UDP tại một port nào đó.
+
 3. List opennned ports, handles.
 
     Sử dụng lệnh bên dưới để liệt kê tất cả các port đang được mở
     ```
     sudo netstat -tulap
     ```
-
-    CHÚ THÍCH cho netstat:
-    * -a: Liệt kê tất cả các các cổng kết nối TCP và UDP
-    * -t: Liệt kê các cổng kết nối kiểu TCP.
-    * -u: Liệt kê các cổng kết nối kiểu UDP.
-    * -l: Liệt kê tất cả các cổng kết nối đang hoạt động, lắng nghe.
-    * -p: Liệt kê mã ID của tiến trình.
 
 4. Find files via regular expressions, and remove them.
 
@@ -99,56 +104,67 @@
     find your-directory/ -regex '[regex]' -delete
 
     VÍ DỤ: find environments/linuxshell/testdel/ -regex '.*cpp' -delete
-    (.*cpp nghĩa là tất cả file với tên bất kì nhưng phải chứa cpp ở cuối tên)
     ```
+
+    CHÚ THÍCH:
+    * `.*cpp`: Tất cả file với tên bất kì nhưng phải chứa cpp ở cuối tên.
+    * `-regex`: Sử dụng "regular expression". Xem thêm hướng dẫn sử dụng [tại đây.](http://www.grymoire.com/Unix/Regular.html)
+    * `find <path/folder>`: Tìm đến thư mục nào đó, kiếm các file trong đó thỏa điều kiện mình đề ra (file phải tồn tại) và xóa chúng.
 
 5. List, one at a time, all files larger than 100K in the /home/username directory tree. Give the user the option to delete or compress the file, then proceed to show the next one. Write to a logfile the names of all deleted files and the deletion times.
 
-    Sử dụng file `bash/3-2-5.sh` để liệt kê các file có kích cỡ lớn hơn 100k ở thư mục /home/username. Khi khởi chạy file bash này, user sẽ có 3 sự lựa chọn:
+    Sử dụng file `bash/3-2-5.sh` để liệt kê các file có kích cỡ lớn hơn 100KB ở thư mục /home/username. Khi khởi chạy file bash này, user sẽ có 3 sự lựa chọn:
     * 0: Dừng hẳn chương trình.
-    * 1: Thực hiên xóa một file do user nhập.
-      * Kết quả được lưu theo dòng `<date-time>: <deletedfile>` vào cuối file `deletedfilelog.txt` tại thư mục /home/username.
+    * 1: Thực hiện xóa một file do user nhập.
+      * Kết quả xóa file được lưu theo dòng `<date-time>: <deletedfile>` vào cuối file `deletedfilelog.txt` tại thư mục /home/username.
     * 2: Thực hiện nén một file do user nhập.
       * Kết quả là file bình thường được nén thành file `<filename>-<date>-<time>.zip` tại thư mục /home/username/CompressFolder.
 
+    Hướng dẫn chạy chương trình:
     ```
     Tải file về máy, dịch chuyển (cd) vào thư mục chứa file
     Mở file & sửa đổi lại HOMEPATH theo đúng /home/username của máy bạn
     chmod +x 3-2-5.sh
     ./3-2-5.sh
     ```
-    
-    Bạn có thể mở file để xem source code cũng như các dòng chú thích.
 
-<br/><br/>
+<br/>
 
 ## SHELL SCRIPTING
 
-1. CÁCH 1
-    * Sử dụng file `bash/3-3.sh` để tính tổng các giá trị là `số nguyên dương` trong file đã cho. 
-        ```
-        Tải file về máy, dịch chuyển (cd) vào thư mục chứa file
-        Mở file & sửa đổi lại HOMEPATH theo đúng /home/username của máy bạn
-        chmod +x 3-3.sh
-        ./3-3.sh
-        ```
+### CÁCH 1
+* Sử dụng file `bash/3-3.sh` để tính tổng các giá trị là `số nguyên dương` trong file đã cho. 
+   ```
+   Tải file về máy, dịch chuyển (cd) vào thư mục chứa file
+   Mở file & sửa đổi lại HOMEPATH theo đúng /home/username của máy bạn
+   chmod +x 3-3.sh
+   ./3-3.sh
+   Nhập tên file.
+   ```
 
-    * Để test kết quả, hãy tải về máy 3 file là `data/sample.data`, `data/sample02.data` và `data/sample03.data`. Kết quả lần lượt khi chạy của 3 file là
-      * `data/sample.data`: 1249992
-      * `data/sample02.data`: 2334
-      * `data/sample03.data`: 210
+* Để test kết quả, hãy tải về máy 3 file là `data/sample.data`, `data/sample02.data` và `data/sample03.data`. Kết quả lần lượt khi chạy của 3 file là
+   * `data/sample.data`: 1249992
+   * `data/sample02.data`: 2334
+   * `data/sample03.data`: 210
 
-    * Bạn có thể mở file để xem source code cũng như các dòng chú thích.
+* Bạn có thể mở file để xem source code cũng như các dòng chú thích.
 
-2. CÁCH 2
-   * Một cách đơn giản hơn nhưng cực mạnh mẽ
-        ```
-        Tải các file sampledata về máy, dịch chuyển (cd) vào thư mục chứa file
-        awk '{sum+=$1} END {print "Sum of numbers: " sum}' sample02.data
-        ```
-   * Như vậy là bạn đã có được giá trị sum một cách thật đơn giản. Ngoài ra, với cách 2 này, file dữ liệu mẫu của bạn cũng phải chứa `số nguyên dương` như cách 1.
+### CÁCH 2
+* Một cách đơn giản hơn nhưng cực mạnh mẽ, dùng lệnh bên dưới ngay trên Terminal. Hoặc để cho dễ dàng hơn, bạn có thể để lệnh này vào bash script và chạy script đó.
+    ```
+    Tải các file sampledata về máy, dịch chuyển (cd) vào thư mục chứa file
+    awk '{sum+=$1} END {print "Sum of numbers: " sum}' sample02.data
+    ```
 
-<br/><br/>
+* Như vậy là bạn đã có được giá trị sum một cách thật đơn giản. Với cách 2 này, file dữ liệu mẫu của bạn cũng phải chứa `số nguyên dương` như cách 1.
+
+* Chú thích:
+   * awk: Là ngôn ngữ lập trình có mục đích đặc biệt được thiết kế để xử lý văn bản và thường được sử dụng như công cụ phân tích, báo cáo và trích xuất dữ liệu. 
+   * sum+=$1: Các con số sẽ được nạp vào $1 và thực hiện cộng dồn vào biến sum.
+   * END {...}: Khi nào awk đọc & cộng dồn hết file, thì lệnh của END mới được chạy, ở đây là in kết quả sum.
+   * `awk .... <filename>`: Thực hiện awk ngay trên file này.
+
+<br/>
 
 ## THAM KHẢO:
 

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #------------------------------------------
-#NGUOI THUC HIEN: TRAN KIEN QUOC
-#VI TRI: SOFTWARE DEVELOPMENT FRESHER
+#NGƯỜI THỰC HIỆN: TRAN KIEN QUOC
+#VỊ TRÍ: SOFTWARE DEVELOPMENT FRESHER
 #MODULE: 02-LINUX-THINKING
-#BAI TAP: 3-3
+#BÀI TẬP: 3-1-2
 #------------------------------------------
 
 HOMEPATH="/home/cpu11817"
@@ -18,19 +18,19 @@ function Run() {
 	then 	
 		echo ">>>File $filename does not exist!"
 	else
-		#Doc du lieu tu file vao Mang So Nguyen Duong (array)
-		#Do dai mang la arraylength
-		#Khai bao bien sum=0 de tien hanh cong don cac so
+		#Đọc dữ liệu từ file vào mảng số nguyên dương
+		#Xác định độ dài/kích cỡ mảng cho biến arraylength
+		#Khai báo biến sum=0 để tiến hành cộng dồn các số
 		array=($(<$input))		
 		arraylength=${#array[*]}
 		sum=0
 
 		for ((i=0; i<$arraylength; ++i))
 		do
-			#Cac phan tu co so '0' o dau (VD: 054) se duoc loai bo so '0' thanh so 54
+			#Các phần tử có số 0 ở đầu (VD: 054) sẽ được loại bỏ số '0', thành số 54.
 			temp=$((10#${array[i]}))
 			
-			#Thao tac cong don
+			#Thao tác cộng dồn
 			sum=$[$sum+$temp]
 		done
 
