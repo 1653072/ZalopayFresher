@@ -52,14 +52,15 @@ Như vậy, bạn sẽ nhận được kết quả giống như lệnh "ls -l" c
 
 #### 2. MÔ TẢ Ý TƯỞNG VỀ BÀI TẬP
 
-
-
-
-
-
-
-
-
+* Server sẽ nhập vào số client được phép kết nối, trong đoạn [3,9]. Ở phía client, mỗi người phải nhập cho mình một cái tên, tên đó không được trùng với các "command tín hiệu" (Tên được kiểm tra âm thầm và báo kết quả không hợp lệ cho client nếu client nhập phải, chứ không liệt kê ra các tên không được dùng, nhằm tránh tò mò) và tên được xóa toàn bộ khoảng cách. Tên này được dùng để lưu file cũng như là xếp thứ hạng.
+* Mảng bi có kích cỡ random trong đoạn [101,999] và giá trị của mỗi phần từ là random trong đoạn [1,1000], thực hiện ở phía server.
+* Server chỉ chạy và game chỉ bắt đầu khi số client đã đủ. Các bên kết nối với nhau, riêng server sau khi đủ số lượng, sẽ tiến hành tạo ra số luồng tương ứng số lượng client.
+* Client muốn lấy bi từ server sẽ phải gửi command "ClientRequestMarble" đến server, server nhận command và nếu còn bi, sẽ gửi bi về. Khi server hết bi thì server sẽ gửi giá trị "-1" đến client để client dừng lấy bi.
+* Trong quá trình lấy bi, client vừa sort lại mảng giá trị vừa viết kết quả vào file. Có vẻ tốn tài nguyên nhưng như vậy sẽ tốt hơn, bởi nếu như giữa chừng hệ thống có trục trặc, chí ít còn file lưu kết quả đến thời điểm bị lỗi gần nhất và dùng file đó để xử lý tiếp.
+* Client gửi tên người chơi lên server để server lưu kết quả cũng như tạo file (Nếu client có file). Nếu server nhận được, server sẽ phản hồi về cho client dưới lệnh "ServerReceivedPlayerName". Sau đó, client gửi tiếp command "ClientDontHaveMarble" (Client không có viên bi nào) hoặc "ClientReadyToSendFile" (Client có bi, có file và sẵn sàng gửi). Server kiểm tra lại command đó, nếu client nào không có bi thì server lưu lại tên, kết quả (tổng bi bằng 0) và thoát khỏi hàm nhận file từ client. Ngược lại, client có bi thì server sẽ tiến hành nhận dữ liệu từ client thông qua command "ServerRequestDataOfFile" đến khi client gửi hết dữ liệu. Kế tiếp, server tính sum và lưu lại tên, tổng kết quả vào mảng vector. Đặc biệt, khi client nào gửi xong file qua server nhanh thì sẽ xuống hàm nhận file ranking từ server và đứng đó đợi command "ServerSendRankingFile" từ server.
+* Server đóng toàn bộ luồng, tiến hành sort thứ hạng và lưu kết quả xuống file "ranking.txt". Sau đó, server gửi lệnh "ServerSendRankingFile" đến client để client biết mà ngưng chờ, 2 bên bắt đầu việc gửi file ranking (server) và nhận file ranking (client). Hơn hết, ở đây chỉ cần dùng vòng lặp for để quét toàn mảng chứa các id socket nhằm gửi dữ liệu, không nhất thiết tạo luồng nữa.
+* Client viết kết quả xuống file `<playername>_ranking.txt` và in kết quả lên màn hình.
+* Server đóng toàn bộ socket và 2 bên dừng trò chơi.
 
 #### 3. HƯỚNG DẪN
 
