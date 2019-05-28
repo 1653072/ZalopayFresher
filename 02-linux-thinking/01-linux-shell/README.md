@@ -29,7 +29,7 @@
     
     Bạn có thể mở file để xem source code cũng như các dòng chú thích (giải thích) ngay trong file.
 
-<br/><br/>
+<br/>
 
 ## SYSTEM
 
