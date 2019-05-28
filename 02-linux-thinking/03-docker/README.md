@@ -167,7 +167,7 @@ Giải thích:
 
 ### BƯỚC 3: KHỞI CHẠY
 
-Bạn tải thư mục `marbledockerserver` và thư mục `clientscript` về máy của mình.
+Bạn tải thư mục `marbledockerserver` và thư mục `_client_` về máy của mình.
 
 Dịch chuyển (cd) vào trong thư mục `marbledockerserver`.
 
@@ -197,6 +197,12 @@ sudo docker start <container-id>
 
 ## Chạy lệnh bên dưới để liệt kê toàn bộ dữ liệu mà container đó đang chứa.
 sudo docker exec -it <container-id> ls -a
+```
+
+***Lưu ý: Để khởi chạy client, hãy vào trong thư mục `_client` và thực hiện 2 lệnh bên dưới là xong***
+```
+g++ -o client client.cpp -std=c++11 -lpthread
+./client
 ```
 
 <br/><br/>
