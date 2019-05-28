@@ -104,4 +104,4 @@ Phía client, ta phải nhập tên cho mỗi người.
 
 Sau khi các client đã được nhập xong hết tên, trò chơi sẽ được bắt đầu. Sau đó, phía server có kết quả lấy bi của các client cũng như bảng xếp hạng, phía client (mỗi người chơi) sẽ có kết quả lấy bi cũng như bảng xếp hạng cho riêng mình.
 
-Video demo cho 9 client tham gia cùng một lúc, truy cập vào `"/video-demo/video-demo-9-clients.mp4"`
+Video demo cho 9 client tham gia cùng một lúc, truy cập theo đường dẫn này để xem: `"/video-demo/video-demo-9-clients.mp4"`

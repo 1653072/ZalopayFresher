@@ -27,6 +27,8 @@
 - [Networking](#E)
   - [Blocking I/O](#E1)
   - [NonBlocking I/O](#E2)
+  - [Socket TCP](#E3)
+  - [Socket UDP](#E4)
 - [Nguồn tham khảo](#F)
 
 <span name="A"></span>
@@ -247,14 +249,14 @@
    * **Ví dụ:** HĐH Windows cho phép chạy nhiều chương trình cùng một lúc, cũng như thực hiện nhiều thao tác copy và xóa cho dù thao tác trước đó vẫn chưa hoàn thành.
 
      ![Blocking-Nonblocking](images/8.png) 
-
+<span name="E3"></span>
 3. **Socket TCP:**
    * Các ứng dụng trên các máy chủ được nối mạng có thể tạo các "kết nối" với nhau, mà qua đó chúng có thể trao đổi dữ liệu hoặc các gói tin.
    * Đảm bảo chuyển dữ liệu tới nơi nhận một cách đáng tin cậy và đúng thứ tự.
    * Phân biệt dữ liệu giữa nhiều ứng dụng. Chẳng hạn, dịch vụ Web và dịch vụ thư điện tử đồng thời chạy trên cùng một máy chủ.
 
      ![Socket-TCP](images/9.jpg) 
-
+<span name="E4"></span>
 4. **Socket UDP:**
    * Chương trình trên mạng máy tính có thể gửi những dữ liệu ngắn được gọi là datagram tới máy khác.
    * UDP không cung cấp sự tin cậy và thứ tự truyền nhận mà TCP làm. Dẫn đến việc các gói dữ liệu có thể đến không đúng thứ tự hoặc bị mất mà không có thông báo.

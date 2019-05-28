@@ -185,7 +185,7 @@ sudo docker run -it --net=host dockerfile .
 Giải thích `--net=host`: 
 * Cho phép container xem port của máy chủ như thể máy chủ đó đang tồn tại trên chính container đó. 
 * Ví dụ: Giả sử có CSDL đang chạy trên port 5000 của máy A (Không có trong container của docker). Nhưng nhờ `host`, phía container ở docker có thể truy cập vào CSDL này dựa trên `localhost:5000`. 
-* Quy về trò bắn bi, nhờ `host` mà server có thể kết nối đến các client và tương tác với chúng.
+* Quay về trò bắn bi, nhờ `host` mà server có thể kết nối đến các client và tương tác với chúng.
 
 Khởi chạy server và phía client, khi trò chơi bắn bi kết thúc, các client sẽ nhận được giá trị, file, ranking của riêng mình, và server cũng vậy. Để kiểm tra server có nhận được các file bi từ client và ranking hay không, ta có thể thực hiện như sau:
 ```
