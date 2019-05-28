@@ -54,5 +54,5 @@
 
 ## 03 DOCKER
 
-Chưa có !!!
-
+### Lý thuyết & Hướng dẫn deploy server trò chơi xếp bi lên server:
+* [Lý thuyết và deploy server trên Docker](./03-docker/README.md)

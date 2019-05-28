@@ -1,0 +1,6 @@
+FROM amytabb/docker_ubuntu16_essentials
+MAINTAINER quoctk<quoctk@vng.com.vn>
+WORKDIR /marbleserverdocker
+COPY ./_server .
+RUN chmod +x ./start.sh
+ENTRYPOINT ["./start.sh"]
