@@ -7,6 +7,129 @@
 
 <br/>
 
+## HIỂU BIẾT CƠ BẢN
+
+### GREP
+
+Cú pháp: `grep [options] [pattern] [file]`
+
+```
+## Grep: Tìm kiếm chuỗi và in những dòng chứa nội dung khớp với mẫu dữ liệu ta nhập vào. Bắt đầu với dòng đầu tiên trong file, grep sẽ copy dòng đó vào buffer và so sánh nó với chuỗi tìm kiếm, nếu thỏa thì in dòng đó ra màn hình.
+
+## Pattern là các biểu thức chính quy (regular expression). Biểu thức chính quy là một chuỗi các ký tự được sử dụng để chỉ định quy tắc khớp mẫu. Các ký tự đặc biệt được sử dụng để xác định các quy tắc và vị trí phù hợp.
+
+## Options:
+-i: thực hiện tìm kiếm không phân biệt chữ hoa chữ thường.
+-n: hiển thị các dòng chứa mẫu cùng với số dòng.
+-v: hiển thị các dòng không chứa mẫu đã chỉ định.
+-c: hiển thị số lượng các mẫu phù hợp.
+```
+
+### SED
+
+Cú pháp chính:
+``
+sed 's/pattern/replace_string/' file
+``
+
+Hoặc
+``
+cat file | sed 's/pattern/replace_string/'
+``
+
+```
+## Sed: Tìm kiếm, lọc, thay thế và thao tác văn bản như chèn, tìm kiếm xóa,.... Sed là một trong những tiện ích mạnh mẽ được cung cấp bởi các hệ thống Linux/Unix và chúng ta có thể sử dụng sed với các biểu thức chính quy.
+
+## Giải thích pattern: Có thể là chuỗi ký tự hoặc 1 biểu thức chính quy. Trong 1 văn bản, chuỗi cần thay thế (pattern) có thể xuất hiện từ 0 đến nhiều lần, mỗi lần như vậy được gọi là 1 xuất hiện của chuỗi cần thay thế.
+```
+
+Mặc định, sed chỉ in ra các văn bản được thay thế. Để lưu các thay đổi này vào cùng 1 tập tin, sử dụng tùy chọn **`-i`**.
+```
+sed -i 's/text/replace/' file
+```
+
+Nếu chúng ta sử dụng các cú pháp đã đề cập ở trên, sed sẽ thay thế sự xuất hiện đầu tiên của mẫu (pattern) trong mỗi dòng. Nếu chúng ta muốn thay thế tất cả xuất hiện của mẫu trong văn bản, chúng ta cần thêm tham số **`g`** vào cuối.
+
+Hậu tố **`/g`** có nghĩa là nó sẽ thay thế các xuất hiện của mẫu cho đến cuối văn bản, mặc định nó sẽ bắt đầu với xuất hiện thứ 1 của mẫu.
+```
+sed 's/pattern/replace_string/g' file
+```
+
+Thay thế từ xuất hiện thứ N của mẫu cho đến cuối văn bản. Để làm việc này, chúng ta có thể sử dụng dạng **`/Ng`**.
+```
+echo thisthisthisthis | sed 's/this/THIS/2g'
+Kết quả: thisTHISTHISTHIS
+```
+
+Xóa các dòng trống là 1 kỹ thuật đơn giản với việc sử dụng sed. Các khoảng trống có thể được đối chiếu với biểu thức chính quy ^$
+```
+sed '/^$/d' file
+```
+
+Thông thường để kết hợp nhiều lệnh sed với nhau, chúng ta thường sử dụng toán tử **`pipe (|)`**.
+```
+sed 'expression' | sed 'expression'
+Hoặc
+sed 'expression; expression'
+Hoặc
+sed -e 'expression' -e 'expression'
+```
+
+Xem thêm các cách sử dụng khác [tại đây](http://www.justpassion.net/tech/programming/bash-shell/lenh-sed-trong-linux.html).
+
+### FIND
+
+Cú pháp cơ bản:
+``
+find [starting-point] [options] [expression]
+``
+
+```
+## Find: Mục đích là tìm kiếm các file trong đó thỏa điều kiện mình đề ra.
+
+## Một số loại file descriptors:
+    f - File thông thường
+    d - Thư mục
+    l - Symbolic link
+    c - Character devices
+    b - Block devices
+
+## In kết quả ra file (-type f) có tên là conf_search.
+find /etc -type f -name “*.conf” > conf_search
+
+## Tìm file theo kích cỡ. Chẳng hạn tìm các file có kích cỡ từ 1000MB trở lên
+find / -size +1000MB
+```
+
+### AWK
+
+```
+## Awk: Là ngôn ngữ lập trình có mục đích đặc biệt được thiết kế để xử lý văn bản và thường được sử dụng như công cụ phân tích, báo cáo và trích xuất dữ liệu.
+
+## Ví dụ mã lệnh:
+awk '/localhost/{print}' /etc/hosts
+awk '/[0-9]/{print}' /etc/hosts
+```
+
+Cú pháp: `awk 'script' filenames`
+
+Nội dung của script: `/pattern/ { actions }`. Script có thể là các biểu thức chính quy, nhưng nó cũng có thể là một mẫu đặc biệt BEGIN và END.
+```
+BEGIN { actions } 
+/pattern/ { actions }
+/pattern/ { actions }
+...
+END { actions } 
+
+## Giải thích:
+
+Awk sẽ thực thi (các) hành động được chỉ định trong BEGIN một lần trước khi thực thi (các) những hành động kế tiếp "/pattern/ { actions }.
+
+Awk sẽ thực thi (các) hành động được chỉ định trong END trước khi nó thực sự thoát.
+```
+
+<br/>
+
 ## PROCESSING TEXTS
 
 1. Count the number of lines satisfying a specific pattern in a log file
@@ -17,8 +140,8 @@
 
     VÍ DỤ: grep -c EEEE logfile
     ```
-
-    **grep `<pattern>`**: Tìm kiếm chuỗi và in những dòng chứa nội dung khớp với mẫu dữ liệu ta nhập vào. Bắt đầu với dòng đầu tiên trong file, grep sẽ copy dòng đó vào buffer và so sánh nó với chuỗi tìm kiếm, nếu thỏa thì in dòng đó ra màn hình. Với câu hỏi này, vì có **-c** nên sẽ chuyển sang in giá trị đã đếm được (c: count).
+    
+    Với câu hỏi này, vì có **-c** nên sẽ chuyển sang in giá trị đã đếm được (c: count).
 
 2. Calculate KLOC of code C/C++ files in a directory
 
@@ -161,7 +284,6 @@
 * Như vậy là bạn đã có được giá trị sum một cách thật đơn giản. Với cách 2 này, file dữ liệu mẫu của bạn cũng phải chứa `số nguyên dương` như cách 1.
 
 * Chú thích:
-   * awk: Là ngôn ngữ lập trình có mục đích đặc biệt được thiết kế để xử lý văn bản và thường được sử dụng như công cụ phân tích, báo cáo và trích xuất dữ liệu. 
    * sum+=$1: Các con số sẽ được nạp vào $1 và thực hiện cộng dồn vào biến sum.
    * END {...}: Khi nào awk đọc & cộng dồn hết file, thì lệnh của END mới được chạy, ở đây là in kết quả sum.
    * `awk .... <filename>`: Thực hiện awk ngay trên file này.
