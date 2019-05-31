@@ -7,21 +7,83 @@
 
 <br/>
 
+## Mục lục
+
+- [Cấu trúc dữ liệu](#A)
+  - [Cấu trúc dữ liệu xác suất (Probabilistic Data Structures)](#A1)
+    - [Tính chất của PDS](#A1.1)
+    - [Bloom Filters](#A1.2)
+    - [Cuckoo Filters](#A1.3)
+    - [Count Min Sketch](#A1.4)
+    - [HyperLogLog](#A1.5)
+  - [Trie](#A2)
+    - [Khái niệm](#A2.1)
+    - [Ứng dụng](#A2.2)
+- [Các mẫu thiết kế (Design Pattern)](#B)
+  - [Mẫu Factory](#B1)
+  - [Mẫu Singleton](#B2)
+  - [Mẫu Composite](#B3)
+  - [Mẫu Iterator](#B4)
+  - [Mẫu Facade](#B5)
+- [Nguyên tắc lập trình](#C)
+  - [SOLID](#C1)
+  - [DRY](#C2)
+  - [KISS](#C3)
+  - [YAGNI](#C4)
+  - [Do the simplest thing that could possibly work](#C5)
+  - [Clean code](#C6)
+    - [Khái niệm](#C6.1)
+    - [Ít nhất 5 cách trong clean code](#C6.2)
+- [Nguồn tham khảo](#D)
+
+<br/>
+
+<span name="A"></span>
+
 ## CẤU TRÚC DỮ LIỆU
 
-1. Cấu trúc dữ liệu xác suất (Probabilistic data structures)
+<span name="A1"></span>
+
+1. Cấu trúc dữ liệu xác suất (Probabilistic Data Structures)
+
+   <span name="A1.1"></span>
+
    * Tính chất của PDS: 
+
+   <span name="A1.2"></span>
+
    * Bloom Filters:
+
+   <span name="A1.3"></span>
+
    * Cuckoo Filters:
+
+   <span name="A1.4"></span>
+
    * Count Min Sketch:
+
+   <span name="A1.5"></span>
+
    * HyperLogLog:
+
+<span name="A2"></span>
+
 2. Trie
+   <span name="A2.1"></span>
+
    * Khái niệm:
+
+   <span name="A2.2"></span>
+
    * Ứng dụng:
 
 <br/>
 
+<span name="B"></span>
+
 ## DESIGN PATTERN
+
+<span name="B1"></span>
 
 1. **Factory (FP):**
    * **Khái niệm:**
@@ -90,6 +152,7 @@
         }
         ```
 
+<span name="B2"></span>
 
 2. **Singleton (SP):**
    * **Khái niệm:**
@@ -152,6 +215,8 @@
             }
         }
         ```
+
+<span name="B3"></span>
 
 3. **Composite (CP):**
    * **Khái niệm:**
@@ -244,6 +309,8 @@
         }
         ```
 
+<span name="B4"></span>
+
 4. **Iterator (IP):**
    * **Khái niệm:**
         * Thuộc nhóm hành vi/tương tác.
@@ -335,7 +402,9 @@
             }
         }
         ```
-   
+
+<span name="B5"></span>
+
 5. **Facade (FP):**
    * **Khái niệm:**
         * Thuộc nhóm cấu trúc.
@@ -471,7 +540,11 @@
 
 <br/>
 
+<span name="C"></span>
+
 ## NGUYÊN TẮC LẬP TRÌNH
+
+<span name="C1"></span>
 
 1. **SOLID**
    
@@ -500,7 +573,10 @@
 
     * Xem chi tiết source code cho SOLID [tại đây](https://topdev.vn/blog/nguyen-ly-solid-la-gi-nguyen-ly-solid-trong-node-js-voi-typescript/?fbclid=IwAR0JmVECIbywQ2Hj6DvpNL9EJYgX6FeXKOIPugx3Yc6keo8yMGb4PgWmdMg).
 
+<span name="C2"></span>
+
 2. **DRY**
+
    * Don't Repeat Yourself hay DRY là một nguyên lý cơ bản nhất của lập trình được đưa ra nhằm mục đích hạn chế tối thiểu việc viết các đoạn code lặp đi lặp lại nhiều lần chỉ để thực hiện các công việc giống nhau trong ứng dụng. Thay vào đó, hãy đóng gói nó thành phương thức riêng, đến khi cần thì chỉ cần gọi tên nó ra để sử dụng.
 
    * Ví dụ: Code hàm kiểm tra Email (tính năng đăng nhập) cho trang admin, vài tuần sau có thêm trang admin mới cần phải kiểm tra vụ đăng nhập, thế là bưng code cũ qua xài tiếp. Vài tháng kế tiếp lại có thêm trang admin mới, lúc này bưng code qua xài tiếp. Tuy nhiên, chỉ cần có 1 sự thay đổi nhỏ như là, ngoài việc kiểm tra Email đăng nhập có khớp với Email admin hay không, mà còn kiểm tra ngày khởi tạo tài khoản có hơn 1 tháng hay không, lúc này bạn sẽ phải sửa code không những ở trang admin này mà còn một đống trang admin phía sau, dẫn đến tốn thời gian. Thay vào đó nên viết một hàm/class xài chung & tổng quát hóa.
@@ -509,17 +585,26 @@
 
    * Xem thêm chi tiết [tại đây](https://www.codehub.vn/Nguyen-Ly-DRY-Dont-Repeat-Yourself).
 
+<span name="C3"></span>
+
 3. **KISS**
+
    * KISS (Keep It Simple, Stupid), tạm dịch là "giữ cho mọi thứ đơn giản đi, ngốc ạ”. Hoặc các biến thể khác như "Keep It Short and Simple", "Keep It Simple and Straightforward" và "Keep It Small and Simple".
 
    * Trong lập trình, KISS nghĩa là hãy làm cho mọi thứ (mã lệnh) trở nên đơn giản nhằm dễ nhìn và dễ đọc. Hãy chia nhỏ vấn đề và giải quyết từng cái. Đừng viết những lớp hay phương thức theo kiểu tổng hợp hay lẫn lộn (tất cả trong một). Đồng thời, hãy để số lượng dòng code của một lớp hay phương thức ở con số hàng chục, hạn chế lên hàng trăm, hàng nghìn.
 
+<span name="C4"></span>
+
 4. **YAGNI**
+
    * YAGNI (You Aren’t Gonna Need It), tạm dịch là "bạn sẽ không cần nó". Hãy xây dựng cái bạn cần khi mà bạn thực sự cần đến nó, hãy xông xáo tái cấu trúc nó khi cần thiết. Đừng dành quá nhiều thời gian để lên kế hoạch cho những thứ lớn lao, và những kịch bản tương lai không biết trước. Phần mềm tốt là cái mà có thể tiến hóa thành sản phẩm hoàn thiện theo thời gian.
 
    * Thực tế hơn, ta nên tập trung xây dựng chức năng giải quyết vấn đề ở thời điểm hiện tại, vấn đề mà khách hàng cần giải quyết, không cần lãng phí thời gian vào một chức năng "Có thể sử dụng đến" => Đừng tự vẽ vời thêm việc cho bản thân.
 
+<span name="C5"></span>
+
 5. **Do the simplest thing that could possibly work**
+
    * Tạm dịch là "làm các thứ đơn giản nhất mà nó chạy được".
 
    * Đối với các tester, điều đó có nghĩa là bắt đầu với một bài kiểm tra đơn vị đơn giản (simple unit test) và chỉ tăng dần độ phức tạp khi nó đã & vẫn đang hoạt động được.
@@ -530,9 +615,14 @@
 
    * Xem thêm [tại đây](http://www.agilenutshell.com/simplest_thing).
 
+<span name="C6"></span>
 
 6. **Clean code**
+
+   <span name="C6.1"></span>
+
    * **Khái niệm:**
+
         * Về hình thức:
             * Cách trình bày code: Căn lề, sử dụng tab, space,... sao cho dễ đọc, dễ nhìn.
             * Cách đặt tên biến, hàm, class có theo quy ước không.
@@ -547,14 +637,36 @@
             * Bjnarne Stroustrup tác giả cuốn sách “The C++ Programming Language” đưa ra quan điểm của mình: Ông muốn code của mình phải hiệu quả và đẹp. Tất cả các hàm business logic phải rõ ràng và bugs dễ dàng tìm thấy. Code phải dễ dàng bảo trì, các ngoại lệ phải được bắt một cách rõ ràng. Phải tối ưu hóa các performance, tránh viết code quá phức tạp gây khó khăn cho người khác.
             * Grady Booch tách giả cuốn sách “Object oriented analysic and design with Applications” đưa ra quan điểm của mình: Viết code đơn giản, code phải dễ đọc và dễ hiểu cho người khác. Code phải có ý nghĩa và dễ quản lý.
 
+   <span name="C6.2"></span>
+
    * **Ít nhất 5 cách để được clean code:**
+
         * General rules:
+            * Tuân thủ quy ước chung mà team đặt ra.
+            * Tuân thủ nguyên tắc KISS.
+            * Tìm gốc gác của mọi vấn đề/lỗi (nếu có) thay vì "đối phó" nó.
         * Names rules:
+            * Tên phân biệt cho mỗi tính năng/trường hợp, không trùng lắp.
+            * Tên mô tả được bản chất của nó cũng như hàm một cách rõ ràng.
+            * Tránh "mã hóa hoặc nối thêm tiền tố (Ví dụ: m_compute, _absolute).
+            * Tên phát âm được (Ví dụ: DateTime, không được DatehhMMss).
         * Functions rules:
+            * Hàm nhỏ, không quá nhiều dòng code.
+            * Mỗi hàm chỉ làm `đúng` nghĩa vụ của nó.
+            * Tên hàm mô tả được nghĩa vụ của nó.
+            * Ít tham số truyền vào hàm.
         * Comments rules:
-        * Tests: 
+            * Giải thích những phần mà mình cho là khó hiểu, cần phải tường minh.
+            * Không giải thích dư thừa: Viết quá nhiều từ, chữ hoặc chỗ nào cũng giải thích (kể cả chỗ dễ hiểu nhất).
+            * Sử dụng cho trường hợp: Cảnh báo, giải thích ngữ nghĩa hàm/từ/ý tưởng,...
+        * Tests:
+            * Mỗi một kiểm tra đặt ở đâu là phải có "assert" chỗ đó.
+            * Các bài kiểm tra phải độc lập nhau, hạn chế kiểm tra này phụ thuộc kiểm tra kia.
+            * Kiểm tra lại theo khoảng thời gian nhất định và các kiểm tra đó người xem phải đọc/xem được. (Kiểm tra mà không xem/đọc được kết quả có đúng đắn hay không thì cũng vô nghĩa).
         
 <br/>
+
+<span name="D"></span>
 
 ## NGUỒN THAM KHẢO
 1. <https://gpcoder.com/4164-gioi-thieu-design-patterns/>
