@@ -501,22 +501,59 @@
     * Xem chi tiết source code cho SOLID [tại đây](https://topdev.vn/blog/nguyen-ly-solid-la-gi-nguyen-ly-solid-trong-node-js-voi-typescript/?fbclid=IwAR0JmVECIbywQ2Hj6DvpNL9EJYgX6FeXKOIPugx3Yc6keo8yMGb4PgWmdMg).
 
 2. **DRY**
+   * Don't Repeat Yourself hay DRY là một nguyên lý cơ bản nhất của lập trình được đưa ra nhằm mục đích hạn chế tối thiểu việc viết các đoạn code lặp đi lặp lại nhiều lần chỉ để thực hiện các công việc giống nhau trong ứng dụng. Thay vào đó, hãy đóng gói nó thành phương thức riêng, đến khi cần thì chỉ cần gọi tên nó ra để sử dụng.
 
+   * Ví dụ: Code hàm kiểm tra Email (tính năng đăng nhập) cho trang admin, vài tuần sau có thêm trang admin mới cần phải kiểm tra vụ đăng nhập, thế là bưng code cũ qua xài tiếp. Vài tháng kế tiếp lại có thêm trang admin mới, lúc này bưng code qua xài tiếp. Tuy nhiên, chỉ cần có 1 sự thay đổi nhỏ như là, ngoài việc kiểm tra Email đăng nhập có khớp với Email admin hay không, mà còn kiểm tra ngày khởi tạo tài khoản có hơn 1 tháng hay không, lúc này bạn sẽ phải sửa code không những ở trang admin này mà còn một đống trang admin phía sau, dẫn đến tốn thời gian. Thay vào đó nên viết một hàm/class xài chung & tổng quát hóa.
+
+   * Tình huống ngoại lệ: Tình huống gấp rút, số lượng trang admin biết trước và ít ỏi thì ta có thể bỏ qua nguyên tắc DRY. Ngược lại, ta nên áp dụng DRY.
+
+   * Xem thêm chi tiết [tại đây](https://www.codehub.vn/Nguyen-Ly-DRY-Dont-Repeat-Yourself).
 
 3. **KISS**
+   * KISS (Keep It Simple, Stupid), tạm dịch là "giữ cho mọi thứ đơn giản đi, ngốc ạ”. Hoặc các biến thể khác như "Keep It Short and Simple", "Keep It Simple and Straightforward" và "Keep It Small and Simple".
 
+   * Trong lập trình, KISS nghĩa là hãy làm cho mọi thứ (mã lệnh) trở nên đơn giản nhằm dễ nhìn và dễ đọc. Hãy chia nhỏ vấn đề và giải quyết từng cái. Đừng viết những lớp hay phương thức theo kiểu tổng hợp hay lẫn lộn (tất cả trong một). Đồng thời, hãy để số lượng dòng code của một lớp hay phương thức ở con số hàng chục, hạn chế lên hàng trăm, hàng nghìn.
 
 4. **YAGNI**
+   * YAGNI (You Aren’t Gonna Need It), tạm dịch là "bạn sẽ không cần nó". Hãy xây dựng cái bạn cần khi mà bạn thực sự cần đến nó, hãy xông xáo tái cấu trúc nó khi cần thiết. Đừng dành quá nhiều thời gian để lên kế hoạch cho những thứ lớn lao, và những kịch bản tương lai không biết trước. Phần mềm tốt là cái mà có thể tiến hóa thành sản phẩm hoàn thiện theo thời gian.
 
+   * Thực tế hơn, ta nên tập trung xây dựng chức năng giải quyết vấn đề ở thời điểm hiện tại, vấn đề mà khách hàng cần giải quyết, không cần lãng phí thời gian vào một chức năng "Có thể sử dụng đến" => Đừng tự vẽ vời thêm việc cho bản thân.
 
 5. **Do the simplest thing that could possibly work**
+   * Tạm dịch là "làm các thứ đơn giản nhất mà nó chạy được".
+
+   * Đối với các tester, điều đó có nghĩa là bắt đầu với một bài kiểm tra đơn vị đơn giản (simple unit test) và chỉ tăng dần độ phức tạp khi nó đã & vẫn đang hoạt động được.
+
+   * Đối với designer, điều đó có nghĩa là bắt đầu với một cái gì đó thật đơn giản, và theo thời gian, tăng dần sự phức tạp, cầu kỳ nhưng phải có ý nghĩa (thêm thắt nhiều chi tiết mà làm tăng sự "rối mắt, nhức não" cho sản phẩm thì cũng vô nghĩa).
+
+   * Có hai cách để thiết kế phần mềm: Một cách là làm cho nó đơn giản đến mức không còn thiếu sót, và cách khác là làm cho nó phức tạp đến mức thiếu sót khó mà thấy rõ. Phương pháp đầu tiên dẫu khó khăn nhưng cực kì có lợi, không những việc mở rộng phần mềm trở nên dễ dàng hơn mà còn là bảo trì, bàn giao sản phẩm,...
+
+   * Xem thêm [tại đây](http://www.agilenutshell.com/simplest_thing).
 
 
 6. **Clean code**
    * **Khái niệm:**
+        * Về hình thức:
+            * Cách trình bày code: Căn lề, sử dụng tab, space,... sao cho dễ đọc, dễ nhìn.
+            * Cách đặt tên biến, hàm, class có theo quy ước không.
+            * Cách phân phối lượng code (số dòng code trong file, số dòng code trong 1 method,...) là bao nhiêu.
+        * Về nội dung:
+            * Cách đặt tên hàm, tên biến phải dễ hiểu.
+            * Cách viết comment cho code, khi nào cần viết comment, khi nào không.
+            * Thiết kế, xây dựng cấu trúc cho đối tượng, dữ liệu nhằm dễ sử dụng và mở rộng.
+            * Cách xử lý ngoại lệ (Exception) có ổn không.
+            * Khả năng bảo trì, mở rộng của code,...
+        * Kết luận:
+            * Bjnarne Stroustrup tác giả cuốn sách “The C++ Programming Language” đưa ra quan điểm của mình: Ông muốn code của mình phải hiệu quả và đẹp. Tất cả các hàm business logic phải rõ ràng và bugs dễ dàng tìm thấy. Code phải dễ dàng bảo trì, các ngoại lệ phải được bắt một cách rõ ràng. Phải tối ưu hóa các performance, tránh viết code quá phức tạp gây khó khăn cho người khác.
+            * Grady Booch tách giả cuốn sách “Object oriented analysic and design with Applications” đưa ra quan điểm của mình: Viết code đơn giản, code phải dễ đọc và dễ hiểu cho người khác. Code phải có ý nghĩa và dễ quản lý.
 
    * **Ít nhất 5 cách để được clean code:**
-
+        * General rules:
+        * Names rules:
+        * Functions rules:
+        * Comments rules:
+        * Tests: 
+        
 <br/>
 
 ## NGUỒN THAM KHẢO
@@ -529,6 +566,12 @@
 7. <https://gpcoder.com/4604-huong-dan-java-design-pattern-facade/>
 8. <https://stackjava.com/design-pattern/facade-pattern.html>
 9. <https://topdev.vn/blog/nguyen-ly-solid-la-gi-nguyen-ly-solid-trong-node-js-voi-typescript/?fbclid=IwAR0JmVECIbywQ2Hj6DvpNL9EJYgX6FeXKOIPugx3Yc6keo8yMGb4PgWmdMg>
-
-
-
+10. <https://www.codehub.vn/Nguyen-Ly-DRY-Dont-Repeat-Yourself>
+11. <https://vinacode.net/2015/03/11/lap-trinh-vien-can-nho/>
+12. <https://hanoiict.edu.vn/cac-nguyen-tac-solid-yagni-kiss-dry-trong-lap-trinh>
+13. <http://www.agilenutshell.com/simplest_thing>
+14. <https://stackjava.com/clean-code/clean-code-la-gi.html>
+15. <https://techtalk.vn/clean-code-ma-sach-va-con-duong-tro-thanh-better-developer.html>
+16. <https://techtalk.vn/clean-code-ma-sach-va-con-duong-tro-thanh-better-developer-p2.html>
+17. <https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29>
+18. <http://shhetri.github.io/clean-code/#/16>
