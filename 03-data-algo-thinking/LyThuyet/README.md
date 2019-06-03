@@ -1,4 +1,4 @@
-# DATA ALGO THINKING
+﻿# DATA ALGO THINKING
 
 ## NGƯỜI THỰC HIỆN
 
@@ -201,16 +201,17 @@
 
             public static ThreadSafeSingleton getInstance()
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     synchronized(ThreadSafeSingleton.class)
                     {
-                        if(instance == null)
+                        if (instance == null)
                         {
-                            instance = new ThreadSafeSingleton();
+                            instance = new Trie();
                         }
                     }
                 }
+                
                 return instance;
             }
         }
