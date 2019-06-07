@@ -230,14 +230,14 @@
         ![Folder-File-Composite](./images/1.png)
 
    * **Code minh họa:**
-        * FileComponent.java
+        * `FileComponent.java`
         ```
         public interface FileComponent {
             void showProperty();
             long totalSize();
         }
         ```
-        * FileLeaf.java
+        * `FileLeaf.java`
         ```
         public class FileLeaf implements FileComponent {
             private String name;
@@ -260,7 +260,7 @@
             }
         }
         ```
-        * FolderComposite.java
+        * `FolderComposite.java`
         ```
         import java.util.ArrayList;
         import java.util.List;
@@ -291,7 +291,7 @@
             }
         }
         ```
-        * Client.java
+        * `Client.java`
         ```
         import java.util.Arrays;
         import java.util.List;
@@ -321,7 +321,7 @@
         ![Iterator-Pattern](./images/2.png)
 
    * **Code minh họa:**
-        * Item.java
+        * `Item.java`
         ```
         public class Item {
             private String title;
@@ -341,7 +341,7 @@
             }
         }
         ```
-        * ItemIterator.java
+        * `ItemIterator.java`
         ```
         public interface ItemIterator<T>
         {
@@ -349,7 +349,7 @@
             T next();
         }
         ```
-        * Menu.java
+        * `Menu.java`
         ```
         import java.util.ArrayList;
         import java.util.List;
@@ -385,7 +385,7 @@
             }
         }
         ```
-        * Client.java
+        * `Client.java`
         ```
         public class Client {
             public static void main(String[] args) {
@@ -414,7 +414,7 @@
         ![Facade-Pattern](./images/3.png)
         
    * **Code minh họa:**
-        * AccountService.java
+        * `AccountService.java`
         ```
         public class AccountService {
             public void getAccount(String email)
@@ -423,7 +423,7 @@
             }
         }
         ```
-        * PaymentService.java
+        * `PaymentService.java`
         ```
         public class PaymentService {
             public void paymentByPaypal()
@@ -447,7 +447,7 @@
             }
         }
         ```
-        * ShippingService.java
+        * `ShippingService.java`
         ```
         public class ShippingService {
             public void freeShipping()
@@ -466,7 +466,7 @@
             }
         }
         ```
-        * EmailService.java
+        * `EmailService.java`
         ```
         public class EmailService {
             public void sendMail(String mailTo)
@@ -475,7 +475,7 @@
             }
         }
         ```
-        * SmsService.java
+        * `SmsService.java`
         ```
         public class SmsService {
             public void sendSMS(String mobilePhone)
@@ -484,7 +484,7 @@
             }
         }
         ```
-        * ShopFacade.java
+        * `ShopFacade.java`
         ```
         public class ShopFacade {
             private static final ShopFacade INSTANCE = new ShopFacade();
@@ -529,7 +529,7 @@
             }
         }
         ```
-        * Client.java (Kết hợp giữa `Facade` và `Singleton`)
+        * `Client.java` (Kết hợp giữa `Facade` và `Singleton`)
         ```
         public class Client {
             public static void main(String[] args) {
