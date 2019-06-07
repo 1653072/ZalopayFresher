@@ -8,7 +8,7 @@
 <br/>
 
 ## LÝ THUYẾT 
-* Xem nội dung lý thuyết [tại đây](./02-linux-programming/LyThuyet/README.md).
+* Xem nội dung lý thuyết [tại đây](./LyThuyet/README.md).
 * Nội dung lý thuyết:
     * Cấu trúc dữ liệu
         * Cấu trúc dữ liệu xác suất: Bloom Filters, Cuckoo Filters, Count Min Sketch, HyperLogLog.
@@ -26,11 +26,11 @@
 <br/>
 
 ## HƯỚNG DẪN THỰC HIỆN BÀI TẬP
-* Xem mô tả & hướng dẫn thực hiện 3 bài tập [tại đây](/BaiTap/README.md)
+* Xem mô tả & hướng dẫn thực hiện 3 bài tập [tại đây](./BaiTap/README.md)
 
 <br/>
 
 ## DỮ LIỆU PHỤC VỤ CHO BÀI TẬP
-* Dữ liệu cho [Bài tập 3-1](/BaiTap/BT3-1).
-* Dữ liệu cho [Bài tập 3-2](/BaiTap/BT3-2).
-* Dữ liệu cho [Bài tập 3-3](/BaiTap/BT3-3).
+* Dữ liệu cho [Bài tập 3-1](./BaiTap/BT3-1).
+* Dữ liệu cho [Bài tập 3-2](./BaiTap/BT3-2).
+* Dữ liệu cho [Bài tập 3-3](./BaiTap/BT3-3).
