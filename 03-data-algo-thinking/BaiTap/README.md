@@ -108,10 +108,25 @@ Import project `HashTable` vào eclipse và bấm tổ hợp phím `Alt + Shift 
 ## BÀI TẬP 3-3
 
 #### 1. MÔ TẢ BÀI TẬP
+Bộ phần CS (Customer Service) sẽ nhận các khiếu nại từ người dùng và giải quyết chúng trong khoảng thời gian cho phép (tối đa là 8 tiếng theo giờ làm việc).
 
+Giờ làm việc được tính từ `8h30` tới `12h` với buổi sáng và `13h30` đến `18h` với buổi chiều. CS sẽ làm nguyên ngày từ thứ 2 đến thứ 6, riêng thứ 7 sẽ chỉ làm buổi sáng.
 
+**Mục tiêu:** Tính toán thời điểm bắt đầu giải quyết khiếu nại cho đến khi hoàn tất là trong khoảng bao lâu.
 
+**Ý tưởng thuật toán:**
 
+* B1: Kiểm tra ngày, tháng, năm "begin" và ngày, tháng, năm "end" có trùng nhau không và chia thành 2 trường hợp.
+    * **`Trường hợp 1: [KHÔNG TRÙNG]`**
+    * B1.1.1: Tính tổng số tiếng của ngày hiện tại của "begin".
+    * B1.1.2: Tăng ngày của "begin" lên 1 và đặt lại giờ thành 8:30 (sáng).
+    * B1.1.3: Quét vòng lặp từ ngày của "begin" cho đến ngày của "end". Nếu ngày, tháng, năm của "begin" và "end" trùng nhau thì thoát khỏi vòng lặp và tiến tới thực hiện `Trường hợp 2`.
+    * B1.1.4: Trong quá trình quét vòng lặp thì cứ cộng dồn số tiếng của "begin". Nếu là thứ 7 thì cộng dồn 3.5 tiếng, các ngày còn lại thì cộng dồn 8 tiếng, chủ nhật không tính.
+    * **`Trường hợp 2: [TRÙNG NHAU]`**
+    * B1.2.1: Lúc này, ngày, tháng, năm của "begin" và "end" trùng nhau. Nếu giờ, phút của "begin" và "end" cùng <=12 hoặc cùng >12 thì ta chỉ cần lấy "end" trừ "begin". Ngược lại, "begin" <=12 trong khi "end" lại >12 thì ta lấy "end" trừ "begin" và trừ thêm 1.5h (Khoảng thời gian từ 12:00 - 13:30).
+* B2: Chuyển kết quả đã sum (đơn vị là tiếng) thành đơn vị là phút. Sau đó, ép kiểu biến từ `double` về lại `int`. Cuối cùng là return kết quả theo hàm `Duration.ofMinutes`.
+
+* Lưu ý: Toàn bộ số phút trong ý tưởng này đều được quy đổi thành số giờ. Ví dụ: 30 phút bằng 0.5h, 20 phút bằng 0.25h, 14:20 bằng 14.25.
 
 #### 2. HƯỚNG DẪN
 
