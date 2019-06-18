@@ -129,7 +129,26 @@ Giờ làm việc được tính từ `8h30` tới `12h` với buổi sáng và 
 * Lưu ý: Toàn bộ số phút trong ý tưởng này đều được quy đổi thành số giờ. Ví dụ: 30 phút bằng 0.5h, 20 phút bằng 0.25h, 14:20 bằng 14.25.
 
 #### 2. HƯỚNG DẪN
+Tải project folder `TicketSLA` từ đường dẫn `/BT3-3/TicketSLA` về máy.
 
+Import project `TicketSLA` vào eclipse và bấm tổ hợp phím `Alt + Shift + X` ở `Main.java` rồi chọn `J (Run java application)` để chạy chương trình. Như vậy là xong.
 
+***Lưu ý:***
+* File `Main.java` trong đường dẫn `/BT3-3/TicketSLA/src/SLA/Main.java` đã được mình cài đặt và chạy thử với 7 trường hợp khác nhau (có dữ liệu mẫu đi chung). Bạn có thể mở source code ra xem code, 7 trường hợp đó là gì và chạy thử kết quả cuối cùng có đúng như bản thân nghĩ.
 
+#### 3. BENCHMARK HÀM CALCULATE
+* Benchmark ở đây sẽ đánh giá trọng tâm duy nhất về `thời gian xử lý`.
+* Ta chỉ cần thêm đoạn code bên dưới để đánh giá thời gian chạy.
+    ```
+    long startTime = System.currentTimeMillis();
+        <Functions need to be evaluated will be put here>
+    long endTime = System.currentTimeMillis();
+    System.out.println("Total execution time: " + (endTime-startTime) + "ms"); 
+    ```
+* Thời gian xử lý dao động từ 0ms-40ms, nghĩa là tốc độ xử lý siêu nhanh, mang tính tức thời.
+* Ngoài ra, vì xử lý quá nhanh mà không tốn nhiều Memory, CPU nên công cụ `JVM Monitor` khó dùng trong tình huống này, thậm chí không cần thiết dùng đến.
+
+    ![CalculateFunction-Image](./images/3.png)
+
+    *(Ảnh ví dụ)*
 

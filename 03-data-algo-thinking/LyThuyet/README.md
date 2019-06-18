@@ -18,7 +18,9 @@
     - [HyperLogLog](#A1.5)
   - [Trie](#A2)
     - [Khái niệm](#A2.1)
-    - [Ứng dụng](#A2.2)
+    - [Cấu trúc](#A2.2)
+    - [Ưu điểm](#A2.3)
+    - [Ứng dụng](#A2.4)
 - [Các mẫu thiết kế (Design Pattern)](#B)
   - [Mẫu Factory](#B1)
   - [Mẫu Singleton](#B2)
@@ -49,33 +51,131 @@
    <span name="A1.1"></span>
 
    * Tính chất của PDS: 
+        * Là nhóm các cấu trúc dữ liệu cực kì hữu ích & phù hợp cho việc truyền tải dữ liệu và xử lý dữ liệu lớn.
+        * Nhóm các cấu trúc này thường sử dụng hàm băm để thực hiện thêm, xóa, kiểm tra kết quả theo cách thức randomize các items.
+        * Các loại cấu trúc trong nhóm này thường bỏ qua các trường hợp đụng độ, dẫn đến việc không thể đưa lại một giá trị chính xác, mà chỉ là ước tính.
+        * Các thuật toán thuộc nhóm này sử dụng ít bộ nhớ, dễ dàng tính toán song song (các hàm hash độc lập nhau) và có thời gian truy vấn không đổi.
+        * Một vài loại của PDS như: Membership, Cardinality, Frequency, Similarity.
 
    <span name="A1.2"></span>
 
    * Bloom Filters:
+        * Bloom filter là 1 cấu trúc dữ liệu xác suất dùng để kiểm tra 1 phần tử có thuộc 1 tập dữ liệu hay không một cách nhanh chóng và tiết kiệm bộ nhớ. 
+        * Hỗ trợ 2 phương thức tương tác là: Thêm phần tử vào tập và kiểm tra 1 phần tử có thuộc tập dữ liệu không. Nếu kết quả trả về là “không” thì kết quả này chính xác 100%. Tuy nhiên khi kết quả trả về là “có” thì xác suất kết quả này không chính xác (false positive) tùy thuộc vào các thông số thiết lập cho bloom filter và số lượng phần tử đã add vào bloom filter (số lượng càng lớn thì phần trăm kết quả sai càng cao).
+        * Bản chất của bloom filter là một vector các bit. Một bloom filter rỗng là một vector các bit có giá trị là 0. Ngoài ra, bloom filter còn cần 1 số nhất định các hàm hash với chức năng map một cách ngẫu nhiên và đồng đều các giá trị được add vào bloom filter tới vị trí của 1 bit trong vector. Số lượng các hàm hash và độ dài của bit vector sẽ ảnh hưởng đến độ chính xác khi kết quả của bloom filter là “phần tử đã tồn tại trong tập hợp”. Thường thì số hàm hash (k) là 1 số cố định và nhỏ hơn rất nhiều so với độ dài của bit vector (m).
+        * Khi add một phần tử vào bloom filter thì giá trị phần tử này sẽ được xử lý bởi k hàm hash. K kết quả trả về là vị trí của k bit trong vector, giá trị các bit vector này sẽ được chuyển sang 1.
+        * Khi kiểm tra 1 phần tử có thuộc tập hợp đã được add vào bloom filter hay chưa thì giá trị của phần tử này cũng được xử lý bởi k hàm hash, trả về các vị trí bit. Nếu có bất kì bit nào có giá trị là 0 thì tức là phần tử này chắc chắn không thuộc tập hợp.  Còn nếu tất cả các bit đều bằng 1 thì phần tử này có thể thuộc tập hợp hoặc cũng có thể là false positive (do việc tất cả các bit bằng 1 có thể là kết quả của việc add các phần tử khác chứ không phải là phần tử đang được kiểm tra). Tỉ lệ false positive sẽ càng tăng khi có càng nhiều phần tử được add vào bloom filter. Chỉ riêng sử dụng bloom filter thì không thể phân biệt 2 trường hợp này mà cần đến các thuật toán và các cấu trúc dữ liệu khác.
+
+            ![BloomFilters01](./images/6.png)
+
+            ![BloomFilters02](./images/7.png)
+        
+        * Để tính số lượng hàm hash nên sử dụng thì ta có công thức: `k* = (m/n)*ln(2)` với m là độ dài bit vector, n là số phần tử của tập hợp, k là số hàm hash.
+        * Các hàm hash function sử dụng trong bloom filter nên là những hàm hash có tính độc lập và kết quả là một tập hợp được phân bố một cách đồng đều. Các hàm hash này cũng nên có thời gian xử lý nhanh và tốn ít tài nguyên (vì lí do này các hàm hash mang tính mật mã như sha1 thương ít được sử dụng). Các hàm hash thường được sử dụng có thể kể đến murmur, fnv, Jenkins hash, CityHash,...
+        * Có 1 vấn đề đặt ra là giả sử ta có 1 bloom filter cần tới k hàm hash (các hàm hash phải khác nhau), vậy chẳng lẽ ta phải tìm k thuật toán hash khác nhau cho bloom filter này? Giải pháp cho vấn đề này là thuật toán Double Hashing. Chỉ với 2 hàm hash độc lập, sử dụng double hashing ta có thể tạo ra một hàm hash hoàn toàn mới.
+        * Bloom filter được sử dụng phổ biến trong các hệ thống cache, cơ sở dữ liệu và những ứng dụng cần đến việc kiểm tra sự tồn tại của dữ liệu một cách nhanh chóng và tiết kiệm tài nguyên.
+            * Google BigTable, Apache HBase and Apache Cassandra, and Postgresql sử dụng bloom filter để hạn chế việc phải tìm kiếm những phần tử không tồn tại trên ổ cứng.
+            * Google Chrome sử dụng bloom filter để kiểm tra những URL độc hại.
 
    <span name="A1.3"></span>
 
-   * Cuckoo Filters:
+   * Cuckoo Filters: 
+        * Cải thiện bloom filter, cụ thể là có thể xóa, giới hạn đếm và giảm việc xuất hiện false positive, còn độ phức tạp không gian thì vẫn được duy trì tương tự bloom filter.
+        * Cuckoo filters như là một bảng băm thu nhỏ, sử dụng hàm băm *cuckoo* để giải quyết các đụng độ. Nó giảm thiểu độ phức tạp không gian (space) của nó bằng cách chỉ lưu trữ `dấu vân tay của giá trị (fingerprint)` trong tập hợp. Giống như bloom filter sử dụng các `bit đơn` để lưu trữ dữ liệu.
+        * Cuckoo filters có:
+            * Một mảng với số n bucket.
+            * Giá trị `load` thể hiện số % của mảng bucket đang lưu giữ giá trị. Giá trị `load` quan trọng trong việc tăng/giảm kích cỡ mảng bucket. 
+            * Giá trị `b`: Số lượng `dấu vân tay` mà một bucket có thể lưu trữ.
+            * f-bits fingerprint: Thể hiện giá trị của phần tử theo dạng f bits. Con số f-bits này tự chọn.
+        * Gif bên dưới cho thấy việc thêm một phần tử tới 3 lần sẽ làm cho cuckoo filter nhét nó vào bucket thứ 2. 
+
+            ![Cuckoo-Insert-Gif](./images/cuckoo.gif)
+            
+            *Chú thích: 10 bucket, mỗi một bucket có thể lưu trữ lên đến 2 fingerprint, mỗi fingerprint mang 7-bits*
+
+        * Cuckoo nghĩa là chim cúc cu, chúng hay đẻ trứng vào các tổ chim khác. Khi những con chim cúc cu này nở ra, chúng sẽ cố gắng đẩy bất kỳ quả trứng hoặc chim khác ra khỏi tổ của nó => Đây là nguyên tắc cơ bản của hàm băm Cuckoo.
+        * Trong hàm băm cuckoo, mỗi khóa được băm bởi hai hàm băm khác nhau, do đó giá trị (f-bits fingerprint) có thể được gán cho một trong hai bucket. Bucket đầu tiên được thử đầu tiên. Nếu không có gì ở đó thì giá trị được đặt trong bucket ấy. Nếu có thứ gì đó đã tồn tại, bucket 2 được thử nghiệm. Nếu bucket 2 chưa có giá trị, ta đặt giá trị mới vào đó. Ngược lại, bucket 2 đã có giá trị thì giá trị ở bucket 1 hoặc bucket 2 sẽ bị đào thải rồi quá trình được thực hiện lại, lưu giữ giá trị mới lên bucket vừa bị đào thải giá trị. Ta có thể sử dụng vòng lặp vô tận cho quá trình đào thải giá trị và đặt giá trị (khóa) mới. Tuy nhiên, ta cũng cần phải lưu tâm đến bảng băm (thay đổi kích cỡ nó lớn lên) hoặc kiểm tra lại ý tưởng hàm băm.
+        
+            ![Cuckoo-Hashing-Example](./images/13.png)
+            
+            *Chú thích: Mỗi một kí tự có 2 ô bucket*
+        
+            ![ComparisonCuckoo&BloomFilter](./images/12.png)
+            
+            *Chú thích: Bảng so sánh Cuckoo và Bloom. Xem thêm [tại đây](https://bdupras.github.io/filter-tutorial/).*
+
+        * Thứ tự fingerprint trong một bucket không ảnh hưởng đến kết quả truy vấn. Dựa vào điều này, phát sinh ra một bước tối ưu hóa không kém phần quan trọng của cuckoo filters, đó là sử dụng `semi-sort`. Chúng ta có thể nén từng bucket bằng cách sắp xếp fingerprint của nó và sau đó mã hóa chuỗi fingerprint được sắp xếp. Tuy nhiên, phương pháp này chỉ ứng dụng cho trường hợp các bucket lưu trữ 4-bits fingerprint. Nếu fingerprint có số bit lớn hơn 4 thì chỉ có bốn bit quan trọng nhất của mỗi fingerprint được mã hóa, phần còn lại được lưu trữ trực tiếp và riêng biệt.
+
+            ![Semi-sort](./images/14.png)
+
+            *Chú thích: Hình trên giải thích vì sao Semi-sort tiết kiệm 1 bit mỗi fingerprint. Theo tiếng Việt, "unique combinations with replacement" nghĩa là Chỉnh hợp chập k=4 (f-bits = 4) của n=16 (4-bits x 4 fingerprints của mỗi bucket = 16). Xem thêm tại báo cáo nghiên cứu **Cuckoo Filter: Practically Better Than Bloom**.*
 
    <span name="A1.4"></span>
 
    * Count Min Sketch:
+        * Một trong những phương pháp giải quyết vấn đề Ước lượng số lần xuất hiện của phần tử trong tập dữ liệu.
+        * CM Sketch là cấu trúc dữ liệu không gian tuyến tính hỗ trợ việc thêm phần tử và đếm số lần phần tử đã được thêm vào.
+        * CM Sketch được mô tả với 2 tham số: `m` (số lượng bucket) và `k` (số lượng hàm hash khác nhau). Yêu cầu vùng nhớ cố định có kích cỡ là `m*k`.
+        * CM Sketch có bản chất là ma trận đếm với m cột và k dòng, mỗi dòng tượng trưng cho 1 hàm hash.
+        * Phương pháp này thường đánh giá cao về số lần tần suất đúng đắn chứ không bao giờ đánh giá thấp kết quả.
+        * Để đạt được xác suất lỗi mục tiêu, ta thường dùng công thức `k >= ln(1/delta)` với delta xoay quanh 1%, như vậy số lượng hàm hash k = 5 là đủ tốt.
+
+            ![CMSketch01](./images/11.png)
+
+            ![CMSketch02](./images/8.png)
+
+            ![CMSketch03](./images/9.png)
+
+            ![CMSketch04](./images/10.png)
+
+        * Một vài ứng dụng tiêu biểu của CM Sketch: 
+            * Là một phần của thư viện Algebird của Twitter.
+            * AT&T sử dụng CM Sketch trong các thiết bị chuyển mạch mạng để thực hiện phân tích lưu lượng mạng với bộ nhớ hạn chế.
 
    <span name="A1.5"></span>
 
    * HyperLogLog:
 
+
+
+
+
+
+
+
+   
+
 <span name="A2"></span>
 
 2. Trie
-   <span name="A2.1"></span>
+    <span name="A2.1"></span>
 
-   * Khái niệm:
+    * Khái niệm: Thuật ngữ Trie xuất phát từ tiếng Anh `re`**`trie`**`ve`. Nó là một cấu trúc dữ liệu dùng để lưu trữ một mảng liên kết của các xâu ký tự. Trie cho phép:
+        * Thêm một xâu vào tập hợp
+        * Xóa một xâu khỏi tập hợp
+        * Kiểm tra một xâu có tồn tại trong tập hợp hay không.
+    
+    <span name="A2.2"></span>
 
-   <span name="A2.2"></span>
+    * Cấu trúc: 
+        * Trie gồm một gốc không chứa thông tin, trên mỗi cạnh lưu một ký tự, mỗi nút và đường đi từ gốc đến nút đó thể hiện 1 xâu, gồm các ký tự là các ký tự thuộc cạnh trên đường đi đó. 
+        * Như hình vẽ bên dưới, nút 1 là nút gốc, nút 7 thể hiện có 1 xâu là "bg", nút 10 thể hiện có 1 xâu là "acd", nút 5 thể hiện là có 1 xâu là "ab". 
+        * Tuy nhiên, đối với một số nút, chẳng hạn nút 4, ta không biết nó là thể hiện kết thúc 1 xâu hay chỉ là 1 phần của đường đi từ nút 1 đến nút 9. Vì vậy, khi cài đặt, tại nút X ta cần lưu thêm thông tin nút X có phải là kết thúc của 1 xâu hay không, hoặc nút X là kết thúc của bao nhiêu xâu, tuỳ theo yêu cầu bài toán mà ta cài đặt.
 
-   * Ứng dụng:
+        ![Trie-Composite](./images/5.png)
+    
+    <span name="A2.3"></span>
+
+    * Ưu điểm:
+        * Dễ dàng cài đặt, không mấy khó khăn.
+        * Tiết kiệm bộ nhớ: Khi số lượng khóa lớn và các khóa có độ dài nhỏ, thông thường trie tiết kiệm bộ nhớ hơn do các phần đầu giống nhau của các khoá chỉ được lưu 1 lần. Ưu điểm này có ứng dụng rất lớn, chẳng hạn trong từ điển.
+        * Thao tác tìm kiếm: O(m) với m là độ dài khóa. Ngoài ra, các thao tác trên trie rất đơn giản và thường chạy nhanh hơn so với thực tế.
+
+   <span name="A2.4"></span>
+
+    * Ứng dụng: Được sử dụng nhiều cho các bài toán về `Chuỗi từ`.
+        * Điển hình như gợi ý từ điển, gợi ý số điện thoại, tự động hoàn tất từ đang kiếm, tìm kiếm tiền tố trùng hợp dài nhất, gợi ý lệnh (chẳng hạn các lệnh trong Terminal mà mình đã dùng), kiểm tra tính đúng đắn của từ (Spell Checker),... 
+        * Ví dụ: ta gõ từ "tiny" sẽ nhận được các giá trị gần tương đồng như "tine", "tin", "tinny". Hoặc gõ "pe" trong từ điển, các từ gợi ý sẽ được hiển thị như "pepper", "pepsi", "people", "pen",...
 
 <br/>
 
@@ -688,3 +788,9 @@
 16. <https://techtalk.vn/clean-code-ma-sach-va-con-duong-tro-thanh-better-developer-p2.html>
 17. <https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29>
 18. <http://shhetri.github.io/clean-code/#/16>
+19. <https://vnoi.info/wiki/algo/data-structures/trie>
+20. <https://www.quora.com/What-is-a-trie-What-is-its-importance-and-how-it-is-implemented>
+21. <https://www.quora.com/What-are-the-best-applications-for-Tries-the-data-structure>
+22. <https://blog.vietnamlab.vn/2016/09/29/gioi-thieu-ve-bloom-filter/>
+23. <https://brilliant.org/wiki/cuckoo-filter/>
+24. <https://bdupras.github.io/filter-tutorial/>
