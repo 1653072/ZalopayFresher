@@ -289,7 +289,6 @@
 
    * **Code minh họa:**
         * `Khởi tạo sớm`: Đây là cách dễ nhất nhưng nó có một nhược điểm là mặc dù instance đã được khởi tạo nhưng có thể sẽ không dùng tới.
-
         ```
         public class EagerInitializedSingleton {
             private static final EagerInitializedSingleton instance = new EagerInitializedSingleton();
@@ -303,9 +302,7 @@
             }
         }
         ```
-
         * `Khởi tạo trễ`: Cách này đã khắc phục được nhược điểm của cách 1 Eager initialization, chỉ khi nào getInstance được gọi thì instance mới được khởi tạo. Tuy nhiên cách này chỉ sử dụng tốt trong trường hợp đơn luồng, trường hợp nếu có 2 luồng cùng chạy và cùng gọi hàm getInstance tại cùng một thời điểm thì đương nhiên chúng ta có ít nhất 2 thể hiện của instance.
-
         ```
         public class LazyInitializedSingleton {
             private static LazyInitializedSingleton instance;
@@ -322,9 +319,7 @@
             }
         }
         ```
-
         * `Khởi tạo luồng an toàn`: Gọi phương thức synchronized cho một đoạn mã quan trọng.
-
         ```
         public class ThreadSafeSingleton {
             private static ThreadSafeSingleton instance;
@@ -363,16 +358,13 @@
 
    * **Code minh họa:**
         * `FileComponent.java`
-
         ```
         public interface FileComponent {
             void showProperty();
             long totalSize();
         }
         ```
-
         * `FileLeaf.java`
-
         ```
         public class FileLeaf implements FileComponent {
             private String name;
@@ -395,9 +387,7 @@
             }
         }
         ```
-
         * `FolderComposite.java`
-
         ```
         import java.util.ArrayList;
         import java.util.List;
@@ -428,9 +418,7 @@
             }
         }
         ```
-
         * `Client.java`
-
         ```
         import java.util.Arrays;
         import java.util.List;
@@ -461,7 +449,6 @@
 
    * **Code minh họa:**
         * `Item.java`
-
         ```
         public class Item {
             private String title;
@@ -481,9 +468,7 @@
             }
         }
         ```
-
         * `ItemIterator.java`
-
         ```
         public interface ItemIterator<T>
         {
@@ -491,9 +476,7 @@
             T next();
         }
         ```
-
         * `Menu.java`
-
         ```
         import java.util.ArrayList;
         import java.util.List;
@@ -529,9 +512,7 @@
             }
         }
         ```
-
         * `Client.java`
-
         ```
         public class Client {
             public static void main(String[] args) {
@@ -561,7 +542,6 @@
         
    * **Code minh họa:**
         * `AccountService.java`
-
         ```
         public class AccountService {
             public void getAccount(String email)
@@ -570,9 +550,7 @@
             }
         }
         ```
-
         * `PaymentService.java`
-
         ```
         public class PaymentService {
             public void paymentByPaypal()
@@ -596,9 +574,7 @@
             }
         }
         ```
-
         * `ShippingService.java`
-
         ```
         public class ShippingService {
             public void freeShipping()
@@ -617,9 +593,7 @@
             }
         }
         ```
-
         * `EmailService.java`
-
         ```
         public class EmailService {
             public void sendMail(String mailTo)
@@ -628,9 +602,7 @@
             }
         }
         ```
-
         * `SmsService.java`
-
         ```
         public class SmsService {
             public void sendSMS(String mobilePhone)
@@ -639,9 +611,7 @@
             }
         }
         ```
-
         * `ShopFacade.java`
-
         ```
         public class ShopFacade {
             private static final ShopFacade INSTANCE = new ShopFacade();
@@ -686,9 +656,7 @@
             }
         }
         ```
-
         * `Client.java` (Kết hợp giữa `Facade` và `Singleton`)
-        
         ```
         public class Client {
             public static void main(String[] args) {
