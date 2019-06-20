@@ -4,7 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Main {
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 	/* Khai báo biến */
 	LocalDateTime begin, end;
 	Duration dur;
@@ -79,5 +79,5 @@ public class Main {
     	end = LocalDateTime.of(2020, 01, 06, 16, 23);
     	dur = var.calculate(begin, end);
     	System.out.println("Result of case 7 (hours): " + dur.getSeconds()*1.0/3600);
-	}
+    }
 }
