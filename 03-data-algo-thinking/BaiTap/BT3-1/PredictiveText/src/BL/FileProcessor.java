@@ -1,4 +1,4 @@
-package BL;
+﻿package BL;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,25 +24,25 @@ public class FileProcessor {
 	public FileProcessor() {}
 	
 	//Đọc toàn bộ file trong folder datasets
-    //Tham khảo: https://stackoverflow.com/questions/1844688/how-to-read-all-files-in-a-folder-from-java
+    	//Tham khảo: https://stackoverflow.com/questions/1844688/how-to-read-all-files-in-a-folder-from-java
 	public static void readAllFilesFromDataset(Trie instance) 
 	{
 		URL resource = Trie.class.getResource("/dataset");
-    	File folder = new File(resource.getPath());
-    	File[] listOfFiles = folder.listFiles();
+    		File folder = new File(resource.getPath());
+    		File[] listOfFiles = folder.listFiles();
 
-    	for (File file : listOfFiles) 
-    	{
-    	    if (file.isFile()) 
-    	    {
-    	    	ArrayList<String> list = readContentOfFile(file);
+    		for (File file : listOfFiles) 
+    		{
+    	   	 	if (file.isFile()) 
+    	    		{
+    	    			ArrayList<String> list = readContentOfFile(file);
     	    	
-    	    	for (int i=0; i<list.size(); ++i)
-    	    	{
-    	    		instance.insert(list.get(i));
-    	    	}
-    	    }
-    	}
+    	    			for (int i=0; i<list.size(); ++i)
+    	    			{
+    	    				instance.insert(list.get(i));
+    	    			}
+    	    		}
+    		}
 	}
 	
 	public static ArrayList<String> readContentOfFile(File file)
@@ -50,14 +50,14 @@ public class FileProcessor {
 		//Khai báo mảng String để lưu trữ toàn bộ các từ (chuỗi xử lý thành từ)
 		ArrayList<String> list = new ArrayList<String>();
 		
-        try 
-        {
-        	//Khai báo các biến nhằm đọc file, lấy dữ liệu từ file
-        	BufferedReader br = new BufferedReader(new FileReader(file));
-            String read;
-            String content = "";
+        	try 
+        	{
+        		//Khai báo các biến nhằm đọc file, lấy dữ liệu từ file
+        		BufferedReader br = new BufferedReader(new FileReader(file));
+            		String read;
+            		String content = "";
             
-            //Biến content sẽ lưu trữ toàn bộ nội dung của file
+            		//Biến content sẽ lưu trữ toàn bộ nội dung của file
 			while ((read = br.readLine()) != null) {
 				content += read;  
 			}
@@ -79,7 +79,7 @@ public class FileProcessor {
 				list.addAll(Arrays.asList(result));
 		    }
 		} 
-        catch (IOException e1) { e1.printStackTrace(); }
+        	catch (IOException e1) { e1.printStackTrace(); }
 		
 		return list;
 	}

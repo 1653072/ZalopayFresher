@@ -108,7 +108,7 @@ Import project `HashTable` vào eclipse và bấm tổ hợp phím `Alt + Shift 
 ## BÀI TẬP 3-3
 
 #### 1. MÔ TẢ BÀI TẬP
-Bộ phần CS (Customer Service) sẽ nhận các khiếu nại từ người dùng và giải quyết chúng trong khoảng thời gian cho phép (tối đa là 8 tiếng theo giờ làm việc).
+Bộ phận CS (Customer Service) sẽ nhận các khiếu nại từ người dùng và giải quyết chúng trong khoảng thời gian cho phép (tối đa là 8 tiếng theo giờ làm việc).
 
 Giờ làm việc được tính từ `8h30` tới `12h` với buổi sáng và `13h30` đến `18h` với buổi chiều. CS sẽ làm nguyên ngày từ thứ 2 đến thứ 6, riêng thứ 7 sẽ chỉ làm buổi sáng.
 

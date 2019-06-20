@@ -1,4 +1,4 @@
-package SLA;
+﻿package SLA;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -52,10 +52,10 @@ public class SlaServiceImpl implements SlaService {
     	
     	//begin và end có số năm, tháng, ngày BẰNG/TRÙNG nhau
     	beginHour = begin.getHour() + begin.getMinute()*1.0/60;
-		endHour = end.getHour() + end.getMinute()*1.0/60;
-		sumHours += ((begin.getHour() > 12 && end.getHour() > 12) || (begin.getHour() <= 12 && end.getHour() <= 12)) ? (endHour - beginHour) : (endHour - beginHour - 1.5);
+	endHour = end.getHour() + end.getMinute()*1.0/60;
+	sumHours += ((begin.getHour() > 12 && end.getHour() > 12) || (begin.getHour() <= 12 && end.getHour() <= 12)) ? (endHour - beginHour) : (endHour - beginHour - 1.5);
     	
-		//Chuyển sumHours từ "Hour" sang "Minutes" bằng cách (Nhân với 60 trước), rồi mới ép về kiểu (int).
+	//Chuyển sumHours từ "Hour" sang "Minutes" bằng cách (Nhân với 60 trước), rồi mới ép về kiểu (int).
         return Duration.ofMinutes((int) (sumHours*60));
     }
 }

@@ -1,12 +1,12 @@
-package BL;
+﻿package BL;
 
 import java.util.HashMap;
 
 public class TrieNode {
 	
-	//Khai báo các thuộc tính cần thiết cho TrieNode
-	private HashMap<Character,TrieNode> children; 
-	private char value;
+    //Khai báo các thuộc tính cần thiết cho TrieNode
+    private HashMap<Character,TrieNode> children; 
+    private char value;
     private boolean isEndOfWord; 
      
     //Constructor
