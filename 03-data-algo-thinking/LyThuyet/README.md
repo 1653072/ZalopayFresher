@@ -134,16 +134,43 @@
 
    <span name="A1.5"></span>
 
-   * HyperLogLog:
+   * HyperLogLog (HLL):
+        * HLL là phần mở rộng của thuật toán Flajolet-Martin (1985).
+        * Xác định chính xác số lượng phần tử duy nhất (cardinality) trong tập dữ liệu sẽ tốn kém nhiều chi phí xử lý và bộ nhớ. Do đó, ta có thể tính toán cardinality một cách tương đối bằng số lượng tối đa `số 0 đứng đầu (leading zero)` trong biểu diễn nhị phân của mỗi số. Nếu giá trị đó là **k** thì số phần tử riêng biệt trong tập hợp có thể gần đúng sẽ là **2<sup>k</sup>**.
 
+            ![Rank-HLL](./images/15.png)
 
+        * HLL được mô tả bằng 2 tham số:
+            * **p**: Số bit nhằm xác định lượng bucket (**m=2<sup>p</sup>** thể hiện số bucket).
+            * **h**: Hàm băm, tạo ra những giá trị có tính chất `uniform (phân phối đều)`.
+        * Thuật toán HLL có thể ước tính số cardinality lên đến hơn 10<sup>9</sup> phần tử với tỉ lệ sai sót thấp ở mức cho phép là 2%, và sử dụng khoảng 1.5kB bộ nhớ.
+        * Thuật toán HLL sử dụng tính `ngẫu nhiên hóa` để ước tính gần đúng số cardinality của bộ dữ liệu, và tính `ngẫu nhiên hóa` đạt được bằng cách sử dụng hằm băm **h**.
+        
+            ![Algorithm&CE-HLL](./images/16.png)
 
+            *Chú thích: Các bước thuật toán và công thức tính **cardinality estimation***
 
+            ![Example01-HLL](./images/17.png)
 
+            *Ví dụ cho các bước của thuật toán HLL*
 
+            ![Example02-HLL](./images/18.png)
 
+            *Ví dụ cho việc cập nhật max rank và tính toán **cardinality estimation**. Tuy nhiên, giá trị ở đây là 135 rất khác với giá trị là 3 (thực ra chỉ có 3 phần tử). Do đó, lượng phần tử duy nhất quá nhỏ thì kết quả sẽ  kém phần chính xác.*
 
-   
+        * Thuật toán HLL có vấn đề rất lớn đối với lượng cardinality nhỏ (Ví dụ trên bạn đã thấy rõ). Do đó, để đạt được sự ước tính tốt nhất ta có thể sử dụng thuật toán Linear Counting khi ngưỡng dưới **5m/2**.
+        * Công thức tính `lỗi tiêu chuẩn (standard error)` có thể được ước tính theo công thức bên dưới:
+
+            ![SE-Formula-HLL](./images/20.png)
+
+        * Bộ nhớ trong thuật toán HLL không có tăng tuyến tính như thuật toán MinCount hay Linear Counting. Hàm băm với **L** bits và **p** sẽ cần bộ nhớ theo công thức bên dưới.
+
+            ![MemoryFormula-HLL](./images/19.png)
+
+            *Chú thích: HLL "gốc gác" sử dụng 32 bits hash codes sẽ tiêu hao lượng bộ nhớ là **(5 x 2<sup>p</sup>) bits***
+
+        * Chúng ta có thể sử dụng một trong các hàm băm sau cho HLL: MD5, Sha1, Sha256, Murmur3,... và không có căn cứ nào cho thấy là hàm băm này sẽ tốt hơn hàm băm kia trong HLL. Ngoài ra, khi thực hiện hàm băm, ta chỉ cần tính toán lượng **p** bits và lượng `số 0 đứng đầu (leading zero)` trong phần bits còn lại là được, chứ không cần tính hết nguyên dãy (tính hết cũng không xài đến mà còn tốn kém thời gian).
+        * Ứng dụng nho nhỏ của HLL: Lệnh **PFCOUNT** trong **Redis** trả về lượng phần tử duy nhất gần đúng & dựa trên cấu trúc dữ liệu của HLL.
 
 <span name="A2"></span>
 
