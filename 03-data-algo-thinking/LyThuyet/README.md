@@ -678,24 +678,24 @@
    
    ![SOLID](./images/4.png)
 
-   * **S:**
+   * **S (Single responsibility principle):**
         * Một class chịu trách nhiệm 1 việc.
         * Ví dụ: Class Person chứa Họ tên, SĐT, Email, Cách chào hỏi và Hàm xác thực Email. Lúc này, "Hàm xác thực Email" trở nên không hợp lý khi nằm ở class Person này. Do vậy, ta tách thuộc tính Email và Hàm xác thực Email ra thành một class riêng biệt, tên là Email. Cuối cùng, class Person sử dụng Class Email như một thuộc tính và thỏa đặc tính **`S`** trong SOLID.
     
-    * **O:**
+    * **O (Open/closed principle):**
         * Chỉ nên mở rộng một class bằng cách `kế thừa`. Tuyệt đối không mở rộng class bằng cách `sửa đổi` nó.
         * Điểm mấu chốt của nguyên tắc này là: **`Chỉ được THÊM mà không được SỬA`**.
         * Ví dụ: Có 2 class là Rectangle và Square, 1 hàm là computeArea. Nếu như bổ sung thêm class Circle thì ta phải sửa code ở hàm computeArea, dẫn đến vi phạm **`O`**. Do vậy, ta phải tạo 1 interface Shape chứa hàm ảo computeArea, các class hình học sẽ có thuộc tính riêng biệt nhưng bắt buộc implements lại hàm computeArea của Shape. Cuối cùng, ta "THÊM" class Circle mà không đụng chạm gì đến các class/hàm khác.
 
-    * **L:**    
+    * **L (Liskov substitution principle):**    
         * Trong một chương trình, các `object` của `class con` có thể thay thế `class cha` mà không làm thay đổi tính đúng đắn của chương trình.
         * Nguyên tắc này khuyến khích chúng ta sử dụng tính đa hình trong lập trình hướng đối tượng.
 
-    * **I:**
+    * **I (Interface segregation principle):**
         * Nên tách Interface lớn thành nhiều interface nhỏ với những mục đích riêng biệt.
         * Ví dụ: Sau khi tính diện tích xong thì mã hóa kết quả thành JSON rồi gửi trả client. Nếu như 1 interface Shape chứa hàm computeArea lẫn hàm serialize thì đã vi phạm **`I`**, vì có những trường hợp client chỉ cần kết quả diện tích mà không cần mã hóa JSON. Cuối cùng, ta phải tách interface Shape thành 2 interface khác nhau, 1 là interface computeArea và 1 là interface serialize. Client cần implements gì thì cài đặt interface đó là xong.
 
-    * **D:**
+    * **D (Dependency inversion principle):**
         * Interface dường như là một yếu tố cơ bản nhất của mọi nguyên tắc trên, nên khi sử dụng, cần phải cẩn thận và tuân thủ các nguyên tắc.
         * Đồng thời, **`D`** là nguyên tắc quan trọng nhất trong nguyên lý SOLID và nằm ở cuối cùng, đó chính là **`tổng hợp 4 nguyên tắc trước`** (cho việc sử dụng interface).
 
@@ -763,7 +763,7 @@
             * Khả năng bảo trì, mở rộng của code,...
         * Kết luận:
             * Bjnarne Stroustrup tác giả cuốn sách “The C++ Programming Language” đưa ra quan điểm của mình: Ông muốn code của mình phải hiệu quả và đẹp. Tất cả các hàm business logic phải rõ ràng và bugs dễ dàng tìm thấy. Code phải dễ dàng bảo trì, các ngoại lệ phải được bắt một cách rõ ràng. Phải tối ưu hóa các performance, tránh viết code quá phức tạp gây khó khăn cho người khác.
-            * Grady Booch tách giả cuốn sách “Object oriented analysic and design with Applications” đưa ra quan điểm của mình: Viết code đơn giản, code phải dễ đọc và dễ hiểu cho người khác. Code phải có ý nghĩa và dễ quản lý.
+            * Grady Booch tác giả cuốn sách “Object oriented analysic and design with Applications” đưa ra quan điểm của mình: Viết code đơn giản, code phải dễ đọc và dễ hiểu cho người khác. Code phải có ý nghĩa và dễ quản lý.
 
    <span name="C6.2"></span>
 
@@ -776,7 +776,7 @@
         * Names rules:
             * Tên phân biệt cho mỗi tính năng/trường hợp, không trùng lắp.
             * Tên mô tả được bản chất của nó cũng như hàm một cách rõ ràng.
-            * Tránh "mã hóa hoặc nối thêm tiền tố (Ví dụ: m_compute, _absolute).
+            * Tránh "mã hóa" hoặc nối thêm tiền tố (Ví dụ: m_compute, _absolute).
             * Tên phát âm được (Ví dụ: DateTime, không được DatehhMMss).
         * Functions rules:
             * Hàm nhỏ, không quá nhiều dòng code.
@@ -785,12 +785,12 @@
             * Ít tham số truyền vào hàm.
         * Comments rules:
             * Giải thích những phần mà mình cho là khó hiểu, cần phải tường minh.
-            * Không giải thích dư thừa: Viết quá nhiều từ, chữ hoặc chỗ nào cũng giải thích (kể cả chỗ dễ hiểu nhất).
-            * Sử dụng cho trường hợp: Cảnh báo, giải thích ngữ nghĩa hàm/từ/ý tưởng,...
+            * Không giải thích dư thừa: Viết quá nhiều từ hoặc chỗ nào cũng giải thích (kể cả chỗ dễ hiểu nhất).
+            * Sử dụng cho trường hợp: Cảnh báo, giải thích ngữ nghĩa hàm/từ/ý tưởng,... (nhưng các trường hợp này phải quan trọng, khó hiểu nếu không có comment).
         * Tests:
-            * Mỗi một kiểm tra đặt ở đâu là phải có "assert" chỗ đó.
-            * Các bài kiểm tra phải độc lập nhau, hạn chế kiểm tra này phụ thuộc kiểm tra kia.
-            * Kiểm tra lại theo khoảng thời gian nhất định và các kiểm tra đó người xem phải đọc/xem được. (Kiểm tra mà không xem/đọc được kết quả có đúng đắn hay không thì cũng vô nghĩa).
+            * Mỗi một kiểm tra đặt ở đâu thì nên có "assert" chỗ đó.
+            * Các bài kiểm tra phải độc lập nhau, hạn chế kiểm tra này phụ thuộc kiểm tra kia nhằm tránh chồng chéo nhau và khó kiểm tra.
+            * Kiểm tra lại theo khoảng thời gian nhất định và các kiểm tra đó, người xem phải đọc/xem được. (Kiểm tra mà không xem/đọc được kết quả có đúng đắn hay không thì cũng vô nghĩa).
         
 <br/>
 
