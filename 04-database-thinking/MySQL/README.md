@@ -218,20 +218,20 @@
 
 <span name="A10"></span>
 
-1.  Bảng tổng hợp tính năng của các Storage Engine
+10.  Bảng tổng hợp tính năng của các Storage Engine
     
-    ![Storage-Engines-Feature-Summary](./images/4.jpg)
+![Storage-Engines-Feature-Summary](./images/4.jpg)
 
-    CHÚ THÍCH:
-    * [1] InnoDB hỗ trợ cho việc Geospatial indexing từ MySQL 5.7.5 trở lên.
-    * [2] InnoDB sử dụng Hash index nội bộ cho tính năng Hash Index của nó.
-    * [3] InnoDB hỗ trợ FULLTEXT từ MySQL 5.6.4 và sau đó.
-    * [4] Các bảng InnoDB đã nén được yêu cầu định dạng file InnoDB Barracuda.
-    * [5] Các bảng MyISAM nén chỉ được hỗ trợ khi sử dụng định dạng dòng nén. Các bảng sử dụng định dạng nén với MyISAM chỉ được đọc (readonly).
-    * [6] Thực hiện trên server (thông qua chức năng mã hóa). Mã hóa dữ liệu có sẵn từ MySQL 5.7 trở lên.
-    * [7] Thực hiện trên server thay vì Storage Engine.
-    * [8] Hỗ trợ cho khóa ngoại (foreign key) có sẵn từ MySQL Cluster NDB 7.3 và sau đó.
-    * [9] Thực hiện trên server thay vì Storage Engine.
+CHÚ THÍCH:
+* [1] InnoDB hỗ trợ cho việc Geospatial indexing từ MySQL 5.7.5 trở lên.
+* [2] InnoDB sử dụng Hash index nội bộ cho tính năng Hash Index của nó.
+* [3] InnoDB hỗ trợ FULLTEXT từ MySQL 5.6.4 và sau đó.
+* [4] Các bảng InnoDB đã nén được yêu cầu định dạng file InnoDB Barracuda.
+* [5] Các bảng MyISAM nén chỉ được hỗ trợ khi sử dụng định dạng dòng nén. Các bảng sử dụng định dạng nén với MyISAM chỉ được đọc (readonly).
+* [6] Thực hiện trên server (thông qua chức năng mã hóa). Mã hóa dữ liệu có sẵn từ MySQL 5.7 trở lên.
+* [7] Thực hiện trên server thay vì Storage Engine.
+* [8] Hỗ trợ cho khóa ngoại (foreign key) có sẵn từ MySQL Cluster NDB 7.3 và sau đó.
+* [9] Thực hiện trên server thay vì Storage Engine.
 
 <br/>
 
