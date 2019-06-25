@@ -9,6 +9,7 @@
 
 ## MỤC LỤC
 
+- [DATABASE (CƠ SỞ DỮ LIỆU)](#0)
 - [STORAGE ENGINE (SE)](#A)
   - [Các loại storage engine cơ bản của MySQL](#A1)
   - [InnoDB](#A2)
@@ -41,6 +42,36 @@
 - [CONNECTOR](#F)
   - [Một số cách kết nối với MySQL: jdbc, python driver,...](#F1)
 - [Nguồn tham khảo](#G)
+
+<br/>
+
+<span name="0"></span>
+
+## DATABASE (CƠ SỞ DỮ LIỆU)
+
+* Một Database (Cơ sở dữ liệu) là một tập hợp dữ liệu đã được tổ chức sắp xếp. Mục đích chính của Database là để tổ chức một lượng lớn thông tin bằng việc lưu trữ, thu thập và quản lý.
+*  Có nhiều loại Database có sẵn như MySQL, Sybase, Oracle, Mongo DB, SQL Server,...
+
+    ![DBMS&RDBMS](./images/9.png)
+
+    *Chú thích: RDBMS (Relational Database Management System - Hệ quản trị cơ sỡ dữ liệu **quan hệ**), DBMS (Database Management System - Hệ quản trị cơ sở dữ liệu)*
+
+* Sau khi theo dõi các điểm khác nhau giữa DBMS và RDBMS, bạn có thể thấy rằng RDBMS là phần mở rộng của DBMS. Trên thị trường hiện nay, có nhiều sản phẩm phần mềm tương thích cả với DBMS và RDBMS. Nghĩa là, ngày nay một ứng dụng RDBMS là một ứng dụng DBMS và ngược lại.
+* Giới thiệu sơ nét về MySQL:
+  * MySQL là một SQL Database mã nguồn mở, được phát triển bởi Swedish. MySQL hỗ trợ nhiều nền tảng khác nhau, gồm Microsoft Windows, Linux, UNIX và Mac OS X.
+  MySQL có các phiên bản miễn phí hay phải trả tiền, phụ thuộc vào sự sử dụng của nó (mang tính thương mại hay không thương mại) và các tính năng/đặc điểm mình cần. MySQL đi cùng với một SQL Database Server rất nhanh, đa luồng, đa người dùng và đầy sức mạnh.
+  * Một vài đặc điểm của MySQL:
+    * Hiệu suất cao.
+    * Tính khả dụng cao.
+    * Khả năng mở rộng và linh hoạt.
+    * Hỗ trợ mạnh mẽ cho transaction.
+    * Kho lưu web và dữ liệu mạnh.
+    * Bảo vệ dữ liệu cao.
+    * Phát triển ứng dụng toàn diện.
+    * Quản lý dễ dàng.
+    * Hỗ trợ 24/7 và mã nguồn mở.
+    * Tổng chi phí sở hữu thấp nhất.
+* Ngoài MySQL ra, còn có MS SQL Server, MS Access, SQL Server,... rất nhiều Hệ quản trị cơ sở dữ liệu mà bạn tha hồ chọn lựa.
 
 <br/>
 
@@ -169,31 +200,113 @@
   
 <span name="A5"></span>
 
-5. NDB (or NDBCLUSTER)
-   * Giới thiệu: Đặc biệt phù hợp với các ứng dụng đòi hỏi thời gian hoạt động và tính khả dụng cao nhất có thể.
+5. NDB (tên gọi khác: NDB CLUSTER)
+   * Giới thiệu: 
+      * Đặc biệt phù hợp với các ứng dụng đòi hỏi thời gian hoạt động và tính khả dụng cao nhất có thể, nhất là các ngành liên quan đến viễn thông.
+      * NDB Cluster là một công nghệ cho phép phân cụm các CSDL trong bộ nhớ của một hệ thống không chia sẻ phần cứng. Kiến trúc không chia sẻ cho phép hệ thống hoạt động với phần cứng "rẻ hơn" và với các yêu cầu cụ thể tối thiểu đối với phần cứng hoặc phần mềm.
+      * NDB Cluster được thiết kế để không có bất kỳ điểm thất bại nào. Trong một hệ thống không chia sẻ, mỗi thành phần dự kiến ​​sẽ có bộ nhớ, đĩa riêng và sử dụng các cơ chế lưu trữ được chia sẻ như chia sẻ mạng, hệ thống file mạng.
+      * NDB là từ viết tắt của `Network DataBase`.
+      * Một cụm MySQL bao gồm một hoặc nhiều nút quản lý (`ndb_mgmd`) lưu trữ cấu hình của cụm và kiểm soát các nút dữ liệu (`ndbd`). Sau khi giao tiếp với nút quản lý, máy khách (máy khách MySQL, máy chủ hoặc API gốc) kết nối trực tiếp với các nút dữ liệu này.
+
+        ![NDB-Cluster-Components](./images/8.jpg)
+
+      * Giải thích sơ lược hình:
+        * NDB Management Server (`ndb_mgmd`): Quản lý cấu hình, xử lý các kết nối mới, xử lý các trường hợp lỗi ở các nút và đồng bộ các Data Nodes với SQL Nodes. 
+        * Data Nodes (`ndbd`): Nơi chứa dữ liệu. Có thể có lên đến 48 nodes. Các nút dữ liệu chia sẻ cùng một dữ liệu được cho là thuộc cùng một nhóm nút.
+        * SQL Nodes (`mysqld`): Chạy service MySQL để nhận các query và xử lý.
+      * Cách để thực hiện truy vấn trong MySQL NDB Cluster: Sử dụng MySQL command-line phía client, standard MySQL connector hoặc API để kết nối với một nút SQL, lần lượt gửi các yêu cầu dữ liệu đến các nút dữ liệu thông qua SQL Nodes.
+      * Sử dụng các SQL Nodes là cách phổ biến nhất để thực hiện các truy vấn. Một nút SQL giống như một phiên bản của Máy chủ MySQL. Công cụ lưu trữ NDB cung cấp cầu nối từ Máy chủ MySQL đến các nút dữ liệu. Cầu nối này giúp việc thực hiện các truy vấn thông qua các nút SQL sẽ giúp ứng dụng trở nên trong suốt.
+      * Việc phân phối dữ liệu cùng với sao chép dữ liệu ở Data Nodes có nghĩa là có thể có một nút ngoại tuyến trong khi nó vẫn cho phép dữ liệu được đọc từ các nút khác, góp phần tăng tính sẵn sàng.
    * Ưu điểm:
+      * Tính sẵn sàng cao (Không chia sẻ gì, phân vùng tự động, chuyển đổi dự phòng tự động và tự phục hồi, lỗi nút được xử lý tự động,...).
+      * Khả năng mở rộng và hiệu suất thời gian thực (Tự động tắt, tối ưu hóa trong bộ nhớ,...).
+      * Kiến trúc phân tán linh hoạt, không có điểm thất bại duy nhất.
+      * Thông lượng cao và độ trễ thấp.
+      * NDBCluster tuân thủ ACID.
+      * Các Data Nodes hỗ trợ truy xuất dữ liệu song song ngay cả đối với một truy vấn duy nhất.
    * Nhược điểm:
+      * Không hỗ trợ khóa ngoại hay các ràng buộc đòi hỏi chặt chẽ.
+      * Triển khai, quản lý, cấu hình phức tạp.
+      * Sao lưu và phục hồi không thuận tiện.
+      * Thời gian khởi động lại, nút dữ liệu sẽ tải dữ liệu vào bộ nhớ cần thiết sẽ tiêu tốn một thời gian dài.
+      * Sử dụng dung lượng đĩa, bộ nhớ. Một thời điểm nào đó thì ta cần phải mở rộng cả 2.
 
 <span name="A6"></span>
 
-6. Federated   
+6. Federated (Liên kết)  
+   
+   ![Federated-Features](./images/7.png)
+
+   *(Cấu trúc bảng FEDERATED)*
+
    * Giới thiệu:
+    * Công cụ lưu trữ Federated cho phép bạn truy cập dữ liệu từ CSDL MySQL từ xa mà không cần sử dụng công nghệ sao chép hoặc phân cụm. Truy vấn bảng Federated từ máy chủ cục bộ sẽ tự động lấy dữ liệu từ các bảng ở máy chủ từ xa (2 bên đã được liên kết với nhau). Đặc biệt, không có dữ liệu được lưu trữ trên các bảng máy chủ cục bộ.
+    * Khi bạn tạo bảng bằng một trong các công cụ lưu trữ tiêu chuẩn (như MyISAM, CSV hoặc InnoDB), bảng sẽ bao gồm định nghĩa bảng và dữ liệu liên quan. Khi bạn tạo một bảng Federated (phía máy chủ cục bộ), định nghĩa bảng sẽ là như nhau, nhưng việc lưu trữ dữ liệu vật lý sẽ được xử lý trên một máy chủ từ xa.
+    * Federated gồm 2 yếu tố:
+      * Một `máy chủ từ xa (remote server)` với bảng CSDL lần lượt bao gồm định nghĩa bảng (được lưu trữ trong từ điển dữ liệu MySQL) và các bảng liên quan. Loại bảng có thể là bất kỳ loại nào được hỗ trợ bởi máy chủ MySQL từ xa, như: MyISAM hoặc InnoDB.
+      * Một `máy chủ cục bộ (local server)` với các bảng CSDL thì định nghĩa các bảng ở cục bộ này sẽ khớp với các bảng tương ứng trên máy chủ từ xa. Định nghĩa bảng được lưu trữ trong từ điển dữ liệu. Không có file dữ liệu trên máy chủ cục bộ. Thay vào đó, định nghĩa bảng bao gồm một chuỗi kết nối trỏ đến bảng từ xa.
+    * Khi thực hiện các truy vấn và câu lệnh trên bảng Federated máy chủ cục bộ, các hoạt động thường chèn, cập nhật hoặc xóa thông tin từ file dữ liệu cục bộ sẽ được gửi đến máy chủ từ xa để nó thực thi hộ. Như vậy, máy chủ từ xa cập nhật thông tin hoặc trả về các hàng khớp đến máy chủ cục bộ.
+    * Khi máy khách (clients) đưa ra một câu lệnh SQL đề cập đến bảng Federated, luồng thông tin giữa máy chủ cục bộ (nơi câu lệnh SQL được thực thi) và máy chủ từ xa (nơi dữ liệu được lưu trữ vật lý) sẽ được thực thi như sau:
+      * Công cụ lưu trữ cục bộ xem qua từng cột mà bảng Federated có và xây dựng một câu lệnh SQL thích hợp đề gửi đến bảng từ xa.
+      * Câu lệnh được gửi đến máy chủ từ xa bằng API máy khách MySQL.
+      * Máy chủ từ xa xử lý câu lệnh và máy chủ cục bộ lấy bất kỳ kết quả nào mà câu lệnh tạo ra (số lượng hàng bị ảnh hưởng bởi câu lệnh hoặc tập kết quả).
+      * Nếu câu lệnh tạo ra tập kết quả, mỗi cột được chuyển đổi sang định dạng công cụ lưu trữ nội bộ mà công cụ Federated mong đợi và có thể sử dụng tập kết quả đó để hiển thị kết quả cho máy khách (nơi đang truy vấn).
    * Ưu điểm:
+      * Truy cập dữ liệu từ xa mà không cần sử dụng công nghệ sao chép hoặc phân cụm. 
+      * Truy vấn bảng Federated cục bộ sẽ tự động lấy dữ liệu từ các bảng từ xa mà bản thân nó không cần phải lưu trữ nhiều dữ liệu.
    * Nhược điểm:
+      * Bảng Federated không hỗ trợ các chỉ mục theo nghĩa thông thường, bởi vì quyền truy cập vào dữ liệu bảng từ xa bị giới hạn (mà bảng từ xa sử dụng các chỉ mục). Điều này có nghĩa là, đối với một truy vấn không thể sử dụng bất kỳ chỉ mục nào và do đó yêu cầu quét toàn bộ bảng từ xa, máy chủ cục bộ sẽ tìm nạp tất cả các hàng từ bảng từ xa và lọc chúng ở cục bộ. Điều này xảy ra bất kể WHERE hay LIMIT được sử dụng với câu lệnh SELECT, các mệnh đề này được áp dụng cục bộ khi cục bộ đã nhận được dữ liệu từ máy chủ từ xa. Do đó, các truy vấn không sử dụng chỉ mục có thể gây ra hiệu suất kém và quá tải mạng. Ngoài ra, do các hàng trả về phải được lưu trữ trong bộ nhớ, nên một truy vấn như vậy cũng có thể dẫn đến việc đổi máy chủ cục bộ hoặc thậm chí treo.
+      * Công cụ lưu trữ Federated hỗ trợ SELECT, INSERT, UPDATE, DELETE, TRUNCATE TABLE. Nó không hỗ trợ ALTER TABLE hoặc bất kỳ câu lệnh *Ngôn ngữ định nghĩa dữ liệu (DDL)* nào ảnh hưởng trực tiếp đến cấu trúc của bảng, ngoại trừ DROP TABLE. 
+      * Giao dịch (Transaction) không được hỗ trợ.
+      * Federated thực hiện INSERT số lượng lớn sao cho nhiều hàng được gửi đến bảng từ xa giúp cải thiện hiệu suất. Ngoài ra, nếu bảng từ xa có giao dịch, nó sẽ cho phép công cụ lưu trữ từ xa thực hiện khôi phục câu lệnh một cách chính xác nếu xảy ra lỗi. Khả năng này có hạn chế sau: Kích thước của phần INSERT không thể vượt quá kích thước gói tối đa giữa các máy chủ. Nếu INSERT vượt quá kích thước này, nó được chia thành nhiều gói và sự cố rollback có thể xảy ra.
+      * Tính toàn vẹn của dữ liệu trong bảng cục bộ có thể bị vi phạm nếu có bất kỳ thay đổi nào đối với cơ sở dữ liệu từ xa. Bởi vì không có cách nào để Federated biết bảng từ xa đã thay đổi. Lý do cho điều này là bảng này phải hoạt động giống như một file dữ liệu và sẽ không bao giờ được ghi vào bất kỳ thứ gì.
+      * Phân vùng do người dùng tự định nghĩa không được hỗ trợ cho các bảng Federated.
+   * Lưu ý:
+      * Máy chủ từ xa phải là máy chủ MySQL.
+      * Bảng từ xa mà bảng Federated trỏ đến phải tồn tại trước khi bạn cố gắng truy cập bảng từ xa thông qua bảng Federated trên cục bộ.
+      * Có thể cho một bảng Federated trỏ đến một bảng khác, nhưng bạn phải cẩn thận nhằm không tạo vòng lặp, trỏ qua trỏ lại rồi dữ liệu bị lặp, dẫn đến không thể truy vấn ra được kết quả.
+      * Khi sử dụng chuỗi CONNECTION, bạn không thể sử dụng ký tự '@' trong mật khẩu. Bạn có thể vượt qua giới hạn này bằng cách sử dụng câu lệnh CREATE SERVER để tạo kết nối máy chủ. 
+      * Bất kỳ câu lệnh DROP TABLE nào được đưa ra đối với bảng Federated chỉ làm giảm bảng cục bộ, bảng từ xa không bị tác động.
 
 <span name="A7"></span>
 
 7. Example
-   * Giới thiệu:
+   * Giới thiệu: 
+      * Công cụ lưu trữ EXAMPLE là một công cụ còn sơ khai không làm gì cả. 
+      * Mục đích của nó là dùng làm ví dụ trong mã nguồn MySQL, nhằm minh họa cách bắt đầu làm việc với các công cụ lưu trữ mới. 
+      * Khi bạn tạo bảng EXAMPLE, không có file nào được tạo và cũng không có dữ liệu nào được lưu trữ vào bảng. Việc truy vấn là không thể và trả về một kết quả trống (chẳng có gì).
    * Ưu điểm:
+      * Tiện lợi cho việc minh họa cách bắt đầu làm việc với công cụ lưu trữ mới, là sự chỉ dẫn bổ ích.
+      * Dễ sử dụng, gọn nhẹ cho việc minh họa.
    * Nhược điểm:
+      * Công cụ lưu trữ EXAMPLE không hỗ trợ lập chỉ mục, phân vùng.
+      * Chỉ có điểm đặc biệt là minh họa cách sử dụng nên đây vừa là ưu vừa là nhược.
 
 <span name="A8"></span>
 
 8. Archive
-   * Giới thiệu:
+
+   ![Archive-Features](./images/6.jpg)
+
+   * Giới thiệu: Công cụ lưu trữ ARCHIVE tạo ra các bảng có mục đích đặc biệt là lưu trữ một lượng lớn dữ liệu chưa được chỉ mục hóa trong một dấu chân (footprint) rất nhỏ.
    * Ưu điểm:
+      * Sử dụng row-level locking.
+      * Sử dụng zlib lossless để nén dữ liệu mỗi khi một dòng được insert vào bảng.
+      * Sao lưu hiệu quả hơn, nhanh hơn do kích thước tệp dữ liệu nhỏ vì đã được nén.
    * Nhược điểm:
+      * Hỗ trợ Insert, Replace, Select, Order By, cột kiểu BLOBs/TEXT nhưng không hỗ trợ Delete, Update.
+      * Không cho phép dùng các chỉ mục cột. Mỗi lần select thì yêu cầu quét toàn bộ bảng.
+      * Không hỗ trợ dữ liệu không gian (spatial data).
+   * Giải thích ngữ nghĩa:
+      * BLOBs:
+        * BLOBs là viết tắt của từ Binary Large Objects (BLOBs).
+        * BLOBs là các đối tượng lớn dưới dạng nhị phân, có thể được lưu trữ trong CSDL.
+        * BLOBs có thể được dùng để lưu trữ hình ảnh, bảng tính, video clips, các tập tin thi hành.
+      * Spatial data:
+        * Spatial data còn có tên gọi khác là geospatial data hoặc geographic information.
+        * Spatial data có thể xem như là road map, một road map gồm 2 chiều chứa các thứ như: Điểm, đường vẽ và đa giác có thể đại diện cho các thành phố, đường và ranh giới chính trị như tiểu bang hoặc tỉnh. Một bản đồ đường là một hình ảnh của thông tin địa lý.
+        * Spatial data thường được lưu trữ dưới dạng tọa độ, cấu trúc liên kết (topology) và dữ liệu có thể được ánh xạ.
+      * Footprint: Dấu chân là lượng không gian (space) mà một đơn vị phần cứng hoặc phần mềm cụ thể đang chiếm giữ.
 
 <span name="A9"></span>
 
@@ -214,7 +327,7 @@
      * Khả năng mất dữ liệu và giới hạn về kích thước CSDL có thể xảy ra. Nếu ta ngừng duy trì CSDL thì ta sẽ mất tính bền vững (D) trong ACID, và đó là một trong những nhược điểm của Memory Table khi tỉ lệ ngừng hoạt động có thể xảy ra rất cao (Chẳng hạn máy chủ tạm dừng hoặc tắt hoặc khởi động lại). Đồng thời, dữ liệu nở ra thì bộ nhớ RAM cũng sẽ thu hẹp dần.
      * Không có hỗ trợ giao dịch và khóa ngoại, có nghĩa là bạn sẽ phải quản lý tính toàn vẹn của giao dịch và tính toàn vẹn tham chiếu một cách thủ công (điều này có thể kém hiệu quả hơn nhiều so với việc để CSDL tự làm điều này).
      * Table-level locking: Đây có thể là một rào cản đáng kể đối với khả năng mở rộng nếu ứng dụng của bạn cần nhiều trình ghi đồng thời vào cùng một tập hợp bảng hoặc trong trường hợp các thao tác đọc của bạn sử dụng khóa để đảm bảo đọc dữ liệu nhất quán.
-     * Không thể chứa các cột kiểu BLOB hoặc TEXT.
+     * Không thể chứa các cột kiểu BLOBs hoặc TEXT.
 
 <span name="A10"></span>
 
@@ -244,8 +357,8 @@ CHÚ THÍCH:
 1. Giới thiệu sơ nét SQL Commands
    
    ![SQL-Commands](./images/1.png)
-
-   * **DML (Data Manipulation Language):** Các câu lệnh SQL trong lớp DML này được dùng để lưu trữ, sửa đổi, truy vấn, cập nhật, thêm, xóa,... dữ liệu trong CSDL:
+   * SQL (Structure Query Language): Một ngôn ngữ lập trình cấp cao, được gọi là Ngôn ngữ truy vấn cấu trúc, được thiết kế để tương tác với các cơ sở dữ liệu quan hệ. SQL gồm 4 bộ tập lệnh: DDL, DML, DCL và TCL. 
+   * DML (Data Manipulation Language): Các câu lệnh SQL trong lớp DML này được dùng để lưu trữ, sửa đổi, truy vấn, cập nhật, thêm, xóa,... dữ liệu trong CSDL:
      * SELECT: Rút trích dữ liệu từ (các bảng trong) CSDL.
      * INSERT: Thêm dữ liệu vào bảng.
      * UPDATE: Cập nhật nội dung của dữ liệu đã tồn tại trong bảng.
@@ -254,7 +367,7 @@ CHÚ THÍCH:
      * CALL: Gọi chương trình con của Java hoặc PL/SQL.
      * EXPLAIN PLAN: giải thích đường dẫn truy cập dữ liệu.
      * LOCK TABLE: Kiểm soát đồng thời.
-   * **DDL (Data Definition Language):** Các câu lệnh SQL trong lớp DDL này được dùng để định nghĩa cấu trúc, hoặc khởi tạo CSDL, như: 
+   * DDL (Data Definition Language): Các câu lệnh SQL trong lớp DDL này được dùng để định nghĩa cấu trúc, hoặc khởi tạo CSDL, như: 
      * CREATE: Tạo CSDL & các đối tượng của nó như bảng, index, views, store procedure, function and trigger.
      * DROP: Xóa các objects trong CSDL (Chẳng hạn DROP khóa ngoại, bảng).
      * ALTER: Thay đổi cấu trúc của CSDL đang tồn tại.
@@ -266,15 +379,15 @@ CHÚ THÍCH:
        * TRUNCATE sẽ luôn nhanh hơn vì nó tiêu tốn ít bộ nhớ hơn, bạn có thể cân nhắc điều này khi cần xóa 1 bảng lớn có nhiều record.
      * COMMENT: Thêm bình luận vào từ điển dữ liệu.
      * RENAME: Đổi tên cho đối tượng
-   * **DCL (Data Control Language):** Ngôn ngủ chủ yếu liên quan đến các quyền truy cập, những điều khiển khác của hệ thống CSDL.
+   * DCL (Data Control Language): Ngôn ngủ chủ yếu liên quan đến các quyền truy cập, những điều khiển khác của hệ thống CSDL.
      * GRANT: Cho phép người dùng truy cập đặc quyền vào CSDL.
      * REVOKE: Rút đặc quyền truy cập của người dùng đã được cung cấp bởi lệnh GRANT.
-   * **TCL (Transaction Control Language):** Ngôn ngữ được sử dụng trong các trường hợp liên quan đến giao dịch trong CSDL.
+   * TCL (Transaction Control Language): Ngôn ngữ được sử dụng trong các trường hợp liên quan đến giao dịch trong CSDL.
      * COMMIT: Commits 1 giao dịch.
      * ROLLBACK: Phục hồi (rollback) 1 giao dịch trong trường hợp có lỗi xảy ra.
      * SAVEPOINT: Phục hồi (rollback) các điểm thực hiện giao dịch (transaction making points) trong các nhóm.
      * SET TRANSACTION: Chỉ định các tính chất, đặc điểm cho giao dịch.
-   * **Giải thích ngữ nghĩa:**
+   * Giải thích ngữ nghĩa:
      * Tuple: Một tuple là một nhóm các phần tử được sắp xếp, chẳng hạn (10, 25, 30).
      * Record: Một bản ghi thường là một nhóm các phần tử được đặt tên như {"x": 10, "y": 25, "z": 30}.
      * Rollback: Là thao tác lùi cơ sở dữ liệu về một trạng thái cũ. Các thao tác rollback có tầm quan trọng đối với tính `toàn vẹn dữ liệu` của CSDL. Chúng giúp khôi phục CSDL về một bản sạch sẽ sau một số thao tác bị lỗi; phục hồi các sự cố sập server CSDL trong việc hủy bất cứ giao dịch nào đang chạy tại thời điểm xảy ra sự cố.
@@ -283,18 +396,176 @@ CHÚ THÍCH:
 
 2. Cách thức cài đặt MySQL server trên Linux
 
+
+
+
+
+
+
+
+
+
+
+
 <span name="B3"></span>
 
 3. Cách tạo DB (database) và table
+  * Đăng nhập user root MySQL để tạo CSDL:
+    ```
+    $ mysql -u root -p
+
+    Kết quả nhận được: "mysql>"
+    ```
+  * Thêm CSDL "books" nếu nó chưa tồn tại:
+    ```
+    mysql> CREATE DATABASE IF NOT EXISTS books;
+    ```
+  * Sử dụng CSDL "books":
+    ```
+    mysql> USE books;
+    ```
+  * Tạo bảng tên "authors" với 3 cột (id, name, email):
+    ```
+    mysql> CREATE TABLE authors (id INT, name VARCHAR(20), email VARCHAR(20));
+    ```
+  * Hiển thị tên các bảng trong CSDL đang được sử dụng hiện tại:
+    ```
+    mysql> SHOW TABLES;
+
+    Kết quả nhận được:
+        +-----------------+
+        | Tables_in_books |
+        +-----------------+
+        | authors         |
+        +-----------------+
+        1 row in set (0.00 sec)
+    ```
+  * Thay vì gõ từng dòng lệnh, bạn có thể sử dụng SQL script và khởi chạy file đó:
+    ```
+    + Tạo 1 file tên là "test.sql".
+    + Lưu trữ file tại đường dẫn <path>.
+    + Mở file và viết nội dung:
+      CREATE DATABASE IF NOT EXISTS books;
+      USE books;
+      CREATE TABLE authors (id INT, name VARCHAR(20), email VARCHAR(20));
+      SHOW TABLES;
+    + Khởi chạy file trong terminal bằng lệnh:
+      mysql> source <path>\test.sql
+    ```
 
 <span name="B4"></span>
 
 4. Thao tác với MySQL
    * **Select:**
+      ```
+        [SYNTAX]
+        SELECT column1, column2,... FROM tableName WHERE criteria
+        SELECT * FROM tableName WHERE criteria
+
+        [EXAMPLE]
+        SELECT name, gpa FROM class101
+        SELECT * FROM class101
+        SELECT name FROM class101 WHERE name LIKE 'k%'
+        SELECT name, gpa FROM class101 WHERE name = 'Tan Ah Teck'
+        SELECT * FROM class101 WHERE gpa > 4 AND name LIKE 'k%' ORDER BY gpa DESC, name ASC
+        SELECT name, gpa FROM class101 WHERE gpa >= 4.7
+
+        [EXPLAIN]
+        + Use AND, OR, NOT to combine simple conditions.
+        + Order the results in DESC (descending) or ASC (Ascending)
+        + Use "LIKE" for string pattern-matching, with:
+           > wildcard % matches zero or more (any) characters.
+           > wildcard _ matches one (any) character.
+        + Full-match (= or !=) on string. Strings are enclosed in quotes.
+        + The wildcard * denotes all the columns.
+        + You can compare numbers (INT, FLOAT) using =, >, <, >=, <=, <> (!=)
+      ```
    * **Insert:**
+      ```
+      [SYNTAX]
+      + All columns: INSERT INTO tableName VALUES (firstColumnValue, ..., lastColumnValue)
+      + Selected Columns: INSERT INTO tableName (column1, column2, ...) VALUES (value1, value2, ...)
+
+      [EXAMPLE]
+      INSERT INTO class101 VALUES (1001, 'Tan Ah Teck', 4.5)
+      INSERT INTO class101 (name, gpa) VALUES ('Peter Jones', 4.55)
+
+      [NOTICE]
+      + Missing fields will be set to their default values or NULL.
+      ```
    * **Update:**
+      ```
+      [SYNTAX]
+      UPDATE tableName SET column = value WHERE criteria
+
+      [EXAMPLE]
+      + Affect to all rows: 
+        UPDATE class101 SET gpa = 5.0
+      + Affect to selected row: 
+        UPDATE class101 SET gpa = gpa + 1.0 WHERE name = 'Tan Ah Teck'
+      ```
    * **Delete:**
-   * **Alter:**
+      ```
+      [SYNTAX]
+      DELETE FROM tableName WHERE criteria
+
+      [EXAMPLE]
+      DELETE FROM class101
+      DELETE FROM class101 WHERE id = 33
+      ```
+   * **Alter:** 
+      * Câu lệnh ALTER TABLE được sử dụng để thêm, xóa hoặc sửa đổi các cột trong bảng hiện có.
+      * Nó còn được sử dụng để thêm và xóa các ràng buộc khác nhau trên một bảng hiện có.
+      * `ADD Column`:
+        ```
+        [SYNTAX]
+        ALTER TABLE table_name
+        ADD column_name datatype;
+
+        [EXAMPLE]
+        + Adds an "Email" column to the "Customers" table:
+          ALTER TABLE Customers
+          ADD Email varchar(255);
+        + Defining a FOREIGN KEY constraint on multiple columns:
+          ALTER TABLE Orders
+          ADD CONSTRAINT FK_PersonOrder
+          FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+        ```
+      * `DROP Column`:
+        ```
+        [SYNTAX]
+        ALTER TABLE table_name
+        DROP COLUMN column_name;
+
+        [EXAMPLE]
+        + Deletes the "Email" column from the "Customers" table:
+          ALTER TABLE Customers
+          DROP COLUMN Email;
+        + MySQL - Drop a FOREIGN KEY constraint:
+          ALTER TABLE Orders
+          DROP FOREIGN KEY FK_PersonOrder;
+        + SQL Server/Oracle/MS Access - Drop a FOREIGN KEY constraint:
+          ALTER TABLE Orders
+          DROP FOREIGN KEY FK_PersonOrder;
+        ```
+      * `ALTER/MODIFY Column`:
+        ```
+        [SYNTAX]
+        + SQL Server/MS Access:
+          ALTER TABLE table_name
+          ALTER COLUMN column_name datatype;
+        + My SQL / Oracle (prior version 10G):
+          ALTER TABLE table_name
+          MODIFY COLUMN column_name datatype;
+        + Oracle 10G and later:
+          ALTER TABLE table_name
+          MODIFY column_name datatype;
+
+        [EXAMPLE]
+        + Change the data type of the column named "DateOfBirth" in the "Persons" table:
+          ALTER TABLE Persons
+          ALTER COLUMN DateOfBirth year;
+        ```
 
 <br/>
 
@@ -383,3 +654,15 @@ CHÚ THÍCH:
 12. <https://dev.mysql.com/doc/refman/8.0/en/memory-storage-engine.html>
 13. <https://dba.stackexchange.com/questions/1811/what-are-reasons-not-to-use-the-memory-storage-engine-in-mysql>
 14. <https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html>
+15. <https://stackoverflow.com/questions/612428/pros-and-cons-of-the-mysql-archive-storage-engine>
+16. <https://dev.mysql.com/doc/refman/8.0/en/archive-storage-engine.html>
+17. <https://dev.mysql.com/doc/refman/8.0/en/federated-description.html>
+18. <https://dev.mysql.com/doc/refman/8.0/en/federated-usagenotes.html>
+19. <https://www.programering.com/a/MTO2kzNwATU.html>
+20. <https://www.codehub.vn/Lam-the-nao-de-tao-mot-cum-MySQL-da-nut-tren-Ubuntu-18-04>
+21. <https://www.apress.com/us/blog/all-blog-posts/what-is-mysql-ndb-cluster/15454530>
+22. <https://hoclaptrinh.vn/tutorial/hoc-sql-server/database-la-gi>
+23. <https://www.w3schools.com/sql/sql_alter.asp>
+24. <https://www.w3schools.com/sql/sql_foreignkey.asp>
+25. <https://www.ntu.edu.sg/home/ehchua/programming/sql/mysql_howto.html>
+26. <https://www.cyberciti.biz/faq/howto-linux-unix-creating-database-and-table/>
