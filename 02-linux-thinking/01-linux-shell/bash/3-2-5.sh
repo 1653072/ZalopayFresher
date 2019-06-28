@@ -4,7 +4,7 @@
 #NGƯỜI THỰC HIỆN: TRAN KIEN QUOC
 #VỊ TRÍ: SOFTWARE DEVELOPMENT FRESHER
 #MODULE: 02-LINUX-THINKING
-#BÀI TẬP: 3-1-2
+#BÀI TẬP: 3-2-5
 #------------------------------------------
 
 HOMEPATH="/home/cpu11817"
