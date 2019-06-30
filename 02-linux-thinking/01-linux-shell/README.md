@@ -288,6 +288,52 @@ Awk sẽ thực thi (các) hành động được chỉ định trong END trư�
    * END {...}: Khi nào awk đọc & cộng dồn hết file, thì lệnh của END mới được chạy, ở đây là in kết quả sum.
    * `awk .... <filename>`: Thực hiện awk ngay trên file này.
 
+### CÁCH 3
+Sử dụng sức mạnh của GNU Parallel, hướng dẫn cài đặt:
+
+* Debian hoặc Ubuntu Linux:
+    ```
+    $ sudo apt install parallel
+    ```
+* RHEL/CentOS Linux:
+    ```
+    $ sudo yum install parallel
+    ```
+* Fedora Linux:
+    ```
+    $ sudo dnf install parallel
+    ```
+
+Tìm hiểu sơ nét về GNU Parallel:
+
+* GNU Parallel là một công cụ shell để thực hiện các công việc song song bằng cách sử dụng một hoặc nhiều máy tính.
+* Nếu bạn viết các vòng lặp trong shell, bạn sẽ thấy GNU Parallel có thể thay thế hầu hết các vòng lặp và làm cho chúng chạy nhanh hơn bằng cách chạy song song một số công việc.
+* GNU Parallel có thể phân tách dữ liệu đầu vào (danh sách file, danh sách host/user, danh sách URL hoặc bảng biểu) thành các khối dữ liệu và đặt mỗi khối vào mỗi ống (pipe) nhằm thực thi song song.
+* GNU Parallel đảm bảo đầu ra sau khi xử lý giống như kết quả chạy các lệnh một cách tuần tự. Điều này cho phép sử dụng đầu ra từ GNU Parallel làm đầu vào cho các chương trình hoặc đoạn lệnh khác.
+* GNU Parallel thường có thể được sử dụng thay thế cho xargs hoặc cat | bash.
+
+Giải quyết bài toán theo cách GNU Parallel:
+
+```
+cat sample.data | parallel --pipe awk \'{s+=\$1} END {print s}\' | awk '{s+=$1} END {print s}'
+```
+* Dùng cat để lấy nội dung vào, sau đó thực hiện cộng dồn SONG SONG bằng awk theo các block (Dữ liệu được chia thành số block ngẫu nhiên, cộng dồn các số bên trong mỗi block). 
+* Đoạn lệnh awk cuối cùng của lệnh là tổng kết quả của awk trước nó.
+
+```
+parallel --pipepart -a sample.data --block 10m awk \'{s+=\$1} END {print s}\' | awk '{s+=$1} END {print s}'
+```
+* Không cần phải cat để lấy dữ liệu làm đầu vào, mà là đọc dữ liệu trực tiếp từ file sample.data thay vì stdin (thông qua -a).
+* --pipepart dễ dàng cung cấp dữ liệu lên đến 5GB/s thay vì --pipe (chỉ 500MB/s). Do đó, nhanh hơn rất nhiều nếu dữ liệu file lớn.
+* Ở đây, dữ liệu được chia thành các block với 1 block có kích cỡ là 10MB.
+* Đoạn lệnh awk đầu tiên thì cộng dồn dữ liệu bên trong các block, lệnh awk cuối cùng là cộng dồn các giá trị của awk đầu tiên.
+
+Tham khảo thêm thông tin về GNU Parallel:
+
+* [Đường dẫn 1](https://www.gnu.org/software/parallel/parallel_tutorial.html)
+* [Đường dẫn 2](http://manpages.ubuntu.com/manpages/cosmic/man1/parallel.1.html)
+* [Đường dẫn 3](https://www.cyberciti.biz/faq/how-to-run-command-or-code-in-parallel-in-bash-shell-under-linux-or-unix/)
+
 <br/>
 
 ## THAM KHẢO:
