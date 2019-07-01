@@ -575,11 +575,104 @@ CHÚ THÍCH:
 
 <span name="C1"></span>
 
-1. Các kiểu dữ liệu cơ bản của MySQL
+1. Các kiểu dữ liệu cơ bản của MySQL: Numberic, Date and Time, String, Spatial Data, JSON
+    * NUMERIC: Gồm các loại Bit-Value, Integer, Fixed-Point, Floating-Point.
+      * BIT(M): M cho biết số bit của mỗi giá trị, từ 1 đến 64 bit. Mặc định là 1 nếu M bị bỏ qua.
+      * TINYINT(M): Một số nguyên **`rất nhỏ`**. Phạm vi giá trị của số có dấu là -128 đến 127. Phạm vi giá trị của số không dấu là 0 đến 255.      
+      * SMALLINT(M): Một số nguyên **`nhỏ`**. Phạm vi giá trị của số có dấu là -32768 đến 32767. Phạm vi giá trị của số không dấu là 0 đến 65535.
+      * MEDIUMINT(M): Một số nguyên có kích thước trung bình. Phạm vi giá trị của số có dấu là -8388608 đến 8388607. Phạm vi giá trị của số không dấu là 0 đến 16777215.
+      * INT(M) hoặc INTEGER(M): Một số nguyên kích thước bình thường. Phạm vi giá trị của số có dấu là -2147483648 đến 2147483647. Phạm vi giá trị của số không dấu là 0 đến 4294967295.
+      * BIGINT(M): Một số nguyên lớn. Phạm vi giá trị của số có dấu là -9223372036854775808 đến 9223372036854775807. Phạm vi giá trị của số không dấu là 0 đến 18446744073709551615.
+      * SERIAL là bí danh (hoặc thay thế) cho BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE.
+      * DECIMAL(M [,D]): 
+        * Là số có lượng chữ số cố định.
+        * M là tổng số chữ số trước dấu chấm (gọi là Precision) và D là tổng số chữ số sau dấu chấm thập phân (gọi là Scale).
+        * Nếu D bằng 0, giá trị không có dấu chấm thập phân và các con số sau dấu chấm đó.
+        * Số chữ số tối đa (M) cho DECIMAL là 65. Số thập phân được hỗ trợ tối đa (D) là 30. Nếu D bị bỏ qua, mặc định là 0. Nếu M bị bỏ qua, mặc định là 10.
+        * Nếu sử dụng DECIMAL UNSIGNED, giá trị âm không được phép sử dụng.
+      * FLOAT(M,D):
+        * Là số có dấu phẩy động nhỏ.
+        * Các giá trị cho phép là -3,402823466E + 38 đến -1.175494351E-38, 0 và 1.175494351E-38 đến 3.402823466E + 38 (dựa trên tiêu chuẩn IEEE). Phạm vi thực tế có thể nhỏ hơn một chút tùy thuộc vào phần cứng hoặc hệ điều hành của bạn.
+        * M là tổng số chữ số trước dấu chấm và D là số chữ số theo sau dấu chấm thập phân. Nếu M và D bị bỏ qua, các giá trị được lưu trữ đến giới hạn cho phép của phần cứng.
+        * Nếu sử dụng FLOAT UNSIGNED, giá trị âm không được phép sử dụng.
+        * Số dấu phẩy động chính xác đến khoảng 7 chữ số thập phân.
+      * DOUBLE(M,D):
+        * Là số có dấu phẩy động kích thước trung bình.
+        * Các giá trị cho phép là -1.7976931348623157E + 308 đến -2.2250738585072014E-308, 0 và 2.2250738585072014E-308 đến 1.7976931348623157E + 308 (dựa trên tiêu chuẩn IEEE). Phạm vi thực tế có thể nhỏ hơn một chút tùy thuộc vào phần cứng hoặc hệ điều hành của bạn.
+        * Số dấu phẩy động chính xác đến khoảng 15 chữ số thập phân.
+    * DATE AND TIME: Gồm các loại Date, DateTime, TimeStamp, Time, Year.
+      * DATE: Được sử dụng cho các giá trị có phần ngày nhưng không có phần thời gian. MySQL truy xuất và hiển thị các giá trị DATE ở định dạng 'YYYY-MM-DD'. Phạm vi được hỗ trợ là '1000-01-01' đến '9999-12-31'.
+      * DATETIME: Được sử dụng cho các giá trị chứa cả phần ngày và thời gian. MySQL truy xuất và hiển thị các giá trị DATETIME ở định dạng 'YYYY-MM-DD hh:mm:ss'. Phạm vi được hỗ trợ là '1000-01-01 00:00:00' đến '9999-12-31 23:59:59'.
+      * TIMESTAMP: Được sử dụng cho các giá trị chứa cả phần ngày và thời gian. TIMESTAMP có phạm vi từ '1970-01-01 00:00:01' UTC đến '2038-01-19 03:14:07' UTC.
+      * TIME: MySQL truy xuất và hiển thị các giá trị TIME theo định dạng 'hh:mm:ss' (hoặc 'hhh:mm:ss' cho các giá trị giờ lớn). Giá trị TIME có thể dao động từ '-838:59:59' đến '838:59:59'. Phần giờ có thể rất lớn vì loại TIME không chỉ được sử dụng để biểu thị thời gian trong ngày (phải dưới 24 giờ), mà còn thời gian trôi qua hoặc khoảng thời gian giữa hai sự kiện (có thể lớn hơn nhiều 24 giờ, hoặc thậm chí kết quả là âm).
+      * YEAR: 
+        * Là loại 1 byte được sử dụng để biểu thị các giá trị năm. Nó có thể được khai báo là YEAR ​​hoặc YEAR(4) (có chiều rộng hiển thị là bốn ký tự). 
+        * MySQL hiển thị các giá trị YEAR ở định dạng YYYY, với phạm vi từ 1901 đến 2155 hoặc 0000.
+        * Bạn có thể sử dụng NOW() để trả về năm hiện hành.
+        * Nếu bạn muốn nhập giá trị là 0 và mong muốn nó tự động chuyển về năm thứ 2000, hãy xác định nó là `một chuỗi '0' hoặc '00'`.
+      * **Lưu ý:**
+        * Các kiểu dữ liệu TIMESTAMP và DATETIME cung cấp khởi tạo và cập nhật tự động đến ngày và giờ hiện tại.
+        * MySQL chuyển đổi các giá trị TIMESTAMP từ múi giờ hiện tại sang UTC để lưu trữ và từ UTC trở thành múi giờ hiện tại khi truy xuất. (Điều này không xảy ra đối với các loại khác, chẳng hạn như DATETIME).
+        * Nếu bạn lưu trữ giá trị TIMESTAMP, sau đó thay đổi múi giờ và truy xuất giá trị, giá trị được truy xuất sẽ khác với giá trị bạn đã lưu trữ. Điều này xảy ra vì bạn không thay đổi theo cùng múi giờ.
+        * Các giá trị DATE, DATETIME hoặc TIMESTAMP không hợp lệ được chuyển đổi thành giá trị 0 ('0000-00-00' hoặc '0000-00-00 00:00:00').
+        * Giá trị '10:11:12' giống như giá trị thời gian vì **`dấu :`**, nhưng được hiểu là năm '2010-11-12' nếu sử dụng DATE. Giá trị '10:45:15' được chuyển đổi thành '0000-00-00' vì '45' không phải là tháng hợp lệ. Giá trị ngày hay giờ mà nhập vào sai thì sẽ được mặc định chuyển về 0 hết.
+        * Nếu bạn nhập số năm chỉ là 2 con số thay vì 4 con số thì MySQL sẽ hiểu như sau: 
+          * Giá trị năm trong phạm vi 00-69 được chuyển đổi thành 2000-2069.
+          * Giá trị năm trong phạm vi 70-99 được chuyển đổi thành 1970-1999.
+        * Về kiểu TIME, nếu bạn `nhập '11:12' có nghĩa là '11:12:00'` chứ không phải là '00:11:12'. Nếu bạn `nhập '1112' có nghĩa là '00:11:12'`. Tương tự, `nhập '12' được hiểu là '00:00:12'`.
+        * Về giá trị của kiểu TIME: Nếu nhập '-850:00:00' hay '850:00:00' thì chúng sẽ được chuyển về '-838:59:59' hay '838:59:59', nghĩa là giá trị tối đa của TIME. Giá trị nhập vào của kiểu TIME nếu không hợp lệ sẽ chuyển về '00:00:00'.
+    * String: Gồm các loại Char-VarChar, Binary-VarBinary, Blob-Text, Enum, Set.
+      * CHAR - VARCHAR: 
+        * CHAR và VARCHAR tương tự nhau, nhưng khác nhau về cách chúng được lưu trữ và truy xuất. Chúng cũng khác nhau về chiều dài tối đa và các khoảng trống có được giữ lại hay không.
+        * Độ dài CHAR có thể là bất kỳ giá trị nào từ 0 đến 255.
+        * Khi các giá trị CHAR được lưu trữ, các khoảng trắng được thêm vào kí tự cuối đến đúng độ dài đã chỉ định. Khi các giá trị CHAR được truy xuất, các khoảng trắng dư thừa ấy sẽ bị xóa trừ khi chế độ SQL PAD_CHAR_TO_FULL_LENGTH được bật.
+        * Độ dài VARCHAR có thể là bất kỳ giá trị nào từ 0 đến 65,535.
+        * Các giá trị VARCHAR được lưu trữ dưới dạng tiền tố có độ dài 1 byte hoặc 2 byte cộng với dữ liệu. Tiền tố độ dài cho biết số lượng byte trong phần giá trị. Một cột sử dụng một byte độ dài nếu các giá trị yêu cầu không quá 255 byte, hai byte độ dài nếu các giá trị có thể yêu cầu nhiều hơn 255 byte.
+        * Nhập quá độ dài chuỗi cho phép, lượng kí tự vượt quá độ dài sẽ bị loại bỏ tự động và có cảnh báo đính kèm. Nhưng nếu bật `strict SQL mode`, lỗi sẽ xuất hiện và bạn không thể chèn chuỗi có độ dài vượt quá giới hạn.
+
+          ![Char-Varchar](./images/10.png)
+
+        * Ví dụ toán tử LIKE trong việc so sánh:
+
+          ![Select-Like-Char&VarChar](./images/11.png)
+
+      * BINARY - VARBINARY:
+        * Gần giống CHAR, VARCHAR. Thay vì chứa chuỗi ký tự thì kiểu dữ liệu này chứa chuỗi byte.
+        * Độ dài của BINARY, VARBINARY tương tự CHAR, VARCHAR.
+        * Ví dụ BINARY(3), 'a ' sẽ trở thành 'a \0' khi được thêm và 'a\0' sẽ trở thành 'a\0\0'. Cả hai giá trị được chèn vẫn không thay đổi khi được SELECT, mỗi byte đều có ý nghĩa chứ không bị bỏ sót.
+
+          ![Select-Binary&VarBinary](./images/12.png)
+
+      * BLOB - TEXT:
+        * BLOB là một đối tượng nhị phân lớn (Binary Large OBject) có thể chứa một lượng lớn dữ liệu. Có bốn loại BLOB, TINYBLOB, BLOB, MEDIUMBLOB và LONGBLOB, nhưng chỉ khác nhau về độ dài tối đa của các giá trị mà chúng có thể giữ. 
+        * Bốn loại TEXT là TINYTEXT, TEXT, MEDIUMTEXT và LONGTEXT. Chúng tương ứng với bốn loại BLOB, có độ dài tối đa và các yêu cầu lưu trữ tương tự BLOB.
+
+          ![BLOB-TEXT](./images/13.png)
+
+        * Điểm khác nhau giữa BLOB và TEXT: Khi sắp xếp và so sánh dữ liệu đã lưu trữ thì với BLOB là phân biệt kiểu chữ hoa thường, còn với TEXT là không phân biệt kiểu chữ. Bạn không cần phải xác định độ dài với BLOB hoặc TEXT.
+      * ENUM: 
+        *  Khi định nghĩa một trường kiểu này, tức là, ta đã chỉ ra một danh sách các đối tượng mà trường phải nhận (có thể là NULL). Ví dụ, nếu ta muốn một trường nào đó chỉ nhận một trong các giá trị "A" hoặc "B" hoặc "C" thì ta phải định nghĩa kiểu ENUM cho nó như sau: ENUM ('A', 'B', 'C'). Và chỉ có các giá trị này (hoặc NULL) có thể xuất hiện trong trường đó.
+        * Bạn có thể liệt kê tối đa 65535 giá trị trong danh sách ENUM.
+        * Các giá trị được sắp xếp theo thứ tự bạn nhập vào.
+      * SET: Tương tự như ENUM, trừ đặc điểm SET có thể chứa tối đa 64 list items và có thể lưu trữ nhiều hơn một lựa chọn.
+    * Spatial Data: Đã được giải thích ở Storage Engine Archive.
+    * JSON: 
+      * MySQL cho phép Tạo giá trị JSON; Normalization, Merging, và Autowrapping của các giá trị JSON; Tìm kiếm và Sửa đổi giá trị JSON.
+      * Một mảng JSON chứa một danh sách các giá trị cách nhau bởi dấu phẩy và đặt trong cặp ký tự [ và ]: `["abc", 10, null, true, false]`. Một đối tượng JSON chứa một bộ key/value được phân cách bởi dấu phẩy và đặt trong cặp ký tự { và }: `{ "K1": "value", "K2": 10}`.
+      * Trong MySQL, giá trị JSON đều là các chuỗi.
+      * MySQL xử lý chuỗi được sử dụng trong bối cảnh JSON bằng cách sử dụng charset utf8mb4 và collation utf8mb4_bin. Strings ở charset khác được chuyển đổi thành utf8mb4 khi cần thiết (Đối với các string ở charset ascii hoặc utf8, không cần thiết chuyển đổi vì ascii và utf8 là tập con của utf8mb4).
+      * Bối cảnh JSON gồm: Thêm một giá trị vào một cột có kiểu dữ liệu JSON và truyền một tham số đến một function đang chờ đợi một giá trị JSON.
+      * Giá trị JSON có thể được gán cho biến do người dùng định nghĩa: `mysql> SET @j = JSON_OBJECT('key', 'value');`. Biến @j này không có kiểu dữ liệu JSON mặc dù nhìn có vẻ như vậy. Thay vào đó, kết quả từ JSON_OBJECT() được chuyển thành một chuỗi khi gán cho biến.
+      * Một vài chức năng của JSON bạn có thể sử dụng: JSON_TYPE, JSON_ARRAY, JSON_OBJECT, JSON_MERGE, JSON_VALID.
+      * Xem thêm về JSON: [Tại đây](https://viblo.asia/p/json-trong-mysql-WrJeYXQaGVO)
+      * Giải thích Collation: Là một bộ quy tắc được sử dụng để so sánh các ký tự trong một bộ ký tự (CharSet) cụ thể. Mỗi ký tự được đặt trong MySQL có thể có nhiều Collation và ít nhất có một Collation mặc định. Hai bộ ký tự (CharSet) không thể có cùng Collation.
+
+        ![CharSet-Collation](./images/14.png)
 
 <span name="C2"></span>
 
-2. Các kiểu dữ liệu đặc biệt và cách xử lý
+2. Các kiểu dữ liệu đặc biệt và cách xử lý (utf8mb4)
+    * s
 
 <br/>
 
@@ -666,3 +759,6 @@ CHÚ THÍCH:
 24. <https://www.w3schools.com/sql/sql_foreignkey.asp>
 25. <https://www.ntu.edu.sg/home/ehchua/programming/sql/mysql_howto.html>
 26. <https://www.cyberciti.biz/faq/howto-linux-unix-creating-database-and-table/>
+27. <https://o7planning.org/vi/10321/du-lieu-va-cau-truc-trong-mysql#a206070>
+28. <https://dev.mysql.com/doc/refman/5.7/en/data-types.html>
+29. <https://viblo.asia/p/json-trong-mysql-WrJeYXQaGVO>
