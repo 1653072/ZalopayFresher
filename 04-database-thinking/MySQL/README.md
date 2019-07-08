@@ -37,11 +37,11 @@
   - [Khái niệm transaction trong hệ thống phân tán](#D5)
 - [ISOLATION](#E)
   - [Isolation là gì](#E1)
-  - [Isolation ở mức cơ bản](#E2)
+  - [Các vấn đề về việc đọc dữ liệu](#E2)
   - [Xác định isolation level của MySQL để xử lý đồng thời (concurrency)](#E3)
 - [CONNECTOR](#F)
   - [Một số cách kết nối với MySQL: jdbc, python driver,...](#F1)
-- [Nguồn tham khảo](#G)
+- [NGUỒN THAM KHẢO](#G)
 
 <br/>
 
@@ -395,63 +395,92 @@ CHÚ THÍCH:
 <span name="B2"></span>
 
 2. Cách thức cài đặt MySQL server trên Linux
+    * Mở Terminal và chạy 2 lệnh bên dưới để cài đặt mysql-server
+      ```
+      $ sudo apt-get update
+      $ sudo apt-get install mysql-server
+      ```
+    * Hiển thị các package liên quan đến mysql
+      ```
+      $ dpkg --get-selections | grep mysql
+      ```
+    * Kiểm tra thông tin chi tiết của các gói trong mysql
+      ```
+      $ dpkg --status mysql-server
+      ```
+    * Kiểm tra vị trí (đường dẫn) của `mysqld (MySQL Server Deamon)` và `mysql (MySQL command-line client)`
+      ```
+      Server: $ which mysqld
+      Client: $ which mysql
+      ```
+    * Chạy/Dừng/Trạng thái của MySQL Server (`mysqld`)
+      ```
+      Start: sudo service mysql start
+      Stop: sudo service mysql stop
+      Restart (Stop and start): sudo service mysql restart
+      Check Status: sudo service mysql status
+      ```
+    * Kiểm tra tiến trình `mysqld`
+      ```
+      $ ps aux | grep mysqld
+      ```
+    * Chạy/Dừng MySQL Command-line Client (`mysql`)
+      ```
+      $ mysql -u root -p
+      
+      Nhập password của root
 
+      mysql> select user, host, authentication_string from mysql.user;
 
-
-
-
-
-
-
-
-
-
+      mysql> exit
+      ```
+    * Xem chi tiết [tại đây](https://www.ntu.edu.sg/home/ehchua/programming/howto/Ubuntu_HowTo.html#mysql).
 
 <span name="B3"></span>
 
 3. Cách tạo DB (database) và table
-  * Đăng nhập user root MySQL để tạo CSDL:
-    ```
-    $ mysql -u root -p
+    * Đăng nhập user root MySQL để tạo CSDL:
+      ```
+      $ mysql -u root -p
 
-    Kết quả nhận được: "mysql>"
-    ```
-  * Thêm CSDL "books" nếu nó chưa tồn tại:
-    ```
-    mysql> CREATE DATABASE IF NOT EXISTS books;
-    ```
-  * Sử dụng CSDL "books":
-    ```
-    mysql> USE books;
-    ```
-  * Tạo bảng tên "authors" với 3 cột (id, name, email):
-    ```
-    mysql> CREATE TABLE authors (id INT, name VARCHAR(20), email VARCHAR(20));
-    ```
-  * Hiển thị tên các bảng trong CSDL đang được sử dụng hiện tại:
-    ```
-    mysql> SHOW TABLES;
+      Kết quả nhận được: "mysql>"
+      ```
+    * Thêm CSDL "books" nếu nó chưa tồn tại:
+      ```
+      mysql> CREATE DATABASE IF NOT EXISTS books;
+      ```
+    * Sử dụng CSDL "books":
+      ```
+      mysql> USE books;
+      ```
+    * Tạo bảng tên "authors" với 3 cột (id, name, email):
+      ```
+      mysql> CREATE TABLE authors (id INT, name VARCHAR(20), email VARCHAR(20));
+      ```
+    * Hiển thị tên các bảng trong CSDL đang được sử dụng hiện tại:
+      ```
+      mysql> SHOW TABLES;
 
-    Kết quả nhận được:
-        +-----------------+
-        | Tables_in_books |
-        +-----------------+
-        | authors         |
-        +-----------------+
-        1 row in set (0.00 sec)
-    ```
-  * Thay vì gõ từng dòng lệnh, bạn có thể sử dụng SQL script và khởi chạy file đó:
-    ```
-    + Tạo 1 file tên là "test.sql".
-    + Lưu trữ file tại đường dẫn <path>.
-    + Mở file và viết nội dung:
-      CREATE DATABASE IF NOT EXISTS books;
-      USE books;
-      CREATE TABLE authors (id INT, name VARCHAR(20), email VARCHAR(20));
-      SHOW TABLES;
-    + Khởi chạy file trong terminal bằng lệnh:
-      mysql> source <path>\test.sql
-    ```
+      Kết quả nhận được:
+          +-----------------+
+          | Tables_in_books |
+          +-----------------+
+          | authors         |
+          +-----------------+
+          1 row in set (0.00 sec)
+      ```
+    * Thay vì gõ từng dòng lệnh, bạn có thể sử dụng SQL script và khởi chạy file đó:
+      ```
+      + Tạo 1 file tên là "test.sql".
+      + Lưu trữ file tại đường dẫn <path>.
+      + Mở file và viết nội dung:
+        CREATE DATABASE IF NOT EXISTS books;
+        USE books;
+        CREATE TABLE authors (id INT, name VARCHAR(20), email VARCHAR(20));
+        SHOW TABLES;
+      + Khởi chạy file trong terminal bằng lệnh:
+        mysql> source <path>/test.sql
+      ```
 
 <span name="B4"></span>
 
@@ -672,7 +701,56 @@ CHÚ THÍCH:
 <span name="C2"></span>
 
 2. Các kiểu dữ liệu đặc biệt và cách xử lý (utf8mb4)
-    * s
+    * Bộ ký tự có tên utf8 sử dụng tối đa 3 byte cho mỗi ký tự, nên utf8 của MySQL chỉ encode được "một phần" của UTF-8. Một ngày đẹp trời lỗi sẽ xảy ra khi xuất hiện 1 character thêm vào CSDL có độ dài lớn hơn 3 byte.
+      ```
+      mysql> SET NAMES utf8;
+
+      mysql> UPDATE database_name.table_name SET column_name = 'foo𝌆bar' WHERE id = 9001;
+
+      mysql> SELECT column_name FROM database_name.table_name WHERE id = 9001;
+      ==> Lúc này kết quả chỉ còn là 'foo', phần nội dung còn lại đã bị cắt ngắn đi bởi kí tự đặc biệt 𝌆 chen giữa.
+      ```
+    * Do đó, utf8mb4 của MySQL mới có nghĩa là UTF-8. Nó hỗ trợ BMP và các kí tự bổ sung cũng như yêu cầu tối đa 4 byte cho một ký tự cần nhiều byte.
+    * Cách đổi CharSet và Collation của CSDL, bảng và cột từ utf8 sang utf8mb4
+      ```
+      # For each database:
+      ALTER DATABASE database_name CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+      # For each table:
+      ALTER TABLE table_name CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+      # For each column:
+      ALTER TABLE table_name CHANGE column_name column_name VARCHAR(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+      ```
+    * Lưu ý về độ dài tối đa của cột và khóa chỉ mục:
+      * Khi chuyển đổi từ utf8 sang utf8mb4, độ dài tối đa của cột hoặc khóa chỉ mục không thay đổi về mặt byte. Do đó, nó chỉ nhỏ hơn về mặt số lượng ký tự, bởi vì độ dài tối đa của một ký tự bây giờ là bốn byte thay vì ba byte. Ví dụ: TINYTEXT có thể có 255 byte, tương ứng 85 kí tự 3-byte và 63 kí tự 4-byte thay vì là 63.75, do đó bạn sẽ thất thoát một ít kí tự 4-byte.
+      * Tương tự cho các khóa chỉ mục, công nghệ lưu trữ InnoDB có độ dài tối đa cho các khóa chỉ mục là 767 byte, nên nếu dùng utf8 là còn 255 kí tự, utf8mb4 là 191 kí tự. Vì vấn đề này, cột khóa chỉ mục có kiểu VARCHAR(255) phải được đổi thành VARCHAR(191).
+    * Sửa đổi bộ ký tự kết nối, client và server theo file cấu hình. Xem thêm [tại đây](https://dev.mysql.com/doc/refman/5.5/en/option-files.html).
+      ```
+      [client]
+      default-character-set = utf8mb4
+
+      [mysql]
+      default-character-set = utf8mb4
+
+      [mysqld]
+      character-set-client-handshake = FALSE
+      character-set-server = utf8mb4
+      collation-server = utf8mb4_unicode_ci
+      ```
+
+      Cách kiểm tra thông tin bộ ký tự kết nối, client và server có thay đổi đúng ý mình:
+
+      ![Modify-utf8mb4](./images/15.png)
+
+      *Chú thích: character_set_system không thể thay đổi thành utf8mb4, nó nên là kiểu nhị phân.*
+
+    * Sửa chữa và tối ưu hóa tất cả các bảng:
+      ```
+      $ mysqlcheck -u root -p --auto-repair --optimize --all-databases
+
+      ==> Bạn sẽ cần nhập mật khẩu root. Sau đó, tất cả các bảng trong tất cả các cơ sở dữ liệu sẽ được sửa chữa và tối ưu hóa sau các bước thay đổi ở trên.
+      ```
 
 <br/>
 
@@ -682,23 +760,84 @@ CHÚ THÍCH:
 
 <span name="D1"></span>
 
-1. Transaction là gì
+1. Transaction là gì: 
+    * Là một tập hợp các câu lệnh thực hiện một quy trình nhất định trong một cơ sở dữ liệu mà:
+      * Tất cả các câu lệnh được thực hiện thành công
+      * Hoặc không có gì xảy ra.
+    * Ví dụ chuyển tiền giữa các ngân hàng:
+      ```
+      Transaction Transfer_money
+
+        Decrease balance of sending account
+        Increase balance of receiving account
+        If all is successful then 
+            commit transaction
+        Else 
+            rollback transaction
+
+      End transaction
+      ```
+    * Ví dụ khác: Cài đặt phần mềm hoặc gỡ bỏ phần mềm. Việc cài đặt/gỡ bỏ được chia thành các bước, thực hiện tuần tự từ đầu đến cuối, nếu toàn bộ các bước thực thi thành công đồng nghĩa với việc tiến trình cài đặt hoặc gỡ bỏ phần mềm thành công và ngược lại, một phép thất bại thì tiến trình phải rollback lại tức sẽ không có bất kỳ thay đổi nào trên máy tính.
+    * Transaction phải đảm bảo:
+      * Tính nguyên tử: Thực hiện theo nguyên nguyên tắc "All or nothing". Nghĩa là nếu một thành phần nào đó trong transaction thực thi bị hỏng (fail) thì đồng nghĩa với việc không có gì xảy ra tức không có gì thay đổi về mặt dữ liệu, ngược lại, tất cả các câu lệnh được thực hiện thành công.
+      * Tính nhất quán: Tất cả các ràng buộc không bị vi phạm trước, trong và sau khi giao dịch được thực hiện.
+      * Tính độc lập: Một transaction không thể tác động việc thực thi trên dữ liệu của một transaction khác. Các transaction thực thi độc lập nhau.
+      * Tính bền vững: Sau transaction, những thay đổi đã được cố định, không có chuyện có thể chuyển lại trạng thái dữ liệu lúc trước khi thực hiện transaction.
 
 <span name="D2"></span>
 
-2. Tại sao phải dùng transaction
+2. Tại sao phải dùng transaction: Trong một số tình huống, dữ liệu có thể không nhất quán khi các lệnh được thực thi riêng lẻ vì gặp phải vấn đề truy xuất đồng thời nếu nó xảy ra (INSERT, UPDATE, DELETE,...). Nếu câu lệnh đầu tiên được thực hiện một cách chính xác nhưng các câu lệnh tiếp theo thất bại thì dữ liệu cũng có thể ở trạng thái không chính xác. Vì vậy, tại phải sử dụng transaction để đảm bảo rằng, tất cả lệnh đều được thực thi thành công hoặc chả gì có thay đổi (nếu gặp thất bại cho việc thực thi câu lệnh), dẫn đến việc dữ liệu được bảo toàn, nhất quán.
 
 <span name="D3"></span>
 
 3. Cách sử dụng transaction
+    * Tạo một giao dịch: Có thể thực hiện nhiều câu lệnh SELECT, INSERT, UPDATE, DELETE sau lệnh `BEGIN;`
+      ```
+      START TRANSACTION;
+      BEGIN;
+      ```
+    * Kết thúc giao dịch:
+      ```
+      COMMIT, ROLLBACK
+      ```
+      * Lệnh COMMIT lưu các thay đổi vào cơ sở dữ liệu.
+      * Lệnh ROLLBACK hủy các thay đổi thực hiện trong giao dịch và cơ sở dữ liệu được phục hồi về trạng thái trước giao dịch.
+      * SAVEPOINT định nghĩa một điểm đánh dấu trong một giao dịch.
+      * ROLLBACK TO SAVEPOINT cho phép phục hồi dữ liệu về lại trước điểm đánh dấu.
+      * RELEASE SAVEPOINT: Xóa SAVEPOINT được đã dùng ra khỏi tập hợp các SAVEPOINT của giao dịch hiện tại. Không có COMMIT hoặc ROLLBACK xảy ra. Sẽ có lỗi nếu điểm lưu trữ không tồn tại mà ta lại đi RELEASE.
 
 <span name="D4"></span>
 
 4. Xử lý khi gặp lỗi transaction
+    * Nếu bị lỗi, lệnh ROLLBACK nên được đưa ra để đưa tất cả các table liên quan với transaction về lại trạng thái trước đó.
+    * Các lệnh thuộc DDL như CREATE, DROP, ALTER CSDL hay Table sẽ không thể ROLLBACK. Do đó, thiết kế các transaction không nên có các lệnh DDL (Data Definition Language) xếp đầu tiên, nếu lỗi xảy ra thì không thể phục hồi lại các dữ liệu đã bị tác động bởi các lệnh DDL.
+    * Nên sử dụng công nghệ lữu trữ InnoDB vì nó có hỗ trợ SAVEPOINT, ROLLBACK TO SAVEPOINT, RELEASE SAVEPOINT và dùng nó kết hợp vào TRANSACTION để khi xảy ra lỗi, có thể phục hồi về lại điểm đã đánh dấu SAVEPOINT.
+      ```
+      mysql> start transaction;
+        <Alter the data of table>
+      mysql> savepoint id;
+      mysql> rollback to savepoint id;
+        <View the data>
+      mysql> release savepoint id;
+      ```
 
 <span name="D5"></span>
 
 5. Khái niệm transaction trong hệ thống phân tán
+    * Giao dịch phân tán, cũng như mọi giao dịch khác, phải đảm bảo các thuộc tính ACID.
+    * Các thứ tự BEGIN, ROLLBACK, COMMIT tương tự như trên một Server.
+    * Vì một hệ thống server là không đủ nên phải tạo nhiều kết nối đến nhiều hệ thống server và hoạt động của transaction cũng sẽ trở nên phức tạp hơn.
+    * Một giao dịch phân tán có thể được xem là một giao dịch cơ sở dữ liệu mà nó phải được đồng bộ hóa (hoặc cung cấp các thuộc tính ACID) giữa nhiều cơ sở dữ liệu tham gia nằm ở các hệ thống/máy chủ vật lý khác nhau.
+
+      ![Distributed-Transaction-Example](./images/18.png)
+      *Ảnh minh họa giao dịch phân tán*
+
+      ![Flat&Nested-Transaction](./images/17.png)
+      *Flat transaction & Nested transaction.*
+
+      ![Two-Phase-Commit](./images/16.png)
+
+      *Two phase commit là giải pháp duy nhất đảm bảo các tính chất ACID của distributed transaction, thường được sử dụng rất nhiều trong các tình huống cần dữ liệu chính xác và các giao dịch có sự tranh chấp cao. Tuy nhiên, vì giải pháp này cần các resources phải bị lock trong quá trình xử lý nên trong các tình huống khác, giải pháp này kém hiệu quả.*
 
 <br/>
 
@@ -708,15 +847,43 @@ CHÚ THÍCH:
 
 <span name="E1"></span>
 
-1. Isolation là gì
+1. Isolation là gì: 
+    * Một giao dịch đang thực thi và chưa được xác nhận (commit) phải bảo đảm tách biệt khỏi các giao dịch khác.
+    * Mức cô lập thấp làm tăng khả năng nhiều người dùng truy cập cùng một dữ liệu cùng một lúc, dẫn đến tăng số lượng hiệu ứng đồng thời (như đọc bẩn hoặc cập nhật thông tin thất bại).
+    * Mức cô lập cao làm giảm các loại hiệu ứng đồng thời mà người dùng có thể gặp phải, nhưng yêu cầu nhiều tài nguyên hệ thống hơn và tăng khả năng một giao dịch sẽ chặn một giao dịch khác tiếp xúc với tài nguyên.
 
 <span name="E2"></span>
 
-2. Isolation ở mức cơ bản
+2. Các vấn đề về việc đọc dữ liệu:
+    * Dirty reads (Đọc bẩn): Khi transaction A tiến hành phép write với dữ liệu, transaction B tiến hành đọc dữ liệu sau khi A làm xong phép write. Tuy nhiên vì một lý do gì đó, transaction A không commit được, do đó sự thay đổi phép write không được chấp nhận, dữ liệu rollback lại trạng thái ban đầu, khi đó dữ liệu của B sẽ trở thành dirty – bẩn.
+
+      ![Dirty-Reads](./images/19.png)
+
+       *Ảnh minh họa SELECT và UPDATE dirty.*
+
+    * Non-repeatable reads: Khi transaction A tiến hành phép read trên dữ liệu, sau đó transaction B thực hiện phép write làm dữ liệu thay đổi, lần kế tiếp A lại tiến hành phép read với chính dữ liệu. Như vậy, 2 lần đọc của A thấy dữ liệu không nhất quán (consistency) trên cùng một bản ghi.
+
+      ![NonRepeatable-Reads](./images/20.png)
+
+      *Ảnh minh họa cho Non-Repeatable read.*
+
+    * Phantom reads: Xảy ra khi trong một giao dịch, hai câu truy vấn giống nhau khi thi hành trả lại tập hợp các dòng khác nhau. Điều này xảy ra khi tại thời điểm giữa hai câu truy vấn đó, giao dịch thứ hai thêm vào các dòng dữ liệu mới thỏa mãn mệnh đề WHERE của câu truy vấn.
+
+      ![Phantom-Reads](./images/21.png)
+
+      *Ảnh minh họa cho Phantom read.*
+    
+    * Để tránh được các trường hợp dị thường của CSDL, chúng ta cần phải lock data – khóa dữ liệu, không cho những giao dịch khác thực hiện các lệnh trên dữ liệu khi giao dịch hiện thời đang làm việc. Khóa này sẽ được mở (giải phóng) ở khi giao dịch hiện thời hoàn thành công việc. Có 3 loại lock khác nhau gồm write locks, read locks, range locks. Đồng thời, isolation levels chỉ ra những mức độ lock khác nhau trên dữ liệu hay nói một cách khác là mức độ “ẩn” khác nhau của một transaction với các transactions khác đang thực thi ở cùng thời điểm.
 
 <span name="E3"></span>
 
 3. Xác định isolation level của MySQL để xử lý đồng thời (concurrency)
+    * Serializable: Đây là mức cao nhất của isolation levels, đảm bảo read và write locks. Trong trường hợp phép read đòi hỏi một vùng dữ liệu, Serializable cũng cần range lock để tránh phantom reads.
+    * Repeatable reads: Mức thấp hơn Serializable có read và write locks nhưng không cần đến range locks. Với trường hợp này, phantom reads có thể xảy ra.
+    * Read committed: Chỉ bao gồm write locks, như vậy read committed chỉ đảm bảo dirty reads là không xảy ra.
+    * Read uncommitted: Mức thấp nhất trong isolation levels trong đó cả ba dirty reads, nonrepeatable reads, phantom reads đều có thể xảy ra. Vì vậy, một giao dịch có thể thấy các thay đổi chưa được commit được thực hiện bởi các giao dịch khác.
+
+      ![Isolation-Level](./images/22.png)
 
 <br/>
 
@@ -726,7 +893,13 @@ CHÚ THÍCH:
 
 <span name="F1"></span>
 
-1. Một số cách kết nối với MySQL: jdbc, python driver,...
+Một số cách kết nối với MySQL: jdbc, python driver,...
+* Một số cách kết nối với MySQL bằng JDBC, Python Driver, ODBC Driver: [Tại đây](https://www.mysql.com/products/connector/).
+* Sử dụng Python, MySQL trên Ubuntu:
+  * Cài đặt Python 3: [Tại đây](https://vinasupport.com/huong-dan-cai-dat-python-3-va-pip-3-tren-ubuntu-linux/)
+  * Hướng dẫn kết nối MySQL trong Python: [Tại đây](https://pycon.vn/topic/34/huong-dan-ket-noi-mysql-trong-python/2)
+  * Sử dụng MySQL trên Python (Bạn có thể bỏ qua bước cài đặt MySQLdb): [Tại đây](https://vietjack.com/python/truy_cap_database_trong_python.jsp)
+* Sử dụng JDBC kết nối MySQL với Java: [Tại đây](https://stackjava.com/network-programming/su-dung-jdbc-de-ket-noi-java-voi-database-mysql.html)
 
 <br/>
 
@@ -758,7 +931,16 @@ CHÚ THÍCH:
 23. <https://www.w3schools.com/sql/sql_alter.asp>
 24. <https://www.w3schools.com/sql/sql_foreignkey.asp>
 25. <https://www.ntu.edu.sg/home/ehchua/programming/sql/mysql_howto.html>
-26. <https://www.cyberciti.biz/faq/howto-linux-unix-creating-database-and-table/>
-27. <https://o7planning.org/vi/10321/du-lieu-va-cau-truc-trong-mysql#a206070>
-28. <https://dev.mysql.com/doc/refman/5.7/en/data-types.html>
-29. <https://viblo.asia/p/json-trong-mysql-WrJeYXQaGVO>
+26. <https://www.ntu.edu.sg/home/ehchua/programming/howto/Ubuntu_HowTo.html#mysql>
+27. <https://www.cyberciti.biz/faq/howto-linux-unix-creating-database-and-table/>
+28. <https://o7planning.org/vi/10321/du-lieu-va-cau-truc-trong-mysql#a206070>
+29. <https://dev.mysql.com/doc/refman/5.7/en/data-types.html>
+30. <https://viblo.asia/p/json-trong-mysql-WrJeYXQaGVO>
+31. <https://mathiasbynens.be/notes/mysql-utf8mb4>
+32. <https://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html>
+33. <https://viblo.asia/p/mysql-database-transactions-ung-dung-transactions-trong-laravel-3KbvZ1LLGmWB>
+34. <https://viblo.asia/p/tim-hieu-ve-transaction-trong-mysql-RnB5pnxGZPG>
+35. <https://en.wikipedia.org/wiki/Distributed_transaction>
+36. <https://kipalog.com/posts/Mot-so-giai-phap-de-xu-ly-distributed-transaction-trong-he-thong-phan-tan>
+37. <https://slideplayer.com/slide/4689412/>
+38. <https://techmaster.vn/posts/26316/transaction-la-gi>
