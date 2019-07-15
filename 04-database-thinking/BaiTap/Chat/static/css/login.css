@@ -1,0 +1,81 @@
+﻿body {
+    background: #F1F1F1 !important;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    margin-top: -200px;
+    right: 0;
+    left: 0;
+}
+
+.card {
+    border: 2px solid #248241;
+}
+
+.card-login {
+    padding: 18px;
+    max-width: 30em;
+}
+
+.card-header {
+    color: #000;
+    font-family: sans-serif;
+    font-size: 20px;
+    font-weight: 600 !important;
+    margin-top: 10px;
+    border-bottom: 0;
+    background-color: #fff;
+}
+
+.card-header img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1em;
+}
+
+input:focus{
+    outline: 0 0 0 0  !important;
+    box-shadow: 0 0 0 0 !important;
+}
+
+#msg {
+    color: red !important;
+    font-style: italic;
+    text-align: center;
+    font-size: 14px;
+}
+
+.login_btn{
+    width: 130px;
+}
+
+.login_btn:hover {
+    color: white;
+    background-color: red;
+}
+
+.btn-outline-danger {
+    color: #fff;
+    font-weight: 500;
+    font-size: 18px;
+    background-color: #248241;
+    border-color: #248241;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #000;
+    font-weight: 500;
+    background-color: transparent;
+    background-clip: padding-box;
+    border: 1px solid #248241;
+    border-radius: 0;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

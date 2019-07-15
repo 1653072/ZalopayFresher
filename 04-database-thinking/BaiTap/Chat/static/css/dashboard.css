@@ -1,0 +1,430 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    background: #7F7FD5;
+    background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+    background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+}
+
+.chat {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.card {
+    height: 700px;
+    border-radius: 15px !important;
+    background-color: rgba(0,0,0,0.4) !important;
+}
+
+.contacts_body {
+    padding:  0.75rem 0 !important;
+    overflow-y: auto;
+    white-space: nowrap;
+}
+
+.msg_card_body {
+    overflow-y: auto;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+    border-bottom: 0 !important;
+}
+
+.card-footer {
+    border-radius: 0 0 15px 15px !important;
+    border-top: 0 !important;
+}
+
+.container {
+    align-content: center;
+}
+
+.search {
+    border-radius: 15px 0 0 15px !important;
+    background-color: rgba(0,0,0,0.3) !important;
+    border:0 !important;
+    color:white !important;
+}
+
+.search:focus {
+    box-shadow:none !important;
+    outline:0px !important;
+}
+
+.type_msg {
+    background-color: rgba(0,0,0,0.3) !important;
+    border:0 !important;
+    border-radius: 15px 0 0 15px !important;
+    color:white !important;
+    height: 60px !important;
+    overflow-y: auto;
+}
+
+.type_msg:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+.send_btn {
+    border-radius: 0 15px 15px 0 !important;
+    background-color: rgba(0,0,0,0.3) !important;
+    border:0 !important;
+    color: white !important;
+    cursor: pointer;
+}
+
+.search_btn {
+    border-radius: 0 15px 15px 0 !important;
+    background-color: rgba(0,0,0,0.3) !important;
+    border:0 !important;
+    color: white !important;
+    cursor: pointer;
+}
+
+.contacts {
+    list-style: none;
+    padding: 0;
+}
+
+.contacts li {
+    width: 100% !important;
+    padding: 5px 10px;
+    margin-bottom: 5px !important;
+    list-style: none;
+}
+
+.contacts li a {
+    display: block;
+}
+
+.active {
+    background-color: rgba(0,0,0,0.3);
+}
+
+.user_img {
+    height: 60px;
+    width: 60px;
+    border: 1.5px solid #f5f6fa;
+}
+
+.user_img_msg {
+    height: 40px;
+    width: 40px;
+    border:1.5px solid #f5f6fa;
+}
+
+.img_cont {
+    position: relative;
+    height: 60px;
+    width: 60px;
+}
+
+.img_cont_msg {
+    height: 40px;
+    width: 40px;
+}
+
+.online_icon {
+    position: absolute;
+    height: 15px;
+    width:15px;
+    background-color: #4cd137;
+    border-radius: 50%;
+    bottom: 0.2em;
+    right: 0.2em;
+    border:1.5px solid white;
+}
+
+.offline {
+    background-color: #c23616 !important;
+}
+.user_info {
+    margin-top: auto;
+    margin-left: 15px;
+    position: relative;
+    height: 60px;
+}
+
+.user_info span {
+    font-size: 22px;
+    color: white;
+}
+
+.user_info p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 0px;
+}
+
+.noticeMsg {
+    color: lightpink;
+    font-style: italic;
+}
+
+.optionrow {
+    height: 40px;
+    padding: 0px 15px;
+}
+
+.optiondiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.optiondiv:hover {
+    background-color: rgba(0,0,0,0.2);
+}
+
+.optionstyle,
+.optionstyle:hover {
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.optionicon {
+    padding-right: 8px;
+}
+
+#option_menu_btn {
+    position: absolute;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.option_menu {
+    z-index: 1;
+    position: absolute;
+    padding: 15px 0;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border-radius: 15px;
+    top: 30px;
+    right: 15px;
+    display: none;
+}
+
+.option_menu ul {
+    list-style: none;
+    padding: 15px 0;
+    margin: 0;
+    position: absolute;
+    bottom: 40px;
+    left: -40px;
+    width: max-content;
+    z-index: 1;
+    color: white;
+    border-radius: 15px;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.option_menu ul li {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 5px;
+}
+
+.option_menu ul li i {
+    padding-right: 10px;
+}
+
+.option_menu ul li:hover {
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.msg_cotainer {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+    margin-right: 300px;
+    border-radius: 25px;
+    background-color: #5abcd2;
+    padding: 10px;
+    position: relative;
+    max-height: 800px;
+    overflow: hidden;
+}
+
+.msg_cotainer_send {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 10px;
+    margin-left: 300px;
+    border-radius: 25px;
+    background-color: #d4b1f4;
+    padding: 10px;
+    position: relative;
+    max-height: 800px;
+    overflow: hidden;
+}
+
+.msg_time {
+    float: right;
+    margin-top: 4px;
+    margin-left: 5px;
+    color: white;
+    font-size: 12px;
+}
+
+.msg_time_send {
+    float: right;
+    margin-top: 4px;
+    margin-left: 5px;
+    color: white;
+    font-size: 12px;
+}
+
+.msg_head {
+    position: relative;
+}
+
+#action_menu_btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.action_menu {
+    z-index: 1;
+    position: absolute;
+    padding: 15px 0;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border-radius: 15px;
+    top: 30px;
+    right: 15px;
+    display: none;
+}
+
+.action_menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.action_menu ul li {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 5px;
+}
+
+.action_menu ul li i {
+    padding-right: 10px;
+}
+
+.action_menu ul li:hover {
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.2);
+}
+
+@media(max-width: 576px) {
+    .contacts_card {
+        margin-bottom: 15px !important;
+    }
+}
+
+.showFRL {
+    list-style: none;
+    margin: auto;
+    padding-inline-start: 10px !important;
+    width: 100%;
+}
+
+.liFRL {
+    padding: 0px;
+    color: black;
+}
+
+.liBtn {
+    cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/* ------------------------------------------------------------------------------ */
+/* MODAL DIALOG CHỈNH SỬA THÔNG TIN */
+
+div.modal{
+    margin-top: 200px;
+}
+
+.modal-backdrop {
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
+.headerDialogUser {
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: black; 
+    padding: 10px 10px 10px 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* CANCEL of ADD, DEACTIVE */
+#cancelAddNewFriend,
+#cancelDeactive {
+    background-color: RGB(128,128,128,0.8); ; 
+    color: #fff; 
+    width: 120px;
+    max-width: 120px;
+}
+
+#cancelAddNewFriend:hover,
+#cancelDeactive:hover {
+    background-color: RGB(128,128,128); 
+    color: #fff; 
+    font-weight: bold;
+}
+
+/* BTN of DEACTIVE, ADD NEW FRIEND, CLOSE MODAL FRL */
+#btnCloseModalFRL,
+#btnAddNewFriend,
+#btnDeactive {
+    background-color: RGB(255,0,0,0.7); 
+    color: #fff; 
+    width: 120px;
+    max-width: 120px;
+}
+
+#btnCloseModalFRL:hover,
+#btnAddNewFriend:hover,
+#btnDeactive:hover {
+    background-color: RGB(255,0,0); 
+    color: #fff; 
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ------------------------------------------------------------------------------ */
+
+#addNewFriendMsg {
+    color: black;
+    font-weight: bold;
+    border: 1px solid black;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 5px;
+    padding: 6px 15px;
+    font-size: 16px;
+}
+
+
