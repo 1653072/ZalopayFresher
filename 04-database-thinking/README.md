@@ -49,4 +49,4 @@
 <br/>
 
 ## DỮ LIỆU PHỤC VỤ CHO BÀI TẬP
-* Dữ liệu cho [Bài tập 3-1](./BaiTap/Chat).
+* Dữ liệu cho [Bài tập 3](./BaiTap/Chat).

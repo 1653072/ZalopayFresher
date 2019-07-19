@@ -16,21 +16,27 @@
     <!-- JQuery/JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <!-- KHÔNG DÙNG VERSION NÀY: 
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+    -->
     
     <!-- Include dashboard.css to dashboard.html -->
     <link rel="stylesheet" type="text/css" href="../static/css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Include socket -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <!-- KHÔNG DÙNG VERSION NÀY: 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script> 
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 
    <!-- Animation CSS-->
    <link rel="stylesheet" type="text/css" href="../static/css/animate.css">
 </head>
 <body>
     <div class="container-fluid h-100">
-        <div class="row justify-content-center h-100 animated zoomIn">
+        <div class="row justify-content-center h-100 animated fadeIn">
             <div class="col-md-4 col-xl-3 chat">
                 <div class="card mb-sm-3 mb-md-0 contacts_card">
                     <div class="card-header">
@@ -60,7 +66,7 @@
                             </li>
                              
                             <li>
-                                <a href="/RoomID-5" style="text-decoration: none;">
+                                <a href="/RoomID:5" style="text-decoration: none;">
                                     <div class="d-flex bd-highlight">
                                         <div class="img_cont">
                                             <img src="../static/images/avatar.png" class="rounded-circle user_img">
@@ -85,13 +91,11 @@
                                 <span id="option_menu_btn" class="optionstyle"><i class="fa fa-ellipsis-v optionicon"></i>Options</span>
                                 <div class="option_menu">
                                     <ul>
-                                        <li id="addNewFriend"><i class="fa fa-user-circle optionicon"></i> Add friend</li>
+                                        <li id="addNewFriend"><i class="fa fa-user-circle optionicon" style="padding-right: 12px;"></i>Add friend</li>
                                         <li id="createGroup"><i class="fa fa-plus optionicon"></i> Create group</li>
-                                        <li id="friendList" class="active"><a href="/dashboard" style="text-decoration: none; color: white;"><i class="fa fa-address-book optionicon"></i> Friend list</a></li>
-                                        <li id="closeFriendList"><i class="fa fa-users optionicon"></i>Close friend list</li>
-                                        <li id="groupList"><i class="fa fa-user-circle optionicon"></i>Group list</li>
+                                        <li id="contactList" class="active"><a href="/dashboard" style="text-decoration: none; color: white;"><i class="fa fa-address-book optionicon" style="padding-right: 12px;"></i>Contact list</a></li>
+                                        <!-- <li id="groupList"><i class="fa fa-user-circle optionicon"></i> Group list</li> -->
                                         <li id="friendRequestList"><i class="fa fa-user-plus optionicon"></i>Friend request list</li>
-                                        <!--<li><i class="fa fa-ban optionicon"></i> Block list</li>-->
                                         <li id="deactiveAccount" style="color: #ff4c4c;"><i class="fa fa-times-circle optionicon"></i> Deactive account</li>
                                     </ul>
                                 </div>
@@ -108,7 +112,7 @@
                     <div class="card-header msg_head">
                         <div class="d-flex bd-highlight">
                             <div class="img_cont">
-                                <img src="../static/images/avatar.png" class="rounded-circle user_img">
+                                <img id="roomImage" src="../static/images/avatar.png" class="rounded-circle user_img">
                                 <span id="statusFriend" class="online_icon"></span>
                             </div>
                             <div class="user_info">
@@ -118,42 +122,53 @@
                         </div>
                         <span id="action_menu_btn" style="display: none;"><i class="fa fa-ellipsis-v"></i></span>
                         <div class="action_menu">
-                            <ul>
-                                <li><i class="fa fa-edit"></i>Change display name</li>
-                                <li><i class="fa fa-users"></i>Add to close friends</li>
-                                <li><i class="fa fa-plus"></i> Add to group</li>
-                                <!--<li><i class="fa fa-ban"></i> Block</li>-->
-                                <li><i class="fa fa-close"></i> Unfriend</li>
+                            <ul id="RIDofFeature">
+                                <li id="changeRoomName"><i class="fa fa-edit"></i>Change display name</li>
+                                <!-- <li id="addToGroup"><i class="fa fa-plus"></i> Add to group</li>
+                                <li id="doUnfriend"><i class="fa fa-close"></i> Unfriend</li> -->
                             </ul>
                         </div>
                     </div>
                     <div class="card-body msg_card_body">
-                        <!--
-                        <div class="d-flex justify-content-start mb-4">
-                            <div class="img_cont_msg">
-                                <img src="../static/images/avatar.png" class="rounded-circle user_img_msg">
+                        <div id="divChat">
+                            <!--
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="../static/images/avatar.png" class="rounded-circle user_img_msg">
+                                </div>
+                                <div class="msg_cotainer">
+                                    <div class="chatName" style="text-align: left;">quoctk08</div>
+                                    <hr/>
+                                    Hi
+                                    <hr/>
+                                    <div class="msg_container_timestatus">
+                                        <span class="msg_time">8:55 AM, Today</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="msg_cotainer">
-                                Hi Maryam i am good tnx how about youssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssbbasdasdasdasda ssadsadsads?sdadsad sa dasdasdsssssssssssssssssssasdsa
-                                <span class="msg_time">8:40 AM, Today</span>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    <div class="chatName" style="text-align: right;">haian123</div>
+                                    <hr/>
+                                    Hi Maryam i am good tnx how about youssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssbbasdasdasdasda ssadsadsads?sdadsad sa dasdasdsssssssssssssssssssasdsa
+                                    <hr/>
+                                    <div class="msg_container_timestatus">
+                                        <span class="msg_time_send">8:55 AM, Today</span>
+                                        <span class="status_message_send">Sent</span>
+                                    </div>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="../static/images/avatar.png" class="rounded-circle user_img_msg">
+                                </div>
                             </div>
+                            -->
                         </div>
-                        <div class="d-flex justify-content-end mb-4">
-                            <div class="msg_cotainer_send">
-                                Hi Maryam i am good tnx how about youssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssbbasdasdasdasdassadsadsads?
-                                <span class="msg_time_send">8:55 AM, Today</span>
-                            </div>
-                            <div class="img_cont_msg">
-                                <img src="../static/images/avatar.png" class="rounded-circle user_img_msg">
-                            </div>
-                        </div>
-                        -->
                     </div>
                     <div class="card-footer">
                         <form id="chatForm" class="input-group" method="POST" action='#'>
                             <textarea name="contentMessage" id="contentMessage" class="form-control type_msg" placeholder="Type your message..."></textarea>
                             <div class="input-group-append">
-                                <span class="input-group-text send_btn"><button type="submit" style="color: white; background: none; border: none; cursor: pointer;"><i class="fa fa-location-arrow"></i></button></a></span>
+                                <span class="input-group-text send_btn"><button type="submit" style="color: white; background: none; border: none; cursor: pointer;"><i class="fa fa-location-arrow"></i></button></span>
                             </div>
                         </form>
                     </div>
@@ -162,7 +177,7 @@
         </div>
     </div>  
 
-    <!-- Modal deactive account -->
+    <!-- Modal DEACTIVE ACCOUNT -->
     <form action="/dashboard/deactiveAccount" method="post" aria-hidden="true">
         <div class="modal animated fadeIn" role="dialog" id="modalDeactiveAccount" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog viewForm">
@@ -182,7 +197,7 @@
         </div>
     </form>
 
-    <!-- Modal add new friend -->
+    <!-- Modal ADD NEW FRIEND -->
     <form action="/dashboard/addNewFriend" method="post" aria-hidden="true" id="formAddNewFriend">
         <div class="modal animated fadeIn" role="dialog" id="modalAddNewFriend" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog viewForm">
@@ -211,7 +226,7 @@
         </div>
     </form>
 
-    <!-- Popup message for you -->
+    <!-- Modal POPUP MESSAGE -->
     <div class="modal animated fadeIn" role="dialog" id="modalMessageForYou">
         <div class="modal-dialog viewForm">
             <div class="modal-content" style="background: linear-gradient(to right, #91EAE4, #86A8E7);">
@@ -225,14 +240,14 @@
         </div>
     </div>
 
-    <!-- Modal friend request list -->
+    <!-- Modal FRIEND REQUEST LIST (SEE & ACCEPT FRIEND) -->
     <div class="modal animated fadeIn" role="dialog" id="modalFriendRequestList" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog viewForm">
             <div class="modal-content" style="background: linear-gradient(to right, #91EAE4, #86A8E7);">
                 <div class="modal-header headerDialogUser">
                     FRIEND REQUEST LIST
                 </div>
-                <div class="modal-body">  
+                <div class="modal-body" style="max-height: 400px; overflow-y: scroll;">  
                     <ul class="showFRL">
                         <!-- <li>
                             <label class="col-lg-4 col-md-4 liFRL">Request from: </label>
@@ -255,19 +270,136 @@
         </div>
     </div>
 
+    <!-- Modal CHANGE ROOM NAME -->
+    <div class="modal animated fadeIn" role="dialog" id="modalChangeRoomName" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog viewForm">
+            <div class="modal-content" style="background: linear-gradient(to right, #91EAE4, #86A8E7);">
+                <div class="modal-header headerDialogUser">
+                    CHANGE ROOM NAME
+                </div>
+                <div class="modal-body">  
+                    <div class="form-group">
+                        <label class="col-lg-12 col-md-12 control-label"><b style="color: red; padding-right: 3px;">*</b>New room name:</label>
+                        <div class="col-lg-12 col-md-12">
+                            <input class="form-control" type="text" id="newRoomName" required autofocus>
+                        </div>
+                    </div>
+                    <div class="form-group" style="color: red; padding-right: 3px; font-weight: normal; padding: 0px 15px;">
+                        <i><b>(*)</b>: Required</i>
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <button class="btn" id="cancelChangeRoomName" data-dismiss="modal" style="margin-right: 15px;">Cancel</button>
+                    <button class="btn" id="btnChangeRoomName" type="submit" style="margin-right: 15px;">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Modal DO UNFRIEND -->
+    <div class="modal animated fadeIn" role="dialog" id="modalDoUnfriend" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog viewForm">
+            <div class="modal-content" style="background: linear-gradient(to right, #91EAE4, #86A8E7);">
+                <div class="modal-header headerDialogUser">
+                    UNFRIEND
+                </div>
+                <div class="modal-body">  
+                    <label class="col-lg-12 col-md-12 control-label">Are you really want to unfriend this person?</label>
+                    <label class="col-lg-12 col-md-12 control-label" style="color: red;"><b>Notice: All datas between you and this person are deleted permanently.</b></label>
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <button class="btn" id="cancelDoUnfriend" data-dismiss="modal" style="margin-right: 15px;">Cancel</button>
+                    <button class="btn" id="btnDoUnfriend" type="submit" style="margin-right: 15px;">Unfriend</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Modal CREATE GROUP -->
+    <div class="modal animated fadeIn" role="dialog" id="modalCreateGroup" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog viewForm">
+            <div class="modal-content" style="background: linear-gradient(to right, #91EAE4, #86A8E7);">
+                <div class="modal-header headerDialogUser">
+                    CREATE A NEW GROUP
+                </div>
+                <div class="modal-body" style="max-height: 400px; overflow-y: scroll;">  
+                    <label class="col-lg-12 col-md-12 control-label"><b style="color: red; padding-right: 3px;">*</b>New group name:</label>
+                    <div class="col-lg-12 col-md-12">
+                        <input class="form-control" type="text" id="newGroupName" required autofocus>
+                    </div>
+                    <hr/>
+                    <ul class="showFL">
+                        <!-- <li>
+                            <input class="col-lg-2 col-md-2 liFLBox" type="checkbox" name="friendForGroup" value="quoctk">
+                            <label class="col-lg-3 col-md-3 liFL">Your friend: </label>
+                            <label class="col-lg-7 col-md-7 liFL">quoctk</label>
+                        </li>
+                        <li>
+                            <input class="col-lg-2 col-md-2 liFLBox" type="checkbox" name="friendForGroup" value="haian123">
+                            <label class="col-lg-3 col-md-3 liFL">Your friend: </label>
+                            <label class="col-lg-7 col-md-7 liFL">haian123</label>
+                        </li> -->
+                    </ul>
+                    <div id="createNewGroupMsg" style="display: none;"></div>
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <button class="btn" id="cancelCreateGroup" data-dismiss="modal" style="margin-right: 15px;">Cancel</button>
+                    <button class="btn" id="btnCreateGroup" type="submit" style="margin-right: 15px;">Create Group</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Modal LEAVE GROUP -->
+    <div class="modal animated fadeIn" role="dialog" id="modalLeaveGroup" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog viewForm">
+            <div class="modal-content" style="background: linear-gradient(to right, #91EAE4, #86A8E7);">
+                <div class="modal-header headerDialogUser">
+                    LEAVE GROUP
+                </div>
+                <div class="modal-body">  
+                    <label class="col-lg-12 col-md-12 control-label">Are you really want to leave this group?</label>
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <button class="btn" id="cancelLeave" data-dismiss="modal" style="margin-right: 15px;">Cancel</button>
+                    <button class="btn" id="btnLeave" type="submit" style="margin-right: 15px;">Leave</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-
-
-
-
+    <!-- Modal ADD FRIEND to CHAT GROUP -->
+    <div class="modal animated fadeIn" role="dialog" id="modalAddToGroup" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog viewForm">
+            <div class="modal-content" style="background: linear-gradient(to right, #91EAE4, #86A8E7);">
+                <div class="modal-header headerDialogUser">
+                    ADD FRIEND TO GROUP
+                </div>
+                <div class="modal-body">  
+                    <div class="form-group">
+                        <label class="col-lg-12 col-md-12 control-label"><b style="color: red; padding-right: 3px;">*</b>Exactly group name:</label>
+                        <div class="col-lg-12 col-md-12">
+                            <input class="form-control" type="text" required autofocus name="nameOfChoosedGroup" id="nameOfChoosedGroup">
+                        </div>
+                    </div>
+                    <div class="form-group" style="color: red; padding-right: 3px; font-weight: normal; padding: 0px 15px;">
+                        <i><b>(*)</b>: Required</i>
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content: center;">
+                    <button class="btn" id="cancelAddToGroup" data-dismiss="modal" style="margin-right: 15px;">Cancel</button>
+                    <button class="btn" id="btnAddToGroup" type="submit" style="margin-right: 15px;">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
+    <!-- SCRIPT - NƠI XỬ LÝ CÁC NHIỆM VỤ -->
     <script>
         $(document).ready(function() {
-            //Toggle of ACTION MENU & OPTION MENU
+            //-------------------------------------------------------------------------------
+            // Toggle of ACTION MENU & OPTION MENU
+            //-------------------------------------------------------------------------------
             $('#action_menu_btn').click(function(){
                 event.stopPropagation();
                 $('.action_menu').toggle();
@@ -304,69 +436,109 @@
             // Connect to the Socket.IO server.
             // The connection URL has the following format, relative to the current page:
             //     http[s]://<domain>:<port>[/<namespace>]
-            socket = io.connect(namespace);
-
-            socket.on('renderFriendListFirstTime', function(msg) {
+            var socket = io.connect(namespace);
+            
+            //-------------------------------------------------------------------------------
+            // Render contact list in the first time of openning/accessing website
+            //-------------------------------------------------------------------------------
+            socket.on('renderContactListFirstTime', function(msg) {
                 $('#action_menu_btn').removeAttr('style');
                 $('.contacts').empty().append(function() {
                     var result = "";
-                    for (var i=0; i<msg.userData.length; ++i) {
-                        if (msg.userData[i][1] == 1) {
-                            result += "\
-                                <li" + ((i==0) ? " class=\"active\" " : " class=\"\" ") + "\">\
-                                    <a href=\"" + "RoomID-" + msg.roomData[i][1] + "\" style=\"text-decoration: none;\">\
-                                        <div class=\"d-flex bd-highlight\">\
-                                            <div class=\"img_cont\">\
-                                                <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img\">\
-                                                <span class=\"online_icon\"></span>\
+
+                    //Phòng chat đơn lẻ
+                    if (msg.userData != null)
+                    {
+                        for (var i=0; i<msg.userData.length; ++i) {
+                            if (msg.userData[i][1] == 1) {
+                                result += "\
+                                    <li" + ((i==0) ? " class=\"active\" " : " class=\"\" ") + "\">\
+                                        <a href=\"" + "RoomID:" + msg.roomData[i][1] + "\" style=\"text-decoration: none;\">\
+                                            <div class=\"d-flex bd-highlight\">\
+                                                <div class=\"img_cont\">\
+                                                    <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img\">\
+                                                    <span class=\"online_icon\"></span>\
+                                                </div>\
+                                                <div class=\"user_info\">"
+                                                +
+                                                    "<span>" + msg.userData[i][0] + "</span>"
+                                                +
+                                                    "<p class=\"noticeMsg\">" + ((msg.roomData[i][2]==0) ? "New message comes" : "Empty") + "</p>\
+                                                </div>\
                                             </div>\
-                                            <div class=\"user_info\">"
-                                            +
-                                                "<span>" + msg.userData[i][0] + "</span>"
-                                            +
-                                                "<p class=\"noticeMsg\">" + ((msg.roomData[i][2]==0) ? "New message comes" : "Empty") + "</p>\
+                                        </a>\
+                                    </li>";
+                            }
+                            else {
+                                result += "\
+                                    <li" + ((i==0) ? " class=\"active\" " : " class=\"\" ") + "\">\
+                                        <a href=\"" + "RoomID:" + msg.roomData[i][1] + "\" style=\"text-decoration: none;\">\
+                                            <div class=\"d-flex bd-highlight\">\
+                                                <div class=\"img_cont\">\
+                                                    <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img\">\
+                                                    <span class=\"online_icon offline\"></span>\
+                                                </div>\
+                                                <div class=\"user_info\">"
+                                                +
+                                                    "<span>" + msg.userData[i][0] + "</span>"
+                                                +
+                                                    "<p class=\"noticeMsg\">" + ((msg.roomData[i][2]==0) ? "New message comes" : "Empty") + "</p>\
+                                                </div>\
                                             </div>\
-                                        </div>\
-                                    </a>\
-                                </li>";
-                        }
-                        else {
-                            result += "\
-                                <li" + ((i==0) ? " class=\"active\" " : " class=\"\" ") + "\">\
-                                    <a href=\"" + "RoomID-" + msg.roomData[i][1] + "\" style=\"text-decoration: none;\">\
-                                        <div class=\"d-flex bd-highlight\">\
-                                            <div class=\"img_cont\">\
-                                                <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img\">\
-                                                <span class=\"online_icon offline\"></span>\
-                                            </div>\
-                                            <div class=\"user_info\">"
-                                            +
-                                                "<span>" + msg.userData[i][0] + "</span>"
-                                            +
-                                                "<p class=\"noticeMsg\">" + ((msg.roomData[i][2]==0) ? "New message comes" : "Empty") + "</p>\
-                                            </div>\
-                                        </div>\
-                                    </a>\
-                                </li>";
+                                        </a>\
+                                    </li>";
+                            }
                         }
                     }
 
+                    //Phòng chat nhóm
+                    if (msg.groupData != null)
+                    {
+                        for (var i=0; i<msg.groupData.length; ++i) {
+                            result += "\
+                                        <li" + ((msg.userData==null) ? ((i==0) ? " class=\"active\" " : " class=\"\" ") : " class=\"\" ") + "\">\
+                                            <a href=\"" + "RoomID:" + msg.groupData[i][0] + "\" style=\"text-decoration: none;\">\
+                                                <div class=\"d-flex bd-highlight\">\
+                                                    <div class=\"img_cont\">\
+                                                        <img src=\"../static/images/group_avatar.png\" class=\"rounded-circle user_img\">\
+                                                    </div>\
+                                                    <div class=\"user_info\">"
+                                                    +
+                                                        "<span>" + msg.groupData[i][1] + "</span>"
+                                                    +
+                                                        "<p class=\"noticeMsg\">" + ((msg.groupData[i][2]==0) ? "New message comes" : "Empty") + "</p>\
+                                                    </div>\
+                                                </div>\
+                                            </a>\
+                                        </li>";
+                        }
+                    }
+                    
                     return result;
                 });
 
-                //Xóa bỏ chuỗi "New message comes" và đổi thành "Empty" (Chưa có tin nhắn mới nào đến) ở msg.roomData[0][1]
-                var rID = "RoomID-" + msg.roomData[0][1];
-                $('ul.contacts li').find('a[href$=\"' + rID + '\"]').find('div').find('div').eq(1).find('p').text("Empty");
-                socket.emit('chooseChatRoom', {roomid: msg.roomData[0][1]});
+                //Xóa bỏ chuỗi "New message comes" và đổi thành "Empty" (Chưa có tin nhắn mới nào đến) ở msg.roomData[0][1] hoặc msg.groupData[0][0]
+                var rID = null;
+                if (msg.userData != null) rID = msg.roomData[0][1];
+                else
+                    if (msg.groupData != null) rID = msg.groupData[0][0];
+                
+                if (rID == null) return false;
+
+                rID_text = "RoomID:" + rID;
+                $('ul.contacts li').find('a[href$=\"' + rID_text + '\"]').find('div').find('div').eq(1).find('p').text("Empty");
+                socket.emit('chooseChatRoom', {roomid: rID});
                 return false;
             });
 
-            // Chuyển đổi đối tượng chat
+            //-------------------------------------------------------------------------------
+            // Change the object for chatting
+            //-------------------------------------------------------------------------------
             $('ul.contacts').on('click', 'li', function(){
                 $('ul.contacts li.active').removeClass('active');
                 $(this).addClass('active');
                 var href = $(this).find("a").attr('href');
-                var roomID = href.split('-')[1];
+                var roomID = href.split(':')[1];
 
                 //Xóa bỏ chuỗi "New message comes" và đổi thành "Empty" (Chưa có tin nhắn mới nào đến)
                 $('ul.contacts li').find('a[href$=\"' + href + '\"]').find('div').find('div').eq(1).find('p').text("Empty");
@@ -375,31 +547,54 @@
                 return false;
             });
 
+            //-------------------------------------------------------------------------------
+            // Render content of chat ROOM
+            //-------------------------------------------------------------------------------
             socket.on('renderChoosedChatRoom', function(msg) {
                 //Cập nhật các tiêu đề của phòng chat
                 $('#action_menu_btn').removeAttr('style');
+
                 if (msg.userStatusInfo == 0) $('#statusFriend').addClass('offline');
                 else $('#statusFriend').removeClass('offline');
-                
-                $('#roomName').text("Chat between " + msg.roomName);
+                $('#roomName').text(msg.roomName);
+                $('#totalMessageFromOther').text(msg.myFriendInSameRoom[3] + " messages from other");
+                $('#roomImage').attr('src', "../static/images/avatar.png");
 
-                $('#totalMessageFromOther').text(msg.totalMessages + " messages from other");
+                $('#RIDofFeature').val(msg.roomID);
+                $('#addToGroup').remove();
+                $('#doUnfriend').remove();
+                $('#leaveGroup').remove();
+                $('#RIDofFeature').append(function() {
+                    var result = "\
+                                <li id=\"addToGroup\"><i class=\"fa fa-plus\"></i> Add to group</li>\
+                                <li id=\"doUnfriend\"><i class=\"fa fa-close\"></i> Unfriend</li>";
+                    return result;
+                });
 
                 //Render nội dung
-                $('.msg_card_body').empty();
+                $('#divChat').empty();
                 result = "";
                 for (var i=0; i<msg.messageArray.length; ++i) {
                     if (msg.messageArray[i][0] == myUsername) {
                         result += "\
                             <div class=\"d-flex justify-content-end mb-4\">\
-                                <div class=\"msg_cotainer_send\">"
-                                    + msg.messageArray[i][1]
-                                    + "<span class=\"msg_time_send\">" + msg.messageArray[i][2].split('.')[0] + "</span>\
+                                <div class=\"msg_cotainer_send\">\
+                                        <div class=\"chatName\" style=\"text-align: right;\">" + myUsername + "</div><hr/>"
+                                +   msg.messageArray[i][1]
+                                +   "<hr/><div class=\"msg_container_timestatus\">\
+                                        <span class=\"msg_time_send\">" + msg.messageArray[i][2].split('.')[0] + "</span>"
+                                +       ((i == (msg.messageArray.length - 1)) ? ((msg.myFriendInSameRoom[2] == 1) ? "<span class=\"status_message_send\">Seen</span>" : "<span class=\"status_message_send\">Sent</span>") : "")
+                                +    "</div>\
                                 </div>\
                                 <div class=\"img_cont_msg\">\
                                     <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img_msg\">\
                                 </div>\
                             </div>";
+                        
+                        //Dòng code chứa "status_message_send"
+                        //Nếu như i là phần tử cuối cùng trong mảng và đối phương ĐÃ seen (1) => hiển thị SEEN.
+                        //Nếu như i là phần tử cuối cùng trong mảng và đối phương CHƯA seen (0) => hiển thị SENT.
+                        //Nếu như i KHÔNG PHẢI LÀ phần tử cuối cùng trong mảng thì không để trạng thái gì cả.
                     }
                     else {
                         result += "\
@@ -407,26 +602,106 @@
                                 <div class=\"img_cont_msg\">\
                                     <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img_msg\">\
                                 </div>\
-                                <div class=\"msg_cotainer\">"
-                                    + msg.messageArray[i][1]
-                                    + "<span class=\"msg_time\">" + msg.messageArray[i][2].split('.')[0] + "</span>\
+                                <div class=\"msg_cotainer\">\
+                                    <div class=\"chatName\" style=\"text-align: left;\">" + msg.messageArray[i][0] + "</div><hr/>"
+                                +   msg.messageArray[i][1]
+                                +   "<hr/><div class=\"msg_container_timestatus\">\
+                                        <span class=\"msg_time\">" + msg.messageArray[i][2].split('.')[0] + "</span>\
+                                    </div>\
                                 </div>\
                             </div>";
+                        
+                        //Nếu i là phần tử cuối cùng trong mảng và mình ko phải là tác giả của tin nhắn gửi 
+                        //thì thông báo cho tác giả biết là mình đã SEEN/NHẬN tin nhắn đó từ tác giả
+                        if (i == (msg.messageArray.length - 1)) {
+                            socket.emit('noticeSeenMsgToAuthor', {roomID: msg.roomID, myUsername: myUsername, authorID: msg.myFriendInSameRoom[0]});
+                        }
                     }
                 }
-                $('.msg_card_body').append(function() {
+
+                $('#divChat').append(function() {
+                    return result;
+                });
+            });
+
+            //-------------------------------------------------------------------------------
+            // Render content of chat GROUP
+            //-------------------------------------------------------------------------------
+            socket.on('renderChoosedChatGroup', function(msg) {
+                //Cập nhật các tiêu đề của phòng chat
+                $('#action_menu_btn').removeAttr('style');
+                
+                $('#statusFriend').remove();
+                $('#roomName').text(msg.roomName);
+                $('#totalMessageFromOther').text(msg.totalMessages + " messages from others");
+                $('#roomImage').attr('src', "../static/images/group_avatar.png");
+
+                $('#RIDofFeature').val(msg.roomID);
+                $('#addToGroup').remove();
+                $('#doUnfriend').remove();
+                $('#leaveGroup').remove();
+                $('#RIDofFeature').append(function() {
+                    return "<li id=\"leaveGroup\"><i class=\"fa fa-sign-out\"></i>Leave group</li>";
+                });
+
+                //Render nội dung
+                $('#divChat').empty();
+                result = "";
+                for (var i=0; i<msg.messageArray.length; ++i) {
+                    if (msg.messageArray[i][0] == myUsername) {
+                        result += "\
+                            <div class=\"d-flex justify-content-end mb-4\">\
+                                <div class=\"msg_cotainer_send\">\
+                                    <div class=\"chatName\" style=\"text-align: right;\">" + myUsername + "</div><hr/>"
+                                +   msg.messageArray[i][1]
+                                +   "<hr/><div class=\"msg_container_timestatus\">\
+                                        <span class=\"msg_time_send\">" + msg.messageArray[i][2].split('.')[0] + "</span>"
+                                +       ((i == (msg.messageArray.length - 1)) ? ((msg.myMsgIsSeen == true) ? "<span class=\"status_message_send\">Seen</span>" : "<span class=\"status_message_send\">Sent</span>") : "")
+                                +    "</div>\
+                                </div>\
+                                <div class=\"img_cont_msg\">\
+                                    <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img_msg\">\
+                                </div>\
+                            </div>";
+                        
+                        //Dòng code chứa "status_message_send" 
+                        //+ myMsgIsSeen = true - tin nhắn mình có người ĐÃ xem.
+                        //+ (else) myMsgIsSeen = false - tin nhắn mình CHƯA có ai xem.
+                        //Nếu như i là phần tử cuối cùng trong mảng và đối phương ĐÃ seen (1) => hiển thị SEEN.
+                        //Nếu như i là phần tử cuối cùng trong mảng và đối phương CHƯA seen (0) => hiển thị SENT.
+                        //Nếu như i KHÔNG PHẢI LÀ phần tử cuối cùng trong mảng thì không để trạng thái gì cả.
+                    }
+                    else {
+                        result += "\
+                            <div class=\"d-flex justify-content-start mb-4\">\
+                                <div class=\"img_cont_msg\">\
+                                    <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img_msg\">\
+                                </div>\
+                                <div class=\"msg_cotainer\">\
+                                    <div class=\"chatName\" style=\"text-align: left;\">" + msg.messageArray[i][0] + "</div><hr/>"
+                                +   msg.messageArray[i][1]
+                                +   "<hr/><div class=\"msg_container_timestatus\">\
+                                        <span class=\"msg_time\">" + msg.messageArray[i][2].split('.')[0] + "</span>\
+                                    </div>\
+                                </div>\
+                            </div>";
+
+                        //Nếu i là phần tử cuối cùng trong mảng và mình ko phải là tác giả của tin nhắn gửi 
+                        //thì thông báo cho tác giả biết là mình đã SEEN/NHẬN tin nhắn đó từ tác giả
+                        if (i == (msg.messageArray.length - 1)) {
+                            if (msg.authorID != null) socket.emit('noticeSeenMsgToAuthor', {roomID: msg.roomID, myUsername: myUsername, authorID: msg.authorID});
+                        }
+                    }
+                }
+
+                $('#divChat').append(function() {
                     return result;
                 });
             });
             
-            function sendChatContent() {
-                var href = $('ul.contacts li.active').find("a").attr('href');
-                var roomID = href.split('-')[1];
-                contentMessage = $('#contentMessage').val();
-                $('#contentMessage').val("");
-                socket.emit('chatTogether', {roomid: roomID, content: contentMessage, authorid: myUsername});
-            };
-            
+            //-------------------------------------------------------------------------------
+            // Button SEND MESSAGE is clicked
+            //-------------------------------------------------------------------------------
             $('form#chatForm').keypress(function (e) {
                 if (e.which == 13) {
                     sendChatContent();
@@ -439,49 +714,114 @@
                 return false;
             });
 
-            socket.on('responseChatTogether', function(msg) {
+            function sendChatContent() {
+                if (!$('ul.contacts li').hasClass('active')) return false;
                 var href = $('ul.contacts li.active').find("a").attr('href');
-                var activeRoomID = href.split('-')[1];
-
+                var roomID = href.split(':')[1];
+                contentMessage = $('#contentMessage').val();
+                $('#contentMessage').val("");
+                $('.status_message_send').text("");
+                socket.emit('chatTogether', {roomid: roomID, content: contentMessage, authorid: myUsername});
+            };
+    
+            //-------------------------------------------------------------------------------
+            // Response chat between members in room
+            //-------------------------------------------------------------------------------
+            socket.on('responseChatTogether', function(msg) {
+                var href;
+                var activeRoomID;
+                if ($('ul.contacts li').hasClass('active')) {
+                    href = $('ul.contacts li.active').find("a").attr('href');
+                    activeRoomID = href.split(':')[1];
+                } 
+                else activeRoomID = -1;
+                
                 // Kiểm tra xem room active có trùng với room đang có message gửi tới hay không.
                 // Nếu room active == msg.room => Trao đổi với nhau và seen tin nhắn.
                 // Nếu room active != msg.room => Unseen + Hiển thị chuỗi "New message comes" là có tin nhắn đến.
                 if (activeRoomID != msg.roomID) {
-                    var rID = "RoomID-" + msg.roomID;
+                    var rID = "RoomID:" + msg.roomID;
                     $('ul.contacts li').find('a[href$=\"' + rID + '\"]').find('div').find('div').eq(1).find('p').text("New message comes");
                 }
                 else {
-                    socket.emit('seen_message', {roomid: activeRoomID});
                     result = "";
                     if (msg.authorid == myUsername) {
-                            result += "\
-                                <div class=\"d-flex justify-content-end mb-4\">\
-                                    <div class=\"msg_cotainer_send\">"
-                                        + msg.content
-                                        + "<span class=\"msg_time_send\">" + msg.timeCreateAt + "</span>\
+                        result += "\
+                            <div class=\"d-flex justify-content-end mb-4\">\
+                                <div class=\"msg_cotainer_send\">\
+                                    <div class=\"chatName\" style=\"text-align: right;\">" + myUsername + "</div><hr/>"
+                                +   msg.content
+                                +   "<hr/><div class=\"msg_container_timestatus\">\
+                                        <span class=\"msg_time_send\">" + msg.timeCreateAt + "</span>\
+                                        <span class=\"status_message_send\">Sent</span>\
                                     </div>\
-                                    <div class=\"img_cont_msg\">\
-                                        <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img_msg\">\
+                                </div>\
+                                <div class=\"img_cont_msg\">\
+                                    <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img_msg\">\
+                                </div>\
+                            </div>";
+                    }
+                    else {
+                        result += "\
+                            <div class=\"d-flex justify-content-start mb-4\">\
+                                <div class=\"img_cont_msg\">\
+                                    <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img_msg\">\
+                                </div>\
+                                <div class=\"msg_cotainer\">\
+                                    <div class=\"chatName\" style=\"text-align: left;\">" + msg.authorid + "</div><hr/>"
+                                +   msg.content
+                                +   "<hr/><div class=\"msg_container_timestatus\">\
+                                        <span class=\"msg_time\">" + msg.timeCreateAt + "</span>\
                                     </div>\
-                                </div>";
-                        }
+                                </div>\
+                            </div>";
+                        
+                        //Nếu mình không phải là tác giả gửi tin nhắn (Mà là người nhận tin nhắn): 
+                        //+ Xác hết toàn bộ status message mà mình đã gửi đi cho người khác.
+                        //+ Bên mình totalMessages sẽ được cập nhật. 
+                        //>>> Nếu roomType=0 thì nhận kết quả như bình thường.
+                        //>>> Nếu roomType=1 thì tính thủ công
+                        //+ Thông báo cho bên tác giả là mình đã nhận được tin nhắn & đã xem. 
+                        $('.status_message_send').text("");
+                        if (msg.roomType == 0) $('#totalMessageFromOther').text(msg.totalMessages + " messages from other");
                         else {
-                            $('#totalMessageFromOther').text(msg.totalMessages + " messages from other");
-                            result += "\
-                                <div class=\"d-flex justify-content-start mb-4\">\
-                                    <div class=\"img_cont_msg\">\
-                                        <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img_msg\">\
-                                    </div>\
-                                    <div class=\"msg_cotainer\">"
-                                        + msg.content
-                                        + "<span class=\"msg_time\">" + msg.timeCreateAt + "</span>\
-                                    </div>\
-                                </div>";
+                            var totalMsg = 0;
+                            for (var i=0; i<msg.allPartsInfo.length; ++i) {
+                                if (myUsername != msg.allPartsInfo[i][0]) {
+                                    totalMsg += msg.allPartsInfo[i][3];
+                                }
+                            }
+                            $('#totalMessageFromOther').text(totalMsg + " messages from others");
                         }
-                    $('.msg_card_body').append(function() {
+                        socket.emit('noticeSeenMsgToAuthor', {roomID: activeRoomID, myUsername: myUsername, authorID: msg.authorid});
+                    }
+
+                    $('#divChat').append(function() {
                         return result;
                     });
                 }
+            });
+
+            //-------------------------------------------------------------------------------
+            // See friend request list & accept them
+            //-------------------------------------------------------------------------------
+            $('#friendRequestList').click(function() {
+                $("#modalFriendRequestList").modal('show');
+                socket.emit('requestRenderFRL');
+            });
+
+            $('#btnCloseModalFRL').click(function() {
+                $("#modalFriendRequestList").modal('hide');
+            });
+
+            $('ul.showFRL').on('click', "li a", function(e) {
+                e.preventDefault();
+                var href = $(this).attr('href');
+                $.ajax({
+                    url: href,
+                    type: 'post',
+                    success: $(this).parent().remove()
+                });
             });
 
             socket.on('renderFRL', function(msg) {
@@ -495,19 +835,224 @@
                                 <a href=\"/dashboard/rejectFriend/" + msg.friendRequestUsernameArray[i] + "\" class=\"col-lg-1 col-md-1 liFRL liBtn\"><i class=\"fa fa-close\"></i></a>\
                                 </li>";
                 }
-                $('.showFRL').append(function() {
+                $('.showFRL').empty().append(function() {
                     return result;
                 });
             });
 
+            //-------------------------------------------------------------------------------
+            // Deactive account
+            //-------------------------------------------------------------------------------
+            $('#deactiveAccount').click(function() {
+                $("#modalDeactiveAccount").modal('show');
+            });
+
+            //-------------------------------------------------------------------------------
+            // Add new friend 
+            //-------------------------------------------------------------------------------
+            $('#addNewFriend').click(function() {
+                $("#modalAddNewFriend").modal('show');
+            });
+
+            $('#cancelAddNewFriend').click(function() {
+                $('#newFriendUsername').val("");
+                $('#addNewFriendMsg').val("").css('display', 'none');
+            });
+
+            $('form#formAddNewFriend').submit(function(e) {
+                e.preventDefault();
+                var newFriendUsername = $('#newFriendUsername').val();
+                
+                if (newFriendUsername == myUsername) {
+                    $('#addNewFriendMsg').removeAttr('style');
+                    $('#addNewFriendMsg').text("[ERROR] You can not add new friend which is your username");
+                    return false;
+                }
+
+                $.ajax({
+                    url: '/dashboard/addNewFriend',
+                    type: 'post',    
+                    data: $('#formAddNewFriend').serialize(),
+                    success: function(){
+                        $('#newFriendUsername').val("");
+                        $('#addNewFriendMsg').val("").css('display', 'none');
+                        $("#modalAddNewFriend").modal('hide');
+                    }
+                });
+            });
+            
+            //-------------------------------------------------------------------------------
+            // Change room name
+            //-------------------------------------------------------------------------------
+            $('#changeRoomName').click(function() {
+                $('#modalChangeRoomName').modal('show');
+            });
+
+            $('#cancelChangeRoomName').click(function() {
+                $('#newRoomName').val("");
+            });
+
+            $('#btnChangeRoomName').click(function(e) {
+                e.preventDefault();
+                var roomid = $('#RIDofFeature').val();
+                var roomname = $('#newRoomName').val();
+                var href = "/dashboard/changeRoomName/" + roomid + "/" + roomname;
+                $.ajax({
+                    url: href,
+                    type: 'post',
+                    success: function(){
+                        $('#newRoomName').val("");
+                        $("#modalChangeRoomName").modal('hide');
+                    }
+                });
+            });
+
+            //-------------------------------------------------------------------------------
+            // Do unfriend
+            //-------------------------------------------------------------------------------
+            $('#RIDofFeature').on('click', '#doUnfriend', function() {
+                $('#modalDoUnfriend').modal('show');
+            });
+            
+            $('#btnDoUnfriend').click(function(e) {
+                e.preventDefault();
+                var roomid = $('#RIDofFeature').val();
+                var href = "/dashboard/unfriend/" + roomid ;
+                $.ajax({
+                    url: href,
+                    type: 'post',
+                    success: function(){
+                        $("#modalDoUnfriend").modal('hide');
+                    }
+                });
+            });
+
+            //-------------------------------------------------------------------------------
+            // Create new chat group
+            //-------------------------------------------------------------------------------
+            $('#createGroup').click(function() {
+                $("#modalCreateGroup").modal('show');
+                socket.emit('requestRenderFL');
+            });
+
+            socket.on('renderFL', function(msg) {
+                result = "";
+                for (var i=0; i<msg.friendUsernameArray.length; ++i) {
+                    result += "\
+                        <li>\
+                            <input class=\"col-lg-2 col-md-2 liFLBox\" type=\"checkbox\" name=\"friendForGroup\" value=\"" + msg.friendUsernameArray[i] + "\">\
+                            <label class=\"col-lg-3 col-md-3 liFL\">Your friend: </label>\
+                            <label class=\"col-lg-7 col-md-7 liFL\">" + msg.friendUsernameArray[i] + "</label>\
+                        </li>";
+                }
+                $('.showFL').empty().append(function() {
+                    return result;
+                });
+            });
+
+            $('#cancelCreateGroup').click(function() {
+                $('#newGroupName').val("");
+                $('#createNewGroupMsg').val("").css('display', 'none');
+            });
+            
+            $('#btnCreateGroup').click(function(e) {
+                e.preventDefault();
+                var ffg = [];
+                $("input[name='friendForGroup']:checked").each( function () {
+                    ffg.push($(this).val());
+                });
+
+                if (ffg.length < 2) {
+                    $('#createNewGroupMsg').removeAttr('style');
+                    $('#createNewGroupMsg').text("[ERROR] Must have at least 2 choosed friends to create a group");
+                    return false;
+                }
+                
+                // Thêm bản thân vào danh sách những người sẽ được thêm vào group
+                ffg.push(myUsername);
+
+                var groupName = $('#newGroupName').val();
+                if (groupName.length < 1) {
+                    $('#createNewGroupMsg').removeAttr('style');
+                    $('#createNewGroupMsg').text("[ERROR] Must have group name, at least 1 character inside the input box");
+                    return false;
+                }
+
+                $.ajax({
+                    url: '/dashboard/createNewGroup',
+                    type: 'post',
+                    data: JSON.stringify({friendsForGroup: ffg, newGroupName: groupName}),
+                    success: function(){
+                        $('#newGroupName').val("");
+                        $('#createNewGroupMsg').val("").css('display', 'none');
+                        $("#modalCreateGroup").modal('hide');
+                    }
+                });
+            });
+
+            //-------------------------------------------------------------------------------
+            // Leave group chat
+            //-------------------------------------------------------------------------------
+            $('#RIDofFeature').on('click', '#leaveGroup', function() {
+                $('#modalLeaveGroup').modal('show');
+            });
+
+            $('#btnLeave').click(function(e) {
+                e.preventDefault();
+                var href = $('ul.contacts li.active').find("a").attr('href');
+                var roomID = href.split(':')[1];
+
+                $.ajax({
+                    url: '/dashboard/leaveGroup',
+                    type: 'post',
+                    data: JSON.stringify({roomID: roomID, myUsername: myUsername}),
+                    success: function(){
+                        var current_url = window.location.href;    
+                        window.location.href = current_url;
+                    }
+                });
+            });
+
+            //-------------------------------------------------------------------------------
+            // Add member to chat group
+            //-------------------------------------------------------------------------------
+            $('#RIDofFeature').on('click', '#addToGroup', function() {
+                $('#modalAddToGroup').modal('show');
+            });
+
+            $('#cancelAddToGroup').click(function() {
+                $('#nameOfChoosedGroup').val("");
+                $('#modalAddToGroup').modal('hide');
+            });
+
+            $('#btnAddToGroup').click(function(e) {
+                e.preventDefault();
+                var href = $('ul.contacts li.active').find("a").attr('href');
+                var roomID = href.split(':')[1];
+                var GName = $('#nameOfChoosedGroup').val();
+
+                $.ajax({
+                    url: '/dashboard/addToGroup',
+                    type: 'post',
+                    data: JSON.stringify({roomID: roomID, myUsername: myUsername, groupName: GName}),
+                    success: function(){
+                        $('#nameOfChoosedGroup').val("");
+                        $('#modalAddToGroup').modal('hide');
+                    }
+                });
+            });
+
+            //-------------------------------------------------------------------------------
+            // This is PERSONAL MAILBOX (Hộp thư cá nhân)
+            //-------------------------------------------------------------------------------
             socket.on('personalMailBox', function(msg) {
                 switch (msg.typeMailBox) {
                     case 0: //Tin nhắn thông thường
                         $('#messageForYou').text(msg.content);
-                        $('#modalMessageForYou').fadeIn(1000).delay(500).fadeOut(1000);
+                        $('#modalMessageForYou').fadeIn(1000).delay(1000).fadeOut(1000);
                         break;
                     case 1: //NHẬN YÊU CẦU KẾT BẠN từ người khác
-                        if ($('#friendRequestList').hasClass('active')) {
+                        if ($('#modalFriendRequestList').hasClass('in')) {
                             result = "\
                                         <li>\
                                         <label class=\"col-lg-4 col-md-4 liFRL\">Request from: </label>\
@@ -521,128 +1066,120 @@
                         }
                         break;
                     case 2: //YÊU CẦU KẾT BẠN ĐƯỢC CHẤP NHẬN bởi người khác
-                        if ($('#friendList').hasClass('active')) {
-                            result = "";
-                            if (msg.userStatusInfo == 1) {
-                                result += "\
-                                    <li class=\"\" >\
-                                        <a href=\"" + "RoomID-" + msg.roomID + "\" style=\"text-decoration: none;\">\
-                                            <div class=\"d-flex bd-highlight\">\
-                                                <div class=\"img_cont\">\
-                                                    <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img\">\
-                                                    <span class=\"online_icon\"></span>\
-                                                </div>\
-                                                <div class=\"user_info\">"
-                                                +
-                                                    "<span>" + msg.username + "</span>"
-                                                +
-                                                    "<p class=\"noticeMsg\">Empty</p>\
-                                                </div>\
+                        result = "";
+                        if (msg.userStatusInfo == 1) {
+                            result += "\
+                                <li class=\"\" >\
+                                    <a href=\"" + "RoomID:" + msg.roomID + "\" style=\"text-decoration: none;\">\
+                                        <div class=\"d-flex bd-highlight\">\
+                                            <div class=\"img_cont\">\
+                                                <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img\">\
+                                                <span class=\"online_icon\"></span>\
                                             </div>\
-                                        </a>\
-                                    </li>";
-                            }
-                            else {
-                                result += "\
-                                    <li class=\"\" >\
-                                        <a href=\"" + "RoomID-" + msg.roomID + "\" style=\"text-decoration: none;\">\
-                                            <div class=\"d-flex bd-highlight\">\
-                                                <div class=\"img_cont\">\
-                                                    <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img\">\
-                                                    <span class=\"online_icon offline\"></span>\
-                                                </div>\
-                                                <div class=\"user_info\">"
-                                                +
-                                                    "<span>" + msg.username + "</span>"
-                                                +
-                                                    "<p class=\"noticeMsg\">Empty</p>\
-                                                </div>\
+                                            <div class=\"user_info\">"
+                                            +
+                                                "<span>" + msg.username + "</span>"
+                                            +
+                                                "<p class=\"noticeMsg\">Empty</p>\
                                             </div>\
-                                        </a>\
-                                    </li>";
-                            }
-
-                            $('.contacts').prepend(function() {
-                                return result;
-                            });
-
-                            socket.emit('join_room', {roomid: msg.roomID});
+                                        </div>\
+                                    </a>\
+                                </li>";
                         }
-                        break;
-                    case 3: //ĐƯỢC THÊM VÀO GROUP từ người khác
+                        else {
+                            result += "\
+                                <li class=\"\" >\
+                                    <a href=\"" + "RoomID:" + msg.roomID + "\" style=\"text-decoration: none;\">\
+                                        <div class=\"d-flex bd-highlight\">\
+                                            <div class=\"img_cont\">\
+                                                <img src=\"../static/images/avatar.png\" class=\"rounded-circle user_img\">\
+                                                <span class=\"online_icon offline\"></span>\
+                                            </div>\
+                                            <div class=\"user_info\">"
+                                            +
+                                                "<span>" + msg.username + "</span>"
+                                            +
+                                                "<p class=\"noticeMsg\">Empty</p>\
+                                            </div>\
+                                        </div>\
+                                    </a>\
+                                </li>";
+                        }
 
+                        $('.contacts').prepend(function() {
+                            return result;
+                        });
+
+                        socket.emit('join_room', {roomid: msg.roomID});
+                        break;
+                    case 3: //ĐƯỢC THÊM VÀO GROUP từ người khác - Cập nhật contact list
+                        result = "\
+                                <li class=\"\" >\
+                                    <a href=\"" + "RoomID:" + msg.roomID + "\" style=\"text-decoration: none;\">\
+                                        <div class=\"d-flex bd-highlight\">\
+                                            <div class=\"img_cont\">\
+                                                <img src=\"../static/images/group_avatar.png\" class=\"rounded-circle user_img\">\
+                                            </div>\
+                                            <div class=\"user_info\">"
+                                            +
+                                                "<span>" + msg.roomName + "</span>"
+                                            +
+                                                "<p class=\"noticeMsg\">Empty</p>\
+                                            </div>\
+                                        </div>\
+                                    </a>\
+                                </li>";
+
+                        $('.contacts').prepend(function() {
+                            return result;
+                        });
+
+                        socket.emit('join_room', {roomid: msg.roomID});
                         break;
                     case 4: //TÊN PHÒNG ĐƯỢC THAY ĐỔI bởi người khác
+                        var href = $('ul.contacts li.active').find("a").attr('href');
+                        var roomID = href.split(':')[1];
+                        if (roomID == msg.roomid) {
+                            $('#roomName').text(msg.newRoomName);
+                        }
 
+                        //Nếu phòng là loại group thì sẽ thêm bước đổi tên ở cột Contact List. Loại room thì ko cần
+                        if (msg.roomType == 1) {
+                            var rID = "RoomID:" + msg.roomid;
+                            $('ul.contacts li').find('a[href$=\"' + rID + '\"]').find('div').find('div').eq(1).find('span').text(msg.newRoomName);
+                        }
+                        break;
+                    case 5: //CHẤM DỨT BẠN BÈ GIỮA A VÀ B
+                        var check = $('ul.contacts li').hasClass('active');
+                        var href;
+                        var roomID = -1;
+                        
+                        if (check == true) {
+                            href = $('ul.contacts li.active').find("a").attr('href');
+                            roomID = href.split(':')[1];
+                        }
+
+                        if (roomID == msg.roomid) {
+                            //Load lại trang dashboard => Mất friend :v
+                            location.reload(); 
+                        }
+                        else {
+                            //Xóa contact (cột bên trái)
+                            var rID = "RoomID:" + msg.roomid;
+                            $('ul.contacts li').find('a[href$=\"' + rID + '\"]').parent().remove();
+                        }
+                        break;
+                    case 6: //CẬP NHẬT TRẠNG THÁI (SENT thành SEEN) CỦA MSG Ở PHÒNG X KHI USER TẠI PHÒNG NÀY ĐÃ XEM
+                        var href = $('ul.contacts li.active').find("a").attr('href');
+                        var roomID = href.split(':')[1];
+                        if (roomID == msg.roomid) {
+                            $('#divChat > :last-child').find('div').find('div').find('span').eq(1).text("Seen");
+                        }
                         break;
                     default: //Trường hợp LỖI
                         alert("Error typeMailBox, please check again!")
                         break;
                 }
-            });
-
-
-
-
-
-
-
-
-
-
-            $('#deactiveAccount').click(function() {
-                $("#modalDeactiveAccount").modal('show');
-            });
-
-            $('#addNewFriend').click(function() {
-                $("#modalAddNewFriend").modal('show');
-            });
-
-            $('#cancelAddNewFriend').click(function() {
-                $('#newFriendUsername').val("");
-                $('#addNewFriendMsg').val("").css('display', 'none');
-            });
-
-            $('form#formAddNewFriend').submit(function(e) {
-                e.preventDefault();
-                var newFriendUsername = $('#newFriendUsername').val();
-                if (newFriendUsername == myUsername) {
-                    $('#addNewFriendMsg').removeAttr('style');
-                    $('#addNewFriendMsg').text("[ERROR] You can not add new friend which is your username");
-                    return false;
-                }
-                $.ajax({
-                    url: '/dashboard/addNewFriend',
-                    type: 'post',    
-                    data: $('#formAddNewFriend').serialize(),
-                    success: function(){
-                        $('#newFriendUsername').val("");
-                        $('#addNewFriendMsg').val("").css('display', 'none');
-                        $("#modalAddNewFriend").modal('hide');
-                    }
-                });
-            });
-            
-            $('#friendRequestList').click(function() {
-                $('.option_menu ul li.active').removeClass('active');
-                $(this).addClass('active');
-                $("#modalFriendRequestList").modal('show');
-                socket.emit('requestRenderFRL');
-            });
-
-            $('#btnCloseModalFRL').click(function() {
-                var current_url = window.location.href;    
-                window.location.href = current_url;
-            });
-
-            $('ul.showFRL').on('click', "li a", function(e) {
-                e.preventDefault();
-                var href = $(this).attr('href');
-                $.ajax({
-                    url: href,
-                    type: 'post',
-                    success: $(this).parent().remove()
-                });
             });
         });
     </script>
