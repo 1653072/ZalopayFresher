@@ -856,12 +856,6 @@
 
             ![Ảnh minh họa](./images/25.png) 
 
-    * Các nhiệm vụ chính của JVM:
-        * Tải code
-        * Kiểm tra code
-        * Thực thi code
-        * Cung cấp môi trường runtime
-
 <span name="E2"></span>
 
 2. Khái niệm JRE & JDK
