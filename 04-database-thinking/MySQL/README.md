@@ -29,7 +29,7 @@
 - [DATA TYPES](#C)
   - [Các kiểu dữ liệu cơ bản của MySQL](#C1)
   - [Các kiểu dữ liệu đặc biệt và cách xử lý](#C2)
-- [DATA TYPES](#D)
+- [TRANSACTION](#D)
   - [Transaction là gì](#D1)
   - [Tại sao phải dùng transaction](#D2)
   - [Cách sử dụng transaction](#D3)

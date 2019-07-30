@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS `ChatDB` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS `ChatDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `ChatDB`;
 
 CREATE TABLE Accounts (username varchar(30) NOT NULL, password varchar(255) NOT NULL, email varchar(50) NOT NULL, phone int(10) NOT NULL, status tinyint(1) DEFAULT 0 NOT NULL, createAt datetime NOT NULL, updateAt datetime NOT NULL, PRIMARY KEY (username)) ENGINE=InnoDB;

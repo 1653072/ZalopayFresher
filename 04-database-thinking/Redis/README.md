@@ -234,7 +234,7 @@
     * Trong khoa học máy tính, khóa hoặc Mutex là một cơ chế đồng bộ hóa để thực thi các giới hạn truy cập vào tài nguyên đồng thời trong môi trường có nhiều luồng thực thi. 
     * Mỗi luồng phải lấy khóa thành công rồi mới truy cập vào dữ liệu tương ứng.
     * Loại khóa đơn giản nhất chính là semaphore nhị phân (Semaphore s = 1, gần giống Mutex). Nó cung cấp quyền truy cập duy nhất cho mỗi luồng tại mỗi thời điểm nhất định.
-    * Có 3 loại khóa:
+    * Có 3 hiện tượng về khóa:
         * Lock overhead: Tài nguyên được bổ sung cho việc sử dụng khóa, như không gian bộ nhớ được phân bổ cho khóa, thời gian CPU để khởi tạo và phá hủy khóa, thời gian để lấy hoặc giải phóng khóa. Chương trình sử dụng càng nhiều khóa, càng nhiều chi phí được sử dụng.
         * Lock contention: Điều này xảy ra bất cứ khi nào một tiến trình hoặc luồng cố gắng có được khóa được giữ bởi tiến trình hoặc luồng khác. Các khóa có sẵn có độ hẹp nhỏ thì càng ít khả năng một tiến trình/luồng yêu cầu khóa được giữ bởi thằng khác. Ví dụ: Khóa một hàng thay vì toàn bộ bảng hoặc khóa một ô chứ không phải toàn bộ hàng.
         * Deadlock: Ít nhất hai nhiệm vụ đang chờ khóa mà nhiệm vụ này lại giữ khóa nhiệm vụ kia và ngược lại. Trừ khi một nhiệm vụ nào đó được thực hiện, nếu không hai nhiệm vụ sẽ chờ đợi truy xuất tài nguyên mãi mãi.
@@ -283,10 +283,10 @@
         * RedLock.net (C#/.NET implementation).
         * ScarletLock (C# .NET implementation with configurable datastore)
         * Node-redlock (NodeJS implementation).
-    * Thay vì chỉ lock trên master giữ tài nguyên, ta sẽ lock trên tất cả các master:
+    * Ta sẽ lock trên tất cả các master đang giữ tài nguyên (Giả sử có N=5 instance):
         * Lấy thời gian hiện tại T0 theo miliseconds.
         * Thử lock tuần tự trên tất cả các instance với cùng giá trị key và random_value. Trong suốt quá trình này, client sử dụng time-out để tránh liên lạc quá lâu với những node không hoạt động và chuyển sang node tiếp theo.
-        * Client tính thời gian trôi qua để thu giữ lock bằng cách trừ thời gian hiện tại với thời gian T0 ở bước 1. Chỉ khi client có khả năng lock phần lớn các instance (ít nhất 3) và tổng thời gian trôi qua để thu giữ lock nhỏ hơn thời gian lock có hiệu lực thì lock đó coi như đã được giữ.
+        * Client tính thời gian trôi qua để thu giữ lock bằng cách trừ thời gian hiện tại với thời gian T0 ở bước 1. Chỉ khi client có khả năng lock phần lớn các instance (ít nhất 3 - theo công thức (N/2+1)) và tổng thời gian trôi qua để thu giữ lock nhỏ hơn thời gian lock có hiệu lực thì lock đó coi như đã được giữ.
         * Nếu client thất bại khi thu giữ lock, nó unlock trên tất cả các instance (ngay cả những instance mà nó vẫn chưa tạo được lock).
 
 <br/>
