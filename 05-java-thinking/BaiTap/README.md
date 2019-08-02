@@ -29,7 +29,7 @@ Bên cạnh bảng Games lưu trữ thông tin về game đó, ngày đó mà us
 
 ![Ảnh minh họa](./images/Architecture.png)
 
-Bất kì thao tác nào của Client (Gửi/Nhận thông tin) đều thông qua Controller nội tại của nó. Phía Server nhận được hoặc gửi thông tin đến Client sẽ thông qua Controller của nó. Sau đó, Controller truy cập đến Model để yêu cầu/nhận dữ liệu từ nó. Model sẽ là nơi trực tiếp truy cập vào Database để thao tác Database.
+Client gửi/nhận thông tin thông qua giao thức HTTP (dữ liệu được xác định dưới dạng JSON) hoặc gRPC (dữ liệu được xác định dưới dạng Protocol Buffers). Phía Server nhận được hoặc gửi thông tin đến Client thông qua Controller của nó. Nếu cần truy cập dữ liệu từ CSDL, Controller truy cập đến Model để yêu cầu/nhận dữ liệu từ nó va Model sẽ là nơi trực tiếp truy cập vào CSDL để thao tác, truy vấn dữ liệu.
 
 ### SEQUENCE DIAGRAM
 

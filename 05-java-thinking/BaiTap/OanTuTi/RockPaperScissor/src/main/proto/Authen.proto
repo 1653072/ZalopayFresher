@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+package com.quoctk.grpc.rps;
+
+enum TYPEAUTHEN {
+    LOGIN = 0;
+    REGISTER = 1;
+}
+
+message AuthenUser {
+    string username = 1;
+    string password = 2;
+}
+
+message AuthenRequest {
+    TYPEAUTHEN type = 1;
+    AuthenUser user = 2;
+}
+
+message AuthenResponse {
+    TYPEAUTHEN type = 1;
+    string notice = 2;
+}
+
+service AuthenService {
+    rpc Authen (AuthenRequest) returns (AuthenResponse);
+}
