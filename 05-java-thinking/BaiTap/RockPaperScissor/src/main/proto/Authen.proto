@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+package com.quoctk.grpc.rps;
+
+message AuthenUser {
+    string username = 1;
+    string password = 2;
+}
+
+message AuthenResponse {
+    string notice = 1;
+}
+
+service AuthenService {
+    rpc Login (AuthenUser) returns (AuthenResponse);
+    rpc Register (AuthenUser) returns (AuthenResponse);
+}

@@ -2,7 +2,7 @@ package RockPaperScissor.Class;
 
 import java.text.DecimalFormat;
 
-public class StringDoublePair {
+public class WinRatingResponse {
 	private String username;
 	private Double winRating;
 	
@@ -15,7 +15,7 @@ public class StringDoublePair {
 	}
 	
 	public Double getWinRating() {
-		DecimalFormat decimalFormat = new DecimalFormat("#.##");
+		DecimalFormat decimalFormat = new DecimalFormat("#.###");
 		return Double.valueOf(decimalFormat.format(winRating));
 	}
 	
@@ -23,13 +23,13 @@ public class StringDoublePair {
 		this.winRating = winRating;
 	}
 
-	public StringDoublePair(String username, Double winRating) {
+	public WinRatingResponse(String username, Double winRating) {
 		super();
 		this.username = username;
 		this.winRating = winRating;
 	}
 
-	public StringDoublePair() {
+	public WinRatingResponse() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

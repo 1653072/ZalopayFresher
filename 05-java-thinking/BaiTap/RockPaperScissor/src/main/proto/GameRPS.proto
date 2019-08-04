@@ -3,12 +3,6 @@ syntax = "proto3";
 option java_multiple_files = true;
 package com.quoctk.grpc.rps;
 
-enum TYPEGAMERPS {
-    TOPPLAYERS = 0;
-    GAMEHISTORY = 1;
-    PLAY = 2;
-}
-
 // Định nghĩa kiểu BInteger trong gRPC
 message BInteger {
 	bytes value = 1;
@@ -45,26 +39,39 @@ message GameTurnInfo {
 	int32 machineResult = 3;
 	string turnDate = 4;
 	BInteger gameID = 5;
+	int32 turnType = 6;
 }
 
 message ListGameTurnInfo {
 	repeated GameTurnInfo listGameTurnInfo = 1;
 }
 
+message GameHistory {
+	GameInfo gameInfo = 1;
+	ListGameTurnInfo listGameTurnInfo = 2;
+}
+
+message ListGameHistory {
+	repeated GameHistory listGameHistory = 1;
+}
+
 message GameRequest {
-    TYPEGAMERPS type = 1;
-    User user = 2;
-    int32 userResult = 3;
+	User user = 1;
+	int32 choose = 2;
 }
 
 message GameResponse {
-    TYPEGAMERPS type = 1;
-	ListTopPlayers listTopPlayers = 2;
-	ListGameInfo listGameInfo = 3;
-	ListGameTurnInfo listGameTurnInfo = 4;
-	string notice = 5;
+	BInteger gameID = 1;
+	int32 gameResult = 2;
+	string gameStartDate = 3;
+	int32 userResult = 4;
+	int32 machineResult = 5;
+	string turnDate = 6;
+	int32 turnType = 7;
 }
 
 service GameService {
-    rpc GameRPS (GameRequest) returns (GameResponse);
+    rpc GetTopPlayers (User) returns (ListTopPlayers);
+    rpc GetGameHistory (User) returns (ListGameHistory);
+    rpc PlayGame (GameRequest) returns (GameResponse);
 }
