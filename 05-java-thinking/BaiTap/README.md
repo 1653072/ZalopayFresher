@@ -64,6 +64,8 @@ Client gửi/nhận thông tin thông qua giao thức HTTP (dữ liệu được
     * datamodel_quoctk.vpp: File thiết kế data model của RPS.
     * rps_quoctk.sql: File định nghĩa cấu trúc lưu trữ CSDL của RPS.
     * sequence_diagram_quoctk.EAP: File thiết kế các sơ đồ sequence cho các mục tính năng của RPS.
+    * RPSLoadTest.jms: Kịch bản thực hiện Load test cho chương trình (Import file này vào JMeter & Play)
+    * summary_jmeter.csv: File csv được export kết quả từ JMeter.
 * Thư mục `./RockPaperScissor` chứa source code của chương trình.
 
 ### CÔNG CỤ
@@ -81,10 +83,16 @@ Kết quả unit test với line coverage đạt được 92.9% cho folder `src/
 
 ### PERFORMANCE TEST
 
+![Ảnh minh họa](./images/summary_jmeter_500users_20loops.png)
 
-
-
-
+* Kịch bản thử nghiệm này thực hiện với 500 users và 20 loops cho việc chơi, xem top players, xem lịch sử game trên từng người.
+* Giải thích sơ lược các thông số cần quan tâm từ ảnh trên:
+    * Sample: Lượng request được gửi đến server.
+    * Min: Thời gian response nhỏ nhất.
+    * Max: Thời gian response lớn nhất.
+    * Error rate: Tỉ lệ các bài test thất bại (trong lúc JMeter chạy).
+    * Throughput: Bao nhiêu request mỗi giây mà server có thể xử lý (Số càng lớn càng tốt).
+    * Avg. Bytes: Kích cỡ trung bình (theo byte) của các gói response.
 
 ### DEFECT/DISADVANTAGE/FAIL
 
