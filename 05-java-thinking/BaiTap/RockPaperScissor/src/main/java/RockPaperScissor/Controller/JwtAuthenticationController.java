@@ -3,6 +3,7 @@ package RockPaperScissor.Controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -42,20 +43,36 @@ public class JwtAuthenticationController {
 	//-----------------------------------------------------------
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-		final String token = jwtTokenUtil.generateToken(userDetails);
-		return ResponseEntity.ok(new JwtResponse(token));
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
+		try
+		{
+			authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+			final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+			final String token = jwtTokenUtil.generateToken(userDetails);
+			return ResponseEntity.ok(new JwtResponse(token));
+		}
+		catch (Exception e) {
+			LOGGER.error(e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("BAD_REQUEST");
+		}
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> saveUser(@RequestBody Account user) throws Exception {
-		if (userDetailsService.save(user) != null) 
+	public ResponseEntity<?> saveUser(@RequestBody Account user) {
+		try {
+			Account var = userDetailsService.save(user);
+			
+			if (var == null) {
+				LOGGER.warn("This username {} existed or username/password is empty => Register fail", user.getUsername());
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Existed username or username/password is empty => Register fail");
+			}
+				
 			return ResponseEntity.ok("Registered account successfully!");
-		
-		LOGGER.warn("This username {} existed => Register fail => Please choose another one", user.getUsername());
-		return ResponseEntity.ok("Register fail, username existed!");
+		}
+		catch (Exception e) {
+			LOGGER.error(e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username or password can not be empty");
+		}
 	}
 	
 	public void authenticate(String username, String password) throws Exception {

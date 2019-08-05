@@ -6,19 +6,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JwtTokenUtil implements Serializable {
 	private static final long serialVersionUID = -2550185165626007488L;
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
-
+	
+	private static final Logger LOGGER = LogManager.getLogger(JwtTokenUtil.class);
+	
 	@Value("${jwt.secret}")
 	private String secret;
 
@@ -34,16 +42,27 @@ public class JwtTokenUtil implements Serializable {
 
 	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = getAllClaimsFromToken(token);
+		if (claims == null) return null;
 		return claimsResolver.apply(claims);
 	}
+	
     // Retrieveing any information from token we will need the secret key
 	private Claims getAllClaimsFromToken(String token) {
-		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+		try {
+			Claims result = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+			return result;
+		}
+		catch (ExpiredJwtException | MalformedJwtException | SignatureException 
+	            | UnsupportedJwtException | IllegalArgumentException e) {
+			LOGGER.error(e.getMessage());
+	        return null;
+	    }
 	}
 
 	// Check if the token has expired
 	private Boolean isTokenExpired(String token) {
-		final Date expiration = getExpirationDateFromToken(token);
+		Date expiration = getExpirationDateFromToken(token);
+		if (expiration == null) return null;
 		return expiration.before(new Date());
 	}
 
@@ -66,7 +85,8 @@ public class JwtTokenUtil implements Serializable {
 
 	// Validate token
 	public Boolean validateToken(String token, UserDetails userDetails) {
-		final String username = getUsernameFromToken(token);
+		String username = getUsernameFromToken(token);
+		if (username == null) return null;
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}
 }

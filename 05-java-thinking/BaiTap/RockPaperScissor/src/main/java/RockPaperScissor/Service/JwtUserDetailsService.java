@@ -27,17 +27,19 @@ public class JwtUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Account var = accountRepo.findById(username).get();
-		
-		if (var == null) {
+		if (!accountRepo.existsById(username)) {
 			LOGGER.error("Username {} doesn't exist!", username);
 			throw new UsernameNotFoundException("Username " + username + " does not exist!");
 		}
-			
+		
+		Account var = accountRepo.findById(username).get();
 		return new User(var.getUsername(), var.getPassword(), new ArrayList<>());
 	}
 	
-	public Account save(Account user) {
+	public Account save(Account user) throws UsernameNotFoundException {
+		if (user.getUsername().length() == 0 || user.getPassword().length() == 0)
+			throw new UsernameNotFoundException("Username or password is empty");
+		
 		if (accountRepo.existsById(user.getUsername())) 
 			return null;
 		

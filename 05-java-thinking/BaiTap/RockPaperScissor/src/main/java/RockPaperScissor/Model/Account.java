@@ -42,26 +42,26 @@ public class Account implements Serializable {
 		this.password = password;
 	}
 
-	public List<Game> getGames() {
-		return this.games;
-	}
-
-	public void setGames(List<Game> games) {
-		this.games = games;
-	}
-
-	public Game addGame(Game game) {
-		getGames().add(game);
-		game.setAccount(this);
-
-		return game;
-	}
-
-	public Game removeGame(Game game) {
-		getGames().remove(game);
-		game.setAccount(null);
-
-		return game;
-	}
+//	public List<Game> getGames() {
+//		return this.games;
+//	}
+//
+//	public void setGames(List<Game> games) {
+//		this.games = games;
+//	}
+//
+//	public Game addGame(Game game) {
+//		getGames().add(game);
+//		game.setAccount(this);
+//
+//		return game;
+//	}
+//
+//	public Game removeGame(Game game) {
+//		getGames().remove(game);
+//		game.setAccount(null);
+//
+//		return game;
+//	}
 
 }

@@ -9,7 +9,6 @@ import java.util.Random;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import RockPaperScissor.Controller.RpsController;
 import RockPaperScissor.Model.Account;
 import RockPaperScissor.Model.Game;
 import RockPaperScissor.Model.GameTurn;
@@ -19,7 +18,7 @@ import RockPaperScissor.Repository.GameTurnRepository;
 
 public class HandleGame {
 	
-	private static final Logger LOGGER = LogManager.getLogger(RpsController.class);
+	private static final Logger LOGGER = LogManager.getLogger(HandleGame.class);
 	
 	//-----------------------------------------------------------
 	// GAME FUNCTION
@@ -62,7 +61,7 @@ public class HandleGame {
 		}
     }
 	
-	public static List<Game> handleGameHistory(String username, GameRepository gameRepo) {
+	public static List<Game> handleGameHistory(String username, GameRepository gameRepo) {		
 		List<Game> gameList = gameRepo.findAllGamesByUsername(username);
 		LOGGER.info("Username {}: Find all games", username);
 		return gameList;
@@ -84,6 +83,11 @@ public class HandleGame {
 			return null;
 		}
 		
+		if (choose < 0 || choose > 2) {
+			LOGGER.warn("Username {}: BAD_REQUEST with wrong `choose=x`", username);
+			return null;
+		}
+		
 		// Compute game result (Win/Lose/Fair (No one wins/loses))
 		byte userResult = choose.byteValue();
 		byte machineResult = playOfMachine();
@@ -98,7 +102,6 @@ public class HandleGame {
 			gameInfo = new Game();
 			gameInfo.setAccount(user);
 			gameInfo.setStartDate(new Date());
-			gameInfo.setGameturns(null);
 			gameInfo.setGameResult((gameResultOfUser == 1) ? (byte) 1 : (byte) 0);
 			gameInfo = gameRepo.save(gameInfo);
 			LOGGER.info("Username {}: New game with id {} & result of game established", username, gameInfo.getId());

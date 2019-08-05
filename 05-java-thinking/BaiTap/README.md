@@ -65,5 +65,27 @@ Client gửi/nhận thông tin thông qua giao thức HTTP (dữ liệu được
     * rps_quoctk.sql: File định nghĩa cấu trúc lưu trữ CSDL của RPS.
     * sequence_diagram_quoctk.EAP: File thiết kế các sơ đồ sequence cho các mục tính năng của RPS.
 * Thư mục `./RockPaperScissor` chứa source code của chương trình.
-* Chương trình RPS sử dụng Eclipse IDE để thực thi và cài đặt.
 
+### CÔNG CỤ
+
+* Chương trình RPS sử dụng Eclipse IDE để thực thi và cài đặt.
+* Sử dụng JMeter để thực hiện performance test.
+* Sử dụng Postman để test các API triển khai theo HTTP và BloomRPC để test các API triển khai theo gRPC.
+* Unit test với Line coverage trên 80% thông qua plugin ElcEmma của Eclipse hỗ trợ & kết hợp tự code, chạy thử nghiệm.
+
+### KẾT QUẢ UNIT TEST 
+
+![Ảnh minh họa](./images/unittest_linecoverage.png)
+
+Kết quả unit test với line coverage đạt được 92.9% cho folder `src/main/java` (Nơi chứa toàn bộ code vận hành chương trình RPS).
+
+### PERFORMANCE TEST
+
+
+
+
+
+
+### DEFECT/DISADVANTAGE/FAIL
+
+* *Kết quả bài tập không có cài đặt JWT cho gRPC.*

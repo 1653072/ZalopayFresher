@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -49,6 +51,8 @@ public class GameControllerGRPC extends GameServiceGrpc.GameServiceImplBase {
 	
 	private Map<String, BigInteger> curInfoMap = new HashMap<String, BigInteger>();
 	
+	private static final Logger LOGGER = LogManager.getLogger(GameControllerGRPC.class);
+	
 	//-----------------------------------------------------------
 	// FUNCTIONS
 	//-----------------------------------------------------------	
@@ -75,6 +79,13 @@ public class GameControllerGRPC extends GameServiceGrpc.GameServiceImplBase {
 	//-----------------------------------------------------------
 	
 	public void getTopPlayers(User user, StreamObserver<ListTopPlayers> responseObserver) {
+		if (!accountRepo.existsById(user.getUsername())) {
+			LOGGER.error("Username {} does not exist, can not play game", user.getUsername());
+			responseObserver.onNext(null);;
+			responseObserver.onCompleted();
+			return;
+		}
+		
 		List<WinRatingResponse> wrList = HandleGame.handleTopPlayers(user.getUsername(), gameRepo);
 		
 		ListTopPlayers.Builder builderListTopPlayers = ListTopPlayers.newBuilder(); 
@@ -88,6 +99,13 @@ public class GameControllerGRPC extends GameServiceGrpc.GameServiceImplBase {
     }
 	
 	public void getGameHistory(User user, StreamObserver<ListGameHistory> responseObserver) {
+		if (!accountRepo.existsById(user.getUsername())) {
+			LOGGER.error("Username {} does not exist, can not play game", user.getUsername());
+			responseObserver.onNext(null);;
+			responseObserver.onCompleted();
+			return;
+		}
+		
 		List<Game> gameList = HandleGame.handleGameHistory(user.getUsername(), gameRepo);
 		
 		ListGameHistory.Builder builderListGameHistory = ListGameHistory.newBuilder();
@@ -116,8 +134,20 @@ public class GameControllerGRPC extends GameServiceGrpc.GameServiceImplBase {
     }
 	
 	public void playGame(GameRequest gameRequest, StreamObserver<GameResponse> responseObserver) {
+		if (!accountRepo.existsById(gameRequest.getUser().getUsername())) {
+			LOGGER.error("Username {} does not exist, can not play game", gameRequest.getUser().getUsername());
+			responseObserver.onNext(null);;
+			responseObserver.onCompleted();
+			return;
+		}
+		
 		GameResultResponse gameResult = HandleGame.handlePlayGame(gameRequest.getUser().getUsername(), gameRequest.getChoose(), 
 																	curInfoMap, gameRepo, accountRepo, gameTurnRepo);
+		if (gameResult == null) {
+			responseObserver.onNext(null);;
+			responseObserver.onCompleted();
+			return;
+		}
 		
 		GameResponse.Builder builderGameResponse = GameResponse.newBuilder();
 		

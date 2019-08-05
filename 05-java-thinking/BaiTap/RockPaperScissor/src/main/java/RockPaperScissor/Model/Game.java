@@ -78,26 +78,4 @@ public class Game implements Serializable {
 		this.account = account;
 	}
 
-	public List<GameTurn> getGameturns() {
-		return this.gameturns;
-	}
-
-	public void setGameturns(List<GameTurn> gameturns) {
-		this.gameturns = gameturns;
-	}
-
-	public GameTurn addGameturn(GameTurn gameturn) {
-		getGameturns().add(gameturn);
-		gameturn.setGame(this);
-
-		return gameturn;
-	}
-
-	public GameTurn removeGameturn(GameTurn gameturn) {
-		getGameturns().remove(gameturn);
-		gameturn.setGame(null);
-
-		return gameturn;
-	}
-
 }

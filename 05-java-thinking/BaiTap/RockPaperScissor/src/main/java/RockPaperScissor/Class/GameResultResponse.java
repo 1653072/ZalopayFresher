@@ -63,15 +63,6 @@ public class GameResultResponse {
 	public int getGameResult() {
 		return gameResult;
 	}
-	
-	public void setGameResult(int gameResult) {
-		this.gameResult = gameResult;
-	}
-
-	public GameResultResponse() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	public GameResultResponse(BigInteger gameID, Date gameStartDate, byte machineResult, byte userResult, int turnType,
 			Date turnDate, int gameResult) {

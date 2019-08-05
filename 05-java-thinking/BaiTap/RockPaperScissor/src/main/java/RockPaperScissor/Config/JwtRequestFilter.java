@@ -17,10 +17,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import RockPaperScissor.Controller.RpsController;
 import RockPaperScissor.Service.JwtUserDetailsService;
-
-import io.jsonwebtoken.ExpiredJwtException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -31,7 +28,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
-	private static final Logger LOGGER = LogManager.getLogger(RpsController.class);
+	private static final Logger LOGGER = LogManager.getLogger(JwtRequestFilter.class);
 	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -45,17 +42,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		// only the Token
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 			jwtToken = requestTokenHeader.substring(7);
-			try 
-			{
-				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-			} 
-			catch (IllegalArgumentException e) {
-				LOGGER.error("Unable to get JWT Token: {}", e.toString());
-				System.out.println("Unable to get JWT Token");
-			} 
-			catch (ExpiredJwtException e) {
-				LOGGER.error("JWT Token has expired: {}", e.toString());
-				System.out.println("JWT Token has expired");
+			username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+			if (username == null) {
+				LOGGER.error("jwtTokenUtil in JwtRequestFilter has problem about get username from token, please check it");
+				return;
 			}
 		} 
 		else {

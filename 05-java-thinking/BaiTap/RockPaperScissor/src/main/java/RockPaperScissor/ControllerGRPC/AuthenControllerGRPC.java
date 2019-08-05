@@ -10,7 +10,6 @@ import com.quoctk.grpc.rps.AuthenResponse;
 import com.quoctk.grpc.rps.AuthenServiceGrpc;
 import com.quoctk.grpc.rps.AuthenUser;
 
-import RockPaperScissor.Controller.RpsController;
 import RockPaperScissor.Model.Account;
 import RockPaperScissor.Repository.AccountRepository;
 import io.grpc.stub.StreamObserver;
@@ -23,7 +22,7 @@ public class AuthenControllerGRPC extends AuthenServiceGrpc.AuthenServiceImplBas
     @Autowired
 	private AccountRepository accountRepo;
     
-    private static final Logger LOGGER = LogManager.getLogger(RpsController.class);
+    private static final Logger LOGGER = LogManager.getLogger(AuthenControllerGRPC.class);
     
     //-----------------------------------------------------------
   	// MAPPING PATH
@@ -52,6 +51,14 @@ public class AuthenControllerGRPC extends AuthenServiceGrpc.AuthenServiceImplBas
     
     public void register(AuthenUser authUser, StreamObserver<AuthenResponse> responseObserver) {
     	AuthenResponse response;
+    	
+    	if (authUser.getUsername().length() == 0 || authUser.getPassword().length() == 0) {
+    		LOGGER.warn("Username and password must not be empty");
+            response = AuthenResponse.newBuilder().setNotice("Username and password must not be empty").build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+            return;
+    	}
     	
         if(accountRepo.existsById(authUser.getUsername())) 
         {
