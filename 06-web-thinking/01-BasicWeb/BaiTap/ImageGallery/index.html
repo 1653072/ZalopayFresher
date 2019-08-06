@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Image Gallery</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="./style.css">
+    <script src="./index.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="card imageGallery">
+            <div class="card-header">
+                <h2 class="text-center">IMAGE GALLERY</h2>
+                <hr>
+                <div class="text-center">
+                    <label class="customNumOfFile" id="numOfFiles">Total: 0 files</label>
+                    <label class="customBtnFileUpload">
+                        <input type="file" name="fileURLs" id="fileURLs" multiple accept="image/png, image/jpeg">
+                        Select Files
+                    </label>
+                    <button type="button" id="clearAllFiles">Clear All</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row" id="imageBox">
+                    <!-- Images will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

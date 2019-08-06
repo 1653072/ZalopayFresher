@@ -1,0 +1,38 @@
+body {
+    background-color: beige;
+}
+
+.imageGallery {
+    background-color: lightgoldenrodyellow;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.customNumOfFile {
+    font-weight: bold;
+    padding: 0px 10px;
+}
+
+.customBtnFileUpload {
+    border: 1px solid rgb(0,0,0,.2);
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 0px 15px;
+    cursor: pointer;
+}
+
+#clearAllFiles {
+    border: 1px solid rgb(0,0,0,.2);
+    display: inline-block;
+    padding: 6px 12px;
+    margin-left: 10px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.img-thumbnail {
+    height: 250px;
+    border-radius: 5%;
+}
