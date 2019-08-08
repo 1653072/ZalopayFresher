@@ -730,21 +730,17 @@
 <span name="C5"></span>
 
 5. RESTful API
-    * API (Application Programming Interface) là một tập các quy tắc và cơ chế mà theo đó, một ứng dụng hay một thành phần sẽ tương tác với một ứng dụng hay thành phần khác. API có thể trả về dữ liệu mà bạn cần cho ứng dụng của mình ở những kiểu dữ liệu phổ biến như JSON hay XML.
-    * REST (REpresentational State Transfer) là một dạng chuyển đổi cấu trúc dữ liệu, một kiểu kiến trúc để viết API. Nó sử dụng phương thức HTTP đơn giản để tạo cho giao tiếp giữa các máy. Vì vậy, thay vì sử dụng một URL cho việc xử lý một số thông tin người dùng, REST gửi một yêu cầu HTTP như GET, POST, DELETE,... đến một URL để xử lý dữ liệu.
-    * RESTful API là một tiêu chuẩn dùng trong việc thiết kế các API cho các ứng dụng web để quản lý các resource. RESTful là một trong những kiểu thiết kế API được sử dụng phổ biến ngày nay để cho các ứng dụng (web, mobile…) khác nhau giao tiếp với nhau.
+     * API (Application Programming Interface) là một tập các quy tắc và cơ chế mà theo đó, một ứng dụng hay một thành phần sẽ tương tác với một ứng dụng hay thành phần khác. API có thể trả về dữ liệu mà bạn cần cho ứng dụng của mình ở những kiểu dữ liệu phổ biến như JSON hay XML.
+    * REST (REpresentational State Transfer) là một kiểu kiến trúc lập trình, định nghĩa các quy tắc để thiết kế web service.
+    * Sử dụng giao thức HTTP, cung cấp các chế độ *cơ bản nhất* truy cập đến nguồn tài nguyên của ứng dụng: Create – Read – Update – Delete (CRUD).
     * RESTful không quy định logic code ứng dụng và không giới hạn bởi ngôn ngữ lập trình ứng dụng, bất kỳ ngôn ngữ hoặc framework nào cũng có thể sử dụng để thiết kế một RESTful API.
-    * Cách hoạt động của RESTful:
-        * REST hoạt động chủ yếu dựa vào giao thức HTTP. Các hoạt động cơ bản nêu trên sẽ sử dụng những phương thức HTTP riêng.
-            * GET (SELECT): Trả về một Resource hoặc một danh sách Resource.
-            * POST (CREATE): Tạo mới một Resource.
-            * PUT (UPDATE): Cập nhật thông tin cho Resource.
-            * DELETE (DELETE): Xoá một Resource.
-        * JSON/XML thường là format chính thức cho việc xử lý/thao tác/truyền nhận dữ liệu
-        
-            ![Ảnh minh họa](./images/19.png) 
-
-    * Chi tiết về cách thiết kế RESTful API, xem chi tiết [tại đây](https://techtalk.vn/thiet-ke-restful-apis.html).
+    * Ưu điểm khi sử dụng Restful API:
+        * Sử dụng các phương thức HTTP một cách rõ ràng.
+        * REST URL đại diện cho tài nguyên chứ không phải hành động.
+        * Dữ liệu được trả về với nhiều định dạng khác nhau như: xml, html, rss, json,...
+        * Stateless (phi trạng thái): Server và client không lưu trạng thái của nhau, cho nên mỗi request đến server thì client phải đóng gói thông tin đầy đủ để server có thể hiểu được.
+    * Cách thiết kế Restful API:
+        ![Cách thiết kế Restful API](./images/28.png)
 
 <br/>
 
