@@ -1,4 +1,4 @@
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function() {
     // Function: Load all images
     function readURLs() {
         clearAll();

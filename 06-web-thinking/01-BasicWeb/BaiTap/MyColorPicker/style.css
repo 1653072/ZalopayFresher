@@ -1,5 +1,13 @@
 body {
+    margin: 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
     background-color: cornsilk;
+    display: block;
 }
 
 .container {
@@ -9,7 +17,77 @@ body {
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%); /* IE 9 */
     -webkit-transform: translate(-50%, -50%); /* Chrome, Safari, Opera */	
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
 }
+
+@media (min-width: 250px) {
+    .container {
+        max-width: 350px;
+    }
+}
+
+@media (min-width: 500px) {
+    .container {
+        max-width: 400px;
+    }
+}
+
+@media (min-width: 850px) {
+    .container {
+        max-width: 680px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 920px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1100px;
+    }
+}
+
+.card-header {
+    padding: .75rem 1.25rem;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+h2 {
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: .5rem;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
+    color: inherit;
+    margin-top: 0;
+}
+
+.text-center {
+    text-align: center!important;
+}
+
+/* ---------------------------------------------------------------------------------------------- */
 
 .headingDiv {
     background-color: rgb(107, 191, 255);
@@ -22,7 +100,6 @@ body {
 
 .headingContent {
     font-weight: bold;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin: 0 auto;
 }
 
@@ -76,7 +153,6 @@ input[type="range"] {
     margin: 0 auto;
     padding-left: 10px;
     font-weight: bold;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .displayColor {
@@ -92,18 +168,22 @@ input[type="range"] {
     font-size: 22px;
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 850px) {
     .displayHexColor {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .choosedColor {
         width: 30px;
         height: 30px;
     }
+
+    .colorNumber {
+        font-size: 14px;
+    }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 380px) {
     .displayHexColor {
         font-size: 12px;
     }
@@ -112,7 +192,7 @@ input[type="range"] {
         width: 25px;
         height: 25px;
     }
-
+    
     .colorNumber {
         font-size: 12px;
     }

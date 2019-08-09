@@ -1,0 +1,113 @@
+body {
+    background-color: cornsilk;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.container-fluid {
+    margin: 20px 0px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.row > div {
+    margin: 10px 20px;
+}
+
+.headingContent {
+    font-weight: bold;
+    margin: 0 auto;
+    font-size: 50px;
+    color: brown;
+    display: inline-block;
+}
+
+.headingLogo {
+    width: 45px;
+    height: 45px;
+    margin: 0px 10px;
+}
+
+.headingLabel {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 5px 10px;
+}
+
+.headingInput {
+    border: 1px solid rgb(0,0,0,.4);
+    width: 50px;
+    max-width: 50px;
+    height: 30px;
+    padding: 0;
+    text-align: center;
+    font-size: 18px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    /* <-- Apparently some margin are still there even though it's hidden */
+    margin: 0; 
+}
+
+input[type=number] {
+    /* Firefox */
+    -moz-appearance:textfield; 
+}
+
+.headingBtn {
+    padding: 8px 8px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    height: 34px;
+    background-color: lightseagreen;
+}
+
+.gameBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 5px;
+}
+
+table {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+td {
+    width: 50px;
+    height: 50px;
+    background: rgb(255, 170, 140);
+    border: 1px solid black;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0px;
+}
+
+.textBox {
+    font-weight: bold;
+    font-size: 20px;
+    border: 2px solid black;
+    width: 48px;
+    height: 48px;
+}
+
+.bombBox {
+    background: brown;
+}
+
+.bombIcon {
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+}

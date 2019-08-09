@@ -1,4 +1,4 @@
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function() {
     // Function: Change value Red or Green or Blue to Hex
     var rgbToHex = function (rgb) { 
         var hex = Number(rgb).toString(16);
@@ -44,15 +44,15 @@ $(document).ready(function() {
     }
 
     // Use function
-    document.getElementById("sliderR"). addEventListener("click", function() {
+    document.getElementById("sliderR"). addEventListener("input", function() {
         displayColorFunction("red");
     });
 
-    document.getElementById("sliderG"). addEventListener("click", function() {
+    document.getElementById("sliderG"). addEventListener("input", function() {
         displayColorFunction("green");
     });
 
-    document.getElementById("sliderB"). addEventListener("click", function() {
+    document.getElementById("sliderB"). addEventListener("input", function() {
         displayColorFunction("blue");
     });
 });
