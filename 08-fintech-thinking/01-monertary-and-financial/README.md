@@ -1,10 +1,10 @@
 # 01 MONERTARY AND FINANCIAL
 
-## AUTHOR
+## NGƯỜI THỰC HIỆN
 
 Trần Kiến Quốc (quoctk) - Software Development Fresher
 
-## EXCERPTION (by Vietnamese)
+## BÁO CÁO
 
 Bản chất của tiền tệ: 
     * Định nghĩa: Là vật ngang giá chung, làm phương tiện để trao đổi hàng hóa, dịch vụ hay các khoản nợ.
@@ -42,5 +42,3 @@ Cung tiền tệ: Là khối lượng tiền cung ứng của nền kinh tế nh
 Cầu tiền tệ: Là tổng khối tiền mà Nhà nước, các tổ chức kinh tế và cá nhân cần có để thỏa mãn các thu cầu.
 
 
-
-## REFLECTIVE REPORT (by English)

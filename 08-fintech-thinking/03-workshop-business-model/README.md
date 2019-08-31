@@ -1,8 +1,8 @@
 # 03 WORKSHOP BUSINESS MODEL
 
-## AUTHOR
+## NGƯỜI THỰC HIỆN
 
 Trần Kiến Quốc (quoctk) - Software Development Fresher
 
-## REFLECTIVE REPORT
+## BÁO CÁO
 
