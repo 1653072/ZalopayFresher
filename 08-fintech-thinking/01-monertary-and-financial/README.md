@@ -89,8 +89,33 @@ Trần Kiến Quốc (quoctk) - Software Development Fresher
 
 **Hệ thống tài chính (financial system):** Là mạng lưới các `trung gian tài chính` (ngân hàng thương mại, tổ chức tiết kiệm và cho vay, bảo hiểm,...) và `thị trường tài chính` (thị trường cổ phiếu, trái phiếu,...) mà trên đó người ta mua bán nhiều loại công cụ tài chính khác nhau (tiền gửi ngân hàng, tín phiếu kho bạc, cổ phiếu, trái phiếu) có liên quan đến việc chuyển tiền, vay và cho vay vốn.
 
+**Trái phiếu:** 
+* `Định nghĩa:` 
+    * Là một loại chứng khoán quy định nghĩa vụ của công ty phát hành (người vay tiền) phải trả cho người nắm giữ trái phiếu (người cho vay) một khoản tiền xác định.
+    * Có xác định khoảng thời gian cụ thể.
+    * Công ty phát hành phải hoàn trả khoản cho vay ban đầu khi nó đáo hạn.
+* `Đặc điểm:`
+    * Thu nhập của trái phiếu là tiền lãi, là khoản thu cố định thường kỳ, và không phụ thuộc vào tình hình kinh doanh của công ty phát hành.
+    * Trái phiếu là chứng khoán nợ, vì vậy khi Công ty bị giải thể hoặc phá sản thì trước hết Công ty phải có nghĩa vụ thanh toán cho những người nắm giữ Trái Phiếu trước, sau đó mới chia cho các Cổ đông.
+
+**Cổ phiếu:** 
+* Cổ phiếu là giấy chứng nhận số tiền nhà đầu tư đóng góp vào công ty phát hành. Cổ phiếu là chứng chỉ do công ty cổ phần phát hành hoặc bút toán ghi sổ xác nhận quyền sở hữu một hoặc một số cổ phần của công ty đó. 
+* Người nắm giữ cổ phiếu trở thành cổ đông và đồng thời là chủ sở hữu của công ty phát hành.
+
+**Trái phiếu và Cổ phiếu:**
+* `Giống nhau:`
+
+    ![TraiPhieu-CoPhieu-GiongNhau](./images/TraiPhieu-CoPhieu-GiongNhau.png)
+
+* `Khác nhau:`
+
+    ![TraiPhieu-CoPhieu-KhacNhau](./images/TraiPhieu-CoPhieu-KhacNhau.png)
+
+<br>
+
 ## NGUỒN THAM KHẢO
 
 * "Giáo trình lý thuyết tài chính - tiền tệ 1" - PGS.TS. Phan Thị Cúc.
+* [Trái phiếu & Cổ phiếu](https://www.vndirect.com.vn/khac-biet-giua-trai-phieu-va-co-phieu/)
 * Wikipedia.
 * Nhiều nguồn tham khảo khác trên Google.
