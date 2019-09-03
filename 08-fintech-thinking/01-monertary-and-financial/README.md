@@ -55,7 +55,7 @@ Trần Kiến Quốc (quoctk) - Software Development Fresher
 * `Công cụ đo lường:`
     * *Chỉ số giá tiêu dùng (CPI):* Phản ánh xu hướng và mức độ biến động giá cả theo thời gian của các mặt hàng trong rổ hàng hoá và dịch vụ tiêu dùng đại diện, với công thức
         ```
-        CPI= (Giá cả của giỏ hàng hóa dịch vụ năm hiện tại)/(Giá cả của giỏ hàng hóa dịch vụ năm gốc)
+        CPI = (Giá cả của giỏ hàng hóa dịch vụ năm hiện tại)/(Giá cả của giỏ hàng hóa dịch vụ năm gốc)
         ``` 
     * *Chỉ số giá sinh hoạt (CLI):* Phản ánh xu hướng và mức độ biến động giá sinh hoạt giữa các vùng, tỉnh trong một thời gian nhất định (thường là một năm).
     * *Chỉ số giá sản xuất (PPI):* Đo lường chi phí của một giỏ hàng hóa và dịch vụ được mua bởi các doanh nghiệp chứ không phải người tiêu dùng, vì các doanh nghiệp sẽ chuyển các chi phí cho người tiêu dùng dưới dạng giá tiêu dùng cao hơn cho nên việc theo dõi những thay đổi của chỉ số giá sản xuất PPI sẽ là hữu ích trong việc dự đoán sự thay đổi của chỉ số CPI.
