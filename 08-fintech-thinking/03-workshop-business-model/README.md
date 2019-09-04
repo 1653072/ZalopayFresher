@@ -90,6 +90,7 @@ Nguyễn Đỗ Cát Trân (tranndc) - Software Development Fresher
     * *Cơ cấu chi phí (Cost structure):*
         * *Mục tiêu:* Mô tả tất cả các chi phí phát sinh trong việc vận hành mô hình kinh doanh. Các chi phí này có thể được tính toán tương đối dễ dàng sau khi xác định các nguồn lực chính, các hoạt động chính và các đối tác chính.
         * *Đặc trưng cơ cấu chi phí:* Chi phí cố định (tiền thuê kho xưởng, máy móc), chi phí thay đổi (Chi phí vận chuyển, nguyên vật liệu)
+* `Ảnh minh họa:`
 
     ![Facebook-Business-Model-Canvas](./images/Facebook-Business-Model-Canvas.png)
 
@@ -113,6 +114,7 @@ Nguyễn Đỗ Cát Trân (tranndc) - Software Development Fresher
     * *Weaknesses (Điểm yếu)*
     * *Opportunities (Cơ hội, thời cơ)*
     * *Threats (Thách thức, mối đe dọa)*
+* `Ảnh minh họa:`
 
     ![SWOT-Definition](./images/SWOT-Definition.jpg)
 
@@ -127,7 +129,7 @@ Nguyễn Đỗ Cát Trân (tranndc) - Software Development Fresher
     *Chú thích: Ví dụ SWOT nhà hàng*
 
 **Chiến lược kinh doanh**
-    
+
 
 
 ### PHẦN II - TỔ CHỨC KINH DOANH
