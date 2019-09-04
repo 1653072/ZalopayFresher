@@ -128,9 +128,51 @@ Nguyễn Đỗ Cát Trân (tranndc) - Software Development Fresher
 
     *Chú thích: Ví dụ SWOT nhà hàng*
 
+**Mô hình kinh doanh**
+
+* `Tham khảo:` [Tại đây (uplevo.com)](http://www.uplevo.com/blog/khoi-nghiep/10-mo-hinh-kinh-doanh-cho-dan-khoi-nghiep/)
+* `Khái niệm:` Là bản kế hoạch kiếm tiền, phát triển doanh nghiệp. Nó chính xác là hướng đi mà chủ doanh nghiệp vạch ra để bám theo loại hình kinh doanh nhất định. Từ đó, mọi thành viên trong công ty sẽ chung một suy nghĩ, mục đích và hành động.
+* `Các loại mô hình kinh doanh cơ bản:`
+    * *Mô hình trải nghiệm (The Experience Model)* 
+
+        ![Experience-Model](./images/Experience-Model.jpg)
+
+    * *Mô hình Kim tự tháp (The Pyramid)*
+
+        ![Pyramid-Model-1](./images/Pyramid-Model-1.png)
+
+        ![Pyramid-Model-2](./images/Pyramid-Model-2.png)
+
+    * *Hệ sinh thái (The Ecosystem)*
+
+        ![Ecosystem-Model](./images/Ecosystem-Model.jpg)
+
+    * *Mô hình kinh doanh miễn phí (Free Model)*
+
+        ![Free-Model](./images/Free-Model.jpg)
+
+    * *Miễn phí kết hợp cao cấp (The Freemium Model)*
+
+        ![Freemium-Model](./images/Freemium-Model.jpg)
+
 **Chiến lược kinh doanh**
 
-
+* `Giải thích:` Chiến lược là chương trình, kế hoạch hành động được thiết kế để đạt được một mục tiêu cụ thể. Như vậy một chiến lược phải giải quyết tổng hợp các vấn đề sau:
+    * Xác định chính xác mục tiêu cần đạt.
+    * Xác định con đường, hay phương thức để đạt mục tiêu.
+    * Định hướng phân bổ nguồn lực để đạt được mục tiêu lựa chọn.
+* `Các loại chiến lược:`
+    * *Chiến lược mở (Open strategy):*
+        * Là cách tiếp cận để lập kế hoạch chiến lược, nơi mà nhân viên từ tất cả các phòng ban và đơn vị kinh doanh có cơ hội đóng góp cho chiến lược tổ chức. Trong một số trường hợp, khách hàng và đối tác cũng được mời tham gia.
+        * Chiến lược mở không làm giảm sự quản lý của bộ máy quản lý cấp cao đối với việc phát triển và thực hiện chiến lược. Nó chỉ là quá trình liên quan đến nhiều người và năng động hơn so với những việc họ đã làm trong quá khứ.
+        * Lợi ích: Cải thiện kế hoạch chiến lược, phương thức triển khai, đảm bảo/tận dụng quyền tham gia & đóng góp của nhân viên.
+    * *Chiến lược thích ứng (Adaptive Strategy):*
+        * Là chiến lược nhằm phát triển, cải tiến liên tục, phản ứng nhanh và thay đổi linh hoạt để tăng tính tương quan giữa tính chất kinh tế và đặc tính xã hội. Việc xây dựng, thực hiện và cải tiến chiến lược không phải là các giai đoạn tuần tự riêng biệt mà đi đôi với nhau.
+        * Dựa trên triết lý và khái niệm về phát triển phần mềm nhanh nhẹn (Agile Software Development).
+        * Là chiến lược luôn nhấn mạnh việc thử nghiệm liên tục và điều chỉnh theo thời gian thực (hơn là phân tích và lập kế hoạch dài hạn).
 
 ### PHẦN II - TỔ CHỨC KINH DOANH
+
+
+
 
