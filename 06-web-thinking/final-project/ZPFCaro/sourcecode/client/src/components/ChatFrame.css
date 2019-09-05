@@ -1,0 +1,70 @@
+.cfr-chat-frame{
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+}
+
+
+.cfr-display-frame{
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    color: white !important;
+    border: 1px solid white !important;
+    padding-bottom: 16px;
+    height: 82%;
+    /* overflow: auto; */
+}
+
+.cfr-message-frame{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 77%;
+}
+
+.cfr-title{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    font-size: 32px;
+    border-bottom: 1px solid white;
+    margin: 8px;
+    padding: 8px;
+}
+
+.cfr-input-frame{
+    display: flex;
+    width: 100% !important;
+    margin-top: 8px;
+
+}
+
+.cfr-input-frame .form-group{
+    width: 100%;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Ruslan+Display&display=swap');
+
+.cfr-btn{
+    float: right !important;
+    height: 60px;
+    width: 60px !important;
+    margin-left: 8px;
+    font-family: 'Ruslan Display', cursive;
+    font-size: 32px;
+    
+}
+
+.cfr-input-frame input{
+    background: rgba(0, 0, 0, 0.5) !important;
+    font-size: 18px;
+    border-color: white;
+    height: 60px !important;
+    color: white !important;
+    border: 1px solid white !important;
+    border-radius: 8px !important;
+}
+
+
+.cfr-input-frame input:focus{
+    border-color: rgba(255,255, 255, 0.7) !important;
+    box-shadow: 0 0 0 0.2rem rgba(255,255,255,.7)
+}

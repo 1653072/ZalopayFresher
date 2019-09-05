@@ -1,0 +1,17 @@
+.head-row {
+    margin: 0px 0px 12px 0px;
+}
+
+.h-logo {
+    padding: 0px 0px 0px 25px;
+}
+
+.h-iconCol {
+    padding: 0px 25px 0px 0px;
+    text-align: right !important;
+    padding-top: 5px;
+}
+
+.h-icon {
+    margin: 0px 8px;
+}

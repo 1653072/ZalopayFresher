@@ -1,0 +1,21 @@
+.hp-row {
+    margin: 0;
+}
+
+.hp-padRight {
+    padding-right: 70px !important;
+}
+
+.hp-padLeft {
+    padding-left: 30px !important;
+}
+
+.hp-margintop {
+    margin-top: 30px !important;
+}
+
+.hp-rectbtn {
+    width: 100% !important;
+    font-weight: bold;
+    margin: 6px 0px;
+}

@@ -1,0 +1,15 @@
+.black-button{
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 24px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.black-button:hover,.black-button:active{
+    background: rgba(255, 255, 255, 0.7);
+    color: black;
+    border-color: white !important;
+    vertical-align: middle;
+}

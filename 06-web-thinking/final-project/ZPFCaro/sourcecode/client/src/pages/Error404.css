@@ -1,0 +1,32 @@
+.error404-container {
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+}
+
+.error404-header {
+    color: #F98D0F;
+    font-size: 156px;
+    letter-spacing: 25px;
+    display: flex;
+}
+
+.error404-title {
+    color: white;
+    font-size: 36px;
+    letter-spacing: 10px;
+    margin-bottom: 40px;
+}
+
+.error404-content {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 50px;
+}
+
+.error404-btnReturn {
+    width: 250px;
+}

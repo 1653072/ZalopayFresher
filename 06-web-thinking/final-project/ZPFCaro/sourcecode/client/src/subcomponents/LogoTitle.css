@@ -1,0 +1,27 @@
+.lt-logotitle {
+    display: block;
+    width: fit-content;
+    height: 60px;
+}
+
+.lt-img {
+    width: 60px;
+    height: 60px;
+    float: left;
+}
+
+.lt-contentdiv {
+    height: 60px;
+    vertical-align:middle;    
+    display:table-cell;
+}
+
+.lt-content {
+    margin-left: 10px;
+    height: 60px;
+    font-size: 32px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    color: #F98D0F;
+    text-shadow: 2px 4px 2px rgb(0,0,0,.2);
+}

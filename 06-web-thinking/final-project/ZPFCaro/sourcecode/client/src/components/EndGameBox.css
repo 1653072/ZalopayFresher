@@ -1,0 +1,111 @@
+.endgamebox-heightmodal .modal-content {
+    width: 450px !important;
+    height: 270px !important;
+    border-radius: 10px !important;
+    border: 2px solid white;
+    align-items: center;
+    background: #090d00;
+    color: rgba(255,255,255,.25);
+}
+
+.endgamebox-marginbot {
+    margin-bottom: 20px;
+}
+
+.endgamebox-margintop {
+    margin-top: 30px;
+}
+
+.endgamebox-marginLeft {
+    margin-left: 20px;
+}
+
+.endgamebox-labelContent {
+    font-size: 18px;
+    text-align: center;
+    width: 380px;
+    color: white;
+}
+
+.endgamebox-labelContent label {
+    margin: 0;
+}
+
+.endgamebox-askContinue {
+    font-style: italic;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
+.endgamebox-titleEndGame {
+    font-size: 25px;
+    font-family: 'Lobster', cursive;
+}
+
+#endgamebox-heading {
+    font: 700 4em/1 "Oswald", sans-serif;
+    margin: 30px 0px 20px 0px;
+    text-shadow: 0 0 80px rgba(255, 255, 255, 0.5);
+    /* Clip Background Image */
+    background: url(http://f.cl.ly/items/010q3E1u3p2Q0j1L1S1o/animated_text_fill.png) repeat-y;
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Animate Background Image */
+    -webkit-text-fill-color: transparent;
+    animation: aitf 80s linear infinite;
+    /* Activate hardware acceleration for smoother animations */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    width: 380px;
+    text-align: center;
+}
+  
+/* Animate Background Image */
+@keyframes aitf {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+}
+  
+.endgamebox-rect-btn,
+.endgamebox-rect-btn:hover,
+.endgamebox-rect-btn:active {
+    width: 180px;
+    height: 50px;
+    background-color: transparent;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    text-transform: uppercase;
+    border-radius: 100px;
+    font-weight: bold;
+}
+
+.endgamebox-rect-btn:focus {
+    box-shadow: none !important;
+}
+
+.endgamebox-quit {
+    border: 2px solid white !important;
+    color: white;
+}
+
+.endgamebox-quit:hover,
+.endgamebox-quit:active {
+    border: 2px solid #F98D0F !important;
+    background: rgba(255, 255, 255) !important;
+    color: #F98D0F !important;
+}
+
+.endgamebox-continue {
+    border: 2px solid #F98D0F !important;
+    color: #F98D0F;
+}
+
+.endgamebox-continue:hover,
+.endgamebox-continue:active {
+    border: 2px solid white !important;
+    background: #F98D0F !important;
+    color: white !important;
+}

@@ -1,0 +1,12 @@
+.bp-bet-points{
+    font-family: 'Aldrich', sans-serif;
+    width: 100%;
+    background: rgba(200, 255, 0, 0.164);
+    border: 2px solid #ADFF00;
+    border-radius: 8px;
+    font-size: 36px;
+    color:#ADFF00;
+    text-align: center;
+    padding-top: 16px;
+    padding-bottom: 8px;
+}

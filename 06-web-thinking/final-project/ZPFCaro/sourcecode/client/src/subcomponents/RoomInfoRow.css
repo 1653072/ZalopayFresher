@@ -1,0 +1,156 @@
+.rir-row {
+    border: 2px solid #F98D0F;
+    height: 60px;
+    background: #ececec; 
+    width: 100%;
+    margin: 0;
+}
+
+.rir-row:hover  {
+    background: rgb(0, 0, 0, 0);
+}
+
+.rir-row:hover .rir-labelRoomName {
+    color: white;
+}
+
+.rir-row:hover .rir-labelDisplayedName {
+    color: white;
+}
+
+.rir-rID {
+    border-right: 2px solid #F98D0F;   
+    padding: 0px 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.rir-labelRID {
+    margin: 0;
+    font-weight: bold;
+    font-size: 18px;
+    color: #F98D0F;
+}
+
+.rir-name {
+    padding: 2px 20px;
+}
+
+.rir-labelRoomName {
+    margin: 0;
+    font-weight: bold;
+    font-size: 18px;
+    color: black;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+.rir-labelDisplayedName {
+    margin: 0;
+    font-weight: bold;
+    font-size: 14px;
+    color: black;
+    width: 100%;
+}
+
+.rir-points {
+    display: flex;
+    align-items: center;
+}
+
+.rir-pointsDiv {
+    display: flex;
+    align-items: center;
+}
+
+.rir-imgRupee {
+    width: 40px;
+    height: 40px;
+}
+
+.rir-labelPoints {
+    margin: 0px;
+    color: #F98D0F;
+    font-weight: bold;
+    font-size: 18px;
+    padding-left: 5px;
+}
+
+.rir-password {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rir-imgPassword {
+    width: 40px;
+    height: 40px;
+}
+
+/* ---------------------------------------------- */
+/* --------------------MODAL--------------------- */
+
+.rir-heightmodal .modal-content {
+    width: 450px !important;
+    height: 270px !important;
+    border-radius: 10px !important;
+    border: none;
+    align-items: center;
+}
+
+.rir-biggestHeightModal .modal-content {
+    height: 390px !important;
+}
+
+.rir-pointsHeightModal .modal-content {
+    height: 295px !important;
+}
+
+.rir-passHeightModal .modal-content {
+    height: 360px !important;
+}
+
+.rir-roominfo {
+    color: black;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;  
+    font-size: 18px;  
+}
+
+.rir-lbhead {
+    color: #F98D0F;
+    font-size: 22px;
+    text-transform: uppercase;
+}
+
+.rir-lbroomid {
+    text-transform: uppercase;
+}
+
+.rir-label {
+    margin: 0;
+}
+
+.rir-labelPadding {
+    padding: 0 10px;
+    font-size: 18px;
+}
+
+.rir-marginbot {
+    margin-bottom: 30px;
+}
+
+.rir-margintop {
+    margin-top: 30px;
+}
+
+.rir-marginRight {
+    margin-right: 10px;
+}

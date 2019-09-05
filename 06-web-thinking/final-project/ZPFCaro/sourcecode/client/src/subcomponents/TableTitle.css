@@ -1,0 +1,19 @@
+.tt-title {
+    height: 70px;
+    width: 100%;
+    /* background: black; */
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 2px solid #F98D0F;
+}
+
+.tt-label {
+    margin: 0 auto;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -2px;
+}

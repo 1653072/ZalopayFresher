@@ -1,0 +1,42 @@
+.gamerule-heightmodal .modal-content {
+    width: 500px !important;
+    height: 890px !important;
+    border-radius: 10px !important;
+    border: none;
+    align-items: center;
+}
+
+.gamerule-marginbot {
+    margin-bottom: 20px;
+}
+
+.gamerule-margintop {
+    margin-top: 30px;
+}
+
+.gamerule-paddingbot {
+    padding-bottom: 10px;
+}
+
+.gamerule-paddingleft {
+    padding-left: 20px;
+}
+
+.gamerule-paddinglittletop {
+    padding-top: 3px;
+}
+
+.gamerule-paddinglittlebot {
+    padding-bottom: 3px;
+}
+
+.gamerule-labelContent {
+    font-size: 16px;
+    color: black;
+    text-align: justify;
+    width: 450px;
+}
+
+.gamerule-labelContent label {
+    margin: 0;
+}

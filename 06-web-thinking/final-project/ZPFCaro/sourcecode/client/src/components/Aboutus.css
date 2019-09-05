@@ -1,0 +1,40 @@
+.aboutus-heightmodal .modal-content {
+    width: 450px !important;
+    height: 645px !important;
+    border-radius: 10px !important;
+    border: none;
+    align-items: center;
+}
+
+.aboutus-marginbot {
+    margin-bottom: 20px;
+}
+
+.aboutus-margintop {
+    margin-top: 30px;
+}
+
+.aboutus-paddingbot {
+    padding-bottom: 10px;
+}
+
+.aboutus-label {
+    margin: 0;
+}
+
+.aboutus-labelHead {
+    color: #F98D0F;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.aboutus-labelUnderline {
+    text-decoration: underline !important;
+}
+
+.aboutus-labelContent {
+    font-size: 18px;
+    color: black;
+    text-align: center;
+    width: 400px;
+}

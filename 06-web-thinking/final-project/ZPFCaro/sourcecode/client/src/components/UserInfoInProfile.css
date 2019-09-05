@@ -1,0 +1,23 @@
+.uiip-div {
+    background-color: white;
+    height: 124px;
+    width: 100%;
+}
+
+.uiip-avatardiv {
+    float: left;
+    border: 2px solid #F98D0F;
+    height: 124px;
+    width: 124px;
+}
+
+.uiip-labeldiv {
+    float: left;
+    margin: 0px 10px;
+    height: 124px;
+}
+
+
+.uiip-space {
+    padding: 2px 0px;
+}

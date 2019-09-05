@@ -1,0 +1,23 @@
+.ui-div {
+    background-color: #ececec;
+    border: 2px solid #F98D0F;
+    height: 124px;
+    width: 100%;
+}
+
+.ui-avatardiv {
+    float: left;
+    border-right: 2px solid #F98D0F;
+    height: 120px;
+    width: 122px;
+}
+
+.ui-labeldiv {
+    float: left;
+    margin: 0px 10px;
+    height: 120px;
+}
+
+.ui-space {
+    padding: 1px 0px;
+}

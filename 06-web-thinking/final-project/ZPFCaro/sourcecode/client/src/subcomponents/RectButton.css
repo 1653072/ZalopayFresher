@@ -1,0 +1,57 @@
+.rect-btn {
+    width: 350px;
+    height: 60px;
+    color: white;
+    background-color: #F98D0F !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none;
+    font-size: 24px;
+    text-transform: uppercase;
+    /* margin-right: 10px; */
+}
+
+.rect-btn:focus {
+    box-shadow: none !important;
+}
+
+.rect-btn:hover,
+.rect-btn:active {
+    background-color: rgb(204, 119, 21) !important;
+    outline-color: rgba(243, 148, 40, 0.575) !important;
+    box-shadow: none !important;
+}
+
+.rect-btn.text-black {
+    color: black;
+}
+
+.rect-btn.background-gray {
+    background: #E5E5E5 !important;
+}
+
+.rect-btn.small-width {
+    width: 170px;
+}
+
+.rect-btn.background-gray:hover,
+.rect-btn.background-gray:focus {
+    background-color: rgb(204, 204, 204) !important;
+    outline-color: rgba(229, 229, 229, 0.747) !important;
+}
+
+.rect-btn.disable{
+    cursor: not-allowed;
+    background-color: #F98D0F !important;
+    opacity: 1;
+    outline: #F98D0F;
+}
+
+.rect-btn.disable:hover{
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+.btn-for-modal {
+    height: 50px !important;
+    font-size: 20px !important;
+}

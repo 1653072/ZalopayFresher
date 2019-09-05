@@ -1,0 +1,28 @@
+.circleButton {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid #F98D0F;
+    background: #ececec;
+    transition: 0.3s;
+    color: #F98D0F;
+    padding: 0;
+}
+
+.circleButton:focus {
+    box-shadow: none !important;
+}
+
+.circleButton:hover,
+.circleButton:active {
+    background-color: rgb(249, 141, 15, .2) !important;
+    border: 3px solid #F98D0F !important;
+    box-shadow: 0 0 0 0.2rem rgba(249, 141, 15, .2) !important;
+}
+
+.circleButton:before {
+    color: #F98D0F;
+    font-size: 25px;
+    width: 40px;
+    height: 40px;
+}

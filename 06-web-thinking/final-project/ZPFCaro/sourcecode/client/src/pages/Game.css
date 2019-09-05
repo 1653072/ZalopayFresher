@@ -1,0 +1,42 @@
+/* .game-container{
+    overflow: hidden;
+    display: table; 
+    width: 100%; 
+}
+
+.game{
+    height: 80vh;
+}
+
+/* .game-container,.info-container{
+    display: table-cell;
+} */ 
+
+
+/* .hp-padRight {
+    padding-right: 70px !important;
+}
+
+.hp-padLeft {
+    padding-left: 30px !important;
+}
+
+.hp-margintop {
+    margin-top: 30px !important;
+} */
+
+.g-game-col{
+    padding-bottom:  7px !important;
+    padding-top:  7px !important;
+    border: 1px solid white !important;
+}
+
+.game-container{
+    overflow: hidden;
+    display: table; 
+    width: 100%; 
+}
+
+.game-container,.info-container{
+    display: table-cell;
+}

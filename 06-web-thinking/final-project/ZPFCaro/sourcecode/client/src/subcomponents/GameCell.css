@@ -1,0 +1,36 @@
+.gc-game-cell{
+    width: 35px;
+    height: 36px;
+    background: rgba(71, 86, 130, 0.4);
+    position: relative;
+    padding: 0px !important;
+    margin: 1px;
+    overflow: hidden;
+}
+@import url('https://fonts.googleapis.com/css?family=Allerta+Stencil&display=swap');
+.gc-game-cell a{
+    align-content: center;
+    font-family: 'Allerta Stencil', sans-serif;
+    font-size: 48px;
+    position: absolute;
+    top:-24px;
+    color: #F98D0F !important;
+}
+
+.gc-game-cell.o a{
+    color: white !important;
+}
+
+.gc-game-cell:hover{
+    background: rgba(71, 86, 130, 0.7);
+    transition: 0.2s;
+    transform: scale(1.1);
+    cursor: pointer !important;
+
+}
+
+.gc-game-cell.disable:hover{
+    background: rgba(71, 86, 130, 0.4);
+    cursor: default !important;
+    transform: scale(1);
+}

@@ -1,0 +1,50 @@
+.alertwarn-heightmodal .modal-content {
+    width: 450px !important;
+    height: 375px !important;
+    border-radius: 10px !important;
+    border: none;
+    align-items: center;
+}
+
+.alertwarn-biggerheightmodal .modal-content {
+    height: 405px !important;
+}
+
+.alertwarn-imgStyle {
+    width: 100px;
+    height: 100px;
+}
+
+.alertwarn-paddingbot {
+    padding-bottom: 20px;
+}
+
+.alertwarn-marginRight {
+    margin-right: 10px;
+}
+
+.alertwarn-marginbot {
+    margin-bottom: 30px;
+}
+
+.alertwarn-margintop {
+    margin-top: 30px;
+}
+
+.alertwarn-label {
+    margin: 0;
+}
+
+.alertwarn-labelHead {
+    color: #F98D0F;
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.alertwarn-labelContent {
+    font-size: 22px;
+    color: black;
+    text-align: center;
+    width: 370px;
+    font-weight: bold;
+}

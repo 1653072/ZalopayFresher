@@ -1,0 +1,26 @@
+.titlemodal-whitebackground {
+    background: white;
+    z-index: 1000;
+    height: 60px;
+    width: 100%;    
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    border-bottom: 2px solid #F98D0F;
+}
+
+.titlemodal-contentdiv {
+    background: rgb(249, 141, 15, .2);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.titlemodal-content {
+    font-size: 36px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    color: #F98D0F;
+    text-shadow: 2px 4px 2px rgb(0,0,0,.2);
+}

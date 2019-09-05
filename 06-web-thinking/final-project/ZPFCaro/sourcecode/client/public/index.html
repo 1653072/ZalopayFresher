@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/logo_rel.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>ZPF Caro</title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+  
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Audiowide&display=swap" rel="stylesheet">
+
+    <!-- Ref nightsky effect: https://www.script-tutorials.com/night-sky-with-twinkling-stars/ -->
+    <link rel="stylesheet" type="text/css" href="%PUBLIC_URL%/nightsky-effect/nightsky.css">
+    <!-- Ref of animation: https://daneden.github.io/animate.css/ -->
+    <link rel="stylesheet" type="text/css" href="%PUBLIC_URL%/animate.css">
+
+    <style>
+      .body-style { 
+        /* background: url(%PUBLIC_URL%/space-background.png) no-repeat center center fixed; */
+        background: #000 url(%PUBLIC_URL%/nightsky-effect/images/stars.png) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        
+        /* Hide scrollbar if zoomin : IE 10+ */
+        -ms-overflow-style: none;
+        /* Hide scrollbar if zoomin : Firefox */
+        scrollbar-width: none;
+
+        /* Ref background-size: https://stackoverflow.com/questions/45873659/how-can-i-make-the-background-image-scale-to-fit-the-entire-window-when-resizing 
+        */
+      }
+
+      /* Hide scrollbar if zoomin : Chrome, Safari */
+      .body-style::-webkit-scrollbar { 
+        width: 0 !important;
+      } 
+
+      .vertical-center {
+        min-height: 100vh; 
+        display: flex;
+        align-items: center;
+        
+        /* Ref: https://stackoverflow.com/questions/39574546/bootstrap-center-a-container-fluid-vertically */
+      }
+    </style>
+  </head>
+  <body class="body-style">
+    <div class="twinkling"></div> 
+    <div class="clouds"></div> 
+    <div id="root" class="vertical-center">
+
+      <!-- RENDER TEMPLATE WILL BE HERE -->
+
+    </div>
+  </body>
+</html>

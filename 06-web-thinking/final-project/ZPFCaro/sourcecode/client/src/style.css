@@ -1,0 +1,46 @@
+@import url(//db.onlinewebfonts.com/c/623c7118249e082fe87a78e08506cb4b?family=Segoe+UI);
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.text-Capitalize{
+    text-transform: capitalize;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); 
+}
+   
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.4);
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.container-fluid {
+    width: 1600px !important;
+    padding: 0px;
+    margin: 0 auto;
+}
+
+.modal-dialog {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-self: auto;
+    align-items: center;
+    min-height: 100vh; 
+}

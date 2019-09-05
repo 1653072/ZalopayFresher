@@ -1,0 +1,72 @@
+.prof-heightmodal .modal-content {
+    width: 450px !important;
+    height: 650px !important;
+    border-radius: 10px !important;
+    border: none;
+    align-items: center;
+}
+
+.prof-windrawlose {
+    padding: 0px 3px;
+    width: 350px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.prof-paddingright {
+    padding-right: 5px;
+}
+
+.prof-paddingleft {
+    padding-left: 5px;
+}
+
+.prof-paddingbot {
+    padding-bottom: 10px;
+}
+
+.prof-marginbot {
+    margin-bottom: 30px;
+}
+
+.prof-margintop {
+    margin-top: 30px;
+}
+
+.prof-marginRight {
+    margin-right: 10px;
+}
+
+.prof-btnlabel  {
+    color: #F98D0F;
+}
+
+.prof-btnlabel:hover {
+    color: #ca7718;
+}
+
+.prof-label {
+    margin: 0;
+    height: 30px;
+}
+
+.prof-message{
+    text-align: right;
+    float: right;
+    /* margin-right: 8px; */
+    color: rgb(32, 170, 78);
+}
+
+.prof-message.error{
+    color: rgb(245, 4, 4);
+}
+
+.prof-changepassword {
+    width: 350px;
+}
+
+.updateHeightModal .modal-content {
+    height: 830px !important;
+}
