@@ -173,6 +173,4 @@ Nguyễn Đỗ Cát Trân (tranndc) - Software Development Fresher
 
 ### PHẦN II - TỔ CHỨC KINH DOANH
 
-
-
-
+* Nội dung trình bày: [Tại đây](https://drive.google.com/open?id=1ofba0lhE1rOIpnYvsCyjwE6U7IHs3APjqVl_PWZxwpc)
