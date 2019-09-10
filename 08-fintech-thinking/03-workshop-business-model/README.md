@@ -3,6 +3,7 @@
 ## NGƯỜI THỰC HIỆN
 
 Trần Kiến Quốc (quoctk) - Software Development Fresher
+
 Nguyễn Đỗ Cát Trân (tranndc) - Software Development Fresher
 
 ## BÁO CÁO
