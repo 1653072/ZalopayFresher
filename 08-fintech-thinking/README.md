@@ -1,4 +1,4 @@
-# FINTECH
+# FINTECH THINKING
 
 ## NGƯỜI THỰC HIỆN
 
